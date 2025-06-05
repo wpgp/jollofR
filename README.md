@@ -9,24 +9,27 @@ The present version of **jollofR** automatically produces subnational age/sex py
 
 
 # Statistical Modelling
-The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit of interest are assigned into only but one of the $n$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_n$. Then, given that $m_1, m_2, .., m_n$ are the corresponding number of individuals within the $n$ groups such thatand $m_k + m_{-k} = N$, where $m_k$ is the number of individuals within group k and $m_{-k}$ is the total number of individuals in the remaining $n-1$ groups (1, 2, k-1, k+1, ...,n$). Also, let $\pi_k = m_k/N$ denote the proportion of individuals belonging to group k and so that $\pi_{-k} = m_{-k}/N$ is the proportion of individuals not in group k. Then, the hierachical modelling structure is given below:
+The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit of interest are assigned into only but one of the $n$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_n$. Then, given that $m_1, m_2, .., m_n$ are the corresponding number of individuals within the $n$ groups such thatand $m_k + m_{-k} = N$, where $m_k$ is the number of individuals within group k and $m_{-k}$ is the total number of individuals in the remaining $n-1$ groups ($1, 2, k-1, k+1, ...,n$). Also, let $\pi_k = m_k/N$ denote the proportion of individuals belonging to group k and so that $\pi_{-k} = m_{-k}/N$ is the proportion of individuals not in group k. Then, the basic two-stage model is given below
 
 $$\eqalign{
  N \sim Poisson(\lambda) \\
  m_k \sim Binomial(N, \pi_k)  &&  (1)
 }$$
 
-
-Then, for each group $k$, N$. That is, $m_k$ is the number of individuals in the $k$th demographic group ($k=1, 2, ...., n$). Here, the total population count $N$ naturally follows a Poisson distribution 
+where $\lambda > 0$ is the mean and variance parameter of the Poisson count process $N$. Often times, $N$ is known either from census, Microcensus or estimated from statistical models, while the demographc group totals $a_1, a_2, .., a_n$ could be only partially observed. In this case, the observed group count $a_k < m_k$  and  $a_k + a_{-k} \ne N$.  then, estimates of the group totals could be obtained through equation (2)
 
 $$\eqalign{
- N \sim Poisson(\lambda) \\
- m_k \sim Binomial(N, \pi_k) \\ 
- logit(\pi_k) = X\beta + \xi(s) + \zeta \\
+ a_k \sim Binomial(\tilde{n}, p_k) \\ 
+ logit(p_k) = X\beta + \xi(s) + \zeta \\
  \zeta \sim Normal(0, \sigma^2_\zeta) \\
  \xi(s) \sim GRF(0, \Sigma)   &&  (2)
 }$$
 
+where $a_k + a_{-k} = \tilde{n}$ and $p_k$ is the probability of belonging to group $k$ such that $p_k + p_{-k}=1$. That is, the predicted probability $\hat{p_k} = (exp(X\beta + \xi(s) + \zeta)/(1+X\beta + \xi(s) + \zeta)$ providesestimates of the proportion of the individuals in the administrative unit belonging to group k. Then, the disaggregated number of individuals in group k is given by 
+
+$$\eqalign{
+ \tilde{m_k} = \hat{p_k}N   &&  (3)
+}$$
 
 with mean and variance equals $\lambda$. Also, the vector of the groups total population counts  $\tilde{m}=(m_1, m_2, .., m_n)$ is assumed to be multinomial 
 $$\tilde{m} = Multinomial(N, \Pi)$$ 
