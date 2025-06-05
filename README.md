@@ -11,12 +11,12 @@ The present version of **jollofR** automatically produces subnational age/sex py
 # Statistical Modelling
 The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit of interest are assigned into only but one of the $n$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_n$. Then, given that $m_1, m_2, .., m_n$ are the corresponding number of individuals within the $n$ groups such thatand $m_k + m_{-k} = N$, where $m_k$ is the number of individuals within group k and $m_{-k}$ is the total number of individuals in the remaining $n-1$ groups ($k=1, 2, ...,n$). The hierachical modelling structure is given below:
 
-$$\eqalign{\tag{1} 
+$$\eqalign{
  N \sim Poisson(\lambda) \\
  m_k \sim Binomial(N, p_k) \\ 
  logit(p_k) = X\beta + \xi(s) + \zeta \\
  \zeta \sim Normal(0, \sigma^2_\zeta) \\
- \xi(s) \sim GRF(0, \Sigma)    
+ \xi(s) \sim GRF(0, \Sigma)     (1)
 }$$
 
 
