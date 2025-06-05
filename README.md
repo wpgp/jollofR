@@ -181,13 +181,13 @@ result <- cheesecake(df = toydata, output_dir = tempdir())
 pyramid(result$fem_age_pop,result$male_age_pop)
 ```
 
-## 'scissors'
+## 'spices'
 ### Description
-This function disaggregates population estimates by a single demographic (age or sex or religion, etc) - no geospatial covariates. Please use the *slices* function if you want covariates used.
+This function disaggregates population estimates by a single demographic (age or sex or religion, etc) - with geospatial covariates. Please use the *slices* function if no covariates are required.
 
 ### Usage
 ```r
-result <- scissors(df, output_dir)
+result <- spices(df, output_dir, class)
 ```
 ### Arguments
 ```
@@ -197,21 +197,24 @@ A data frame object containing sample data (often partially observed) on age or 
 output_dir	
 This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
 
+class	
+This a vector which provides the levels of the categorical demographic characteristics of interest. For example, for disaggregating population by educational level, class could be the vector containing the elements "no education", "primary education", "secondary education", "tertiary education", etc.
+
 Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
 ### Examples
 ```r
 data(toydata)
-result <- scissors(df = toydata, output_dir = tempdir())
+result <- spices(df = toydata, output_dir = tempdir(), class)
 ```
 ## 'slices'	
 ### Description
-This function disaggregates population estimates by a single demographic (age or sex or religion, etc) -  with geospatial covariates. Please use *scissors* if you do not want covariates used.
+This function disaggregates population estimates by a single demographic (age or sex or religion, etc) -  with no geospatial covariates. Please use *spices* if covariates are required.
 
 ### Usage
 ```r
-result <- slices(df, output_dir)
+result <- slices(df, output_dir, class)
 ```
 ### Arguments
 ```
@@ -221,13 +224,16 @@ A data frame object containing sample data (often partially observed) on age or 
 output_dir	
 This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
 
+class	
+This a vector which provides the levels of the categorical demographic characteristics of interest. For example, for disaggregating population by educational level, class could be the vector containing the elements "no education", "primary education", "secondary education", "tertiary education", etc.
+
 Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
 ### Examples
 ```r
 data(toydata)
-result <- slices(df = toydata, output_dir = tempdir())
+result <- slices(df = toydata, output_dir = tempdir(), class)
 ```
 
 ## 5. Toy data for illustration
