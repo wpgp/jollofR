@@ -62,7 +62,7 @@ install.packages("INLA", repos=c(getOption("repos"),
 After confirming that **INLA** has been successfully installed, please install the development version of **jollofR** package from GitHub using the following codes: 
 ```{r eval=FALSE, include=TRUE}
 # install.packages("devtools")
-devtools::install_github("wpgp/jollof")
+devtools::install_github("wpgp/jollofR")
 ```
 
 ## Install from CRAN
