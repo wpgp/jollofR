@@ -281,8 +281,8 @@ pyramid(result$fem_age_pop,result$male_age_pop)
 ```
 
 ### spices
-```r{r eval=TRUE, include=TRUE}
-data(toydata)
+```{r eval=TRUE, include=TRUE}
+data(data/toydata.RData)
 classes <- names(toydata %>% select(starts_with("age_")))
 result2 <- spices(df = toydata, output_dir = tempdir(), class = classes)
 ```
