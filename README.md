@@ -275,6 +275,16 @@ classes <- names(toydata %>% select(starts_with("age_")))
 result2 <- slices(df = toydata, output_dir = tempdir(), class = classes)
 ```
 
+### Making pyramid graph of the observed age-sex data
+```
+female_pop <- data.frame(dat1 %>% dplyr::select(starts_with("fage_"))) # extract females age data
+names(female_pop) <- paste0("pp_", names(female_pop)) # rename the variables by adding "pp_" as suffix to the existing names
+
+male_pop <- data.frame(dat1 %>% dplyr::select(starts_with("mage_")))# extract males age data
+names(male_pop) <- paste0("pp_", names(male_pop))# rename the variables by adding "pp_" as suffix to the existing names
+
+pyramid(female_pop,male_pop) # make the observed pyramid plot
+```
 
 ## 7. Model validation metrics
 The **jollofR** package is a model-based approach which enables model validation by automatically computing model fit metrics based on the comparisons between the observed and the predicted values based on the age groups population disaggregation models. The computed metrics include:
@@ -330,7 +340,7 @@ The **jollofR** package is a model-based approach which enables model validation
 - **model_validation_scatter_plot.png**: This is the automatically generated correlation plot of the observed total age data versus the model predicted total age data.
   
 # Statistical Modelling
-The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit (herein also called *admin*) of interest are assigned into only but one of the $K$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_K$. Then, given that $m_1, m_2, .., m_K$ are the corresponding number of individuals within the $K$ groups such thatand $m_j + m_{-j} = N$, where $m_j$ is the number of individuals within group j and $m_{-j}$ is the total number of individuals in the remaining $K-1$ groups ($1, 2, j-1, j+1, ...,K$). Also, let $\pi_j = m_j/N$ denote the proportion of individuals belonging to group k, so that $\pi_{-j} = m_{-j}/N$ is the proportion of individuals not in group j. Then, for $i = 1, 2, ... , M$, (where $M$ is the total number of administrative units of interest), the basic two-stage model is given by
+The disaggregation functions within the **jollofR** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit (herein also called *admin*) of interest are assigned into only but one of the $K$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_K$. Then, given that $m_1, m_2, .., m_K$ are the corresponding number of individuals within the $K$ groups such thatand $m_j + m_{-j} = N$, where $m_j$ is the number of individuals within group j and $m_{-j}$ is the total number of individuals in the remaining $K-1$ groups ($1, 2, j-1, j+1, ...,K$). Also, let $\pi_j = m_j/N$ denote the proportion of individuals belonging to group k, so that $\pi_{-j} = m_{-j}/N$ is the proportion of individuals not in group j. Then, for $i = 1, 2, ... , M$, (where $M$ is the total number of administrative units of interest), the basic two-stage model is given by
 
 $$\eqalign{
  N_i \sim Poisson(\lambda_i) \\
