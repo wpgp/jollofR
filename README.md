@@ -25,7 +25,7 @@ $$\eqalign{
  \xi(s) \sim GRF(0, \Sigma)   &&  (2)
 }$$
 
-where $a_k + a_{-k} = \tilde{n}$ and $p_k$ is the probability of belonging to group $k$ such that $p_k + p_{-k}=1$. That is, the predicted probability $\hat{p_k} = (exp(X\beta + \xi(s) + \zeta)/(1+X\beta + \xi(s) + \zeta)$ providesestimates of the proportion of the individuals in the administrative unit belonging to group k. Then, the disaggregated number of individuals in group k is given by 
+where $\tilde{n}$ is the total number of individuals observed across all the  $a_k + a_{-k} = \tilde{n}$ and $p_k$ is the probability of belonging to group $k$ such that $p_k + p_{-k}=1$. That is, the predicted probability $\hat{p_k} = (exp(X\beta + \xi(s) + \zeta)/(1+X\beta + \xi(s) + \zeta)$ providesestimates of the proportion of the individuals in the administrative unit belonging to group k. Then, the disaggregated number of individuals in group k is given by 
 
 $$\eqalign{
  \tilde{m_k} = \hat{p_k}N   &&  (3)
