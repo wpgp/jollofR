@@ -7,6 +7,16 @@ The present version of **jollofR** automatically produces subnational age/sex py
 
 # 2. Installation
 
+
+Here is a simple flow chart:
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
 ## System Requirements
 
 Before installing **jollofR**, please ensure that your system meets the following requirements:
