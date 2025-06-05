@@ -55,7 +55,7 @@ Once the setup is complete, follow the instructions below to download **jollofR*
 First, you may need to install **INLA** by running the following codes (if you do not have INLA already installed)
 ```{r eval=FALSE, include=TRUE}
 # install.packages("devtools")
-install.packages("INLA", repos=c(getOption("repos"), type = "binary",
+install.packages("INLA", repos=c(getOption("repos"),
                                  INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 ```
 After confirming that **INLA** has been successfully installed, please install the development version of **jollofR** package from GitHub using the following codes: 
