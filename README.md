@@ -124,11 +124,6 @@ This is the directory with the name of the output folder where the disaggregated
 Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
-### Examples
-```r
-data(toydata)
-result <- cheesecake(df = toydata, output_dir = tempdir())
-```
 
 ## 'cheesepop'	
 ### Description
@@ -218,12 +213,7 @@ This a vector which provides the levels of the categorical demographic character
 Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
-### Examples
-```r
-data(toydata)
-classes <- names(toydata %>% select(starts_with("age_")))
-result2 <- slices(df = toydata, output_dir = tempdir(), class = classes)
-```
+
 
 ## 5. Toy data for illustration
 Name: **toydata**	
@@ -250,15 +240,7 @@ An object of class "data.frame"
   
 - **mage_1, ..., mage_12**: These correspond to the partially or fully observed number of males corresponding to each of the age groups. Note that we have used only 12 age groups here for illustration but the package can accomodate any number of age or sex or any demographic groups.
 
-### References
-This data set was artificially created for the jollof package.
 
-### Examples
-```r
-data(toydata)
-names(toydata)
-head(toydata)
-```
 ## 6. Examples: using jollofR functions
 ### cheesecake
 ```r
