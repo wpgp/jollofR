@@ -1,0 +1,42 @@
+#' Partially observed country-wide or sub-national demographically structured data by age and sex groups
+#'
+#' Artificially generated toy data set that comes in a cross-sectional
+#' format where the unit of analysis is either administrative unit or enumeration area identifiable by an 'id' variable.
+#''It provides artificial information for 3,213 spatially distinct administrative units in which the individuals in the population
+#'are grouped into 12 mutually exclusive and exhaustive age groups. Each of the age groups was further grouped into 'male' and 'female' groups.
+#' The data contains the total population counts (total) for each spatial unit but also contains missing age and sex groups population counts.
+#' The model first predicts the population proportions of the mising data and then disaggregates the population totals using the predicted
+#' proportions to obtain the predicted population counts for the age and sex groups. Note that the same applies for other demographic
+#' groups such as marital status, race, etc.
+#' illustrate the use of the package.
+#'
+#' @docType data
+#'
+#' @usage data(toydata)
+#'
+#' @format An object of class \code{"data.frame"}
+#' \describe{
+#'  \item{id}{ Administrative units ids (as numeric) for the administrative units of interest}
+#'  \item{x1,x2,x3}{These are the samples of geospatial covariates (only required for the 'cheesecake' and the 'slices' functions).
+#'  Note that these are the covariates identified to significantly predict population distribution among
+#'  the demographic groups. The package allows the user to include any number of covariates in thier own datasets.}
+#'  \item{total}{The total population counts being disaggregated and should correspond to the rowsum of the age groups or the sex groups population counts}
+#'  \item{age_1, ..., age_12}{These correspond to the partially or fully observed number of people
+#'  corresponding to each of the age groups. Note that we have used only 12 age groups here for illustration
+#'  but the package can accomodate any number of age or sex or any demographic groups.}
+#'  \item{fage_1, ..., fage_12}{These correspond to the partially or fully observed number of females
+#'  corresponding to each of the age groups. Note that we have used only 12 age groups here for illustration
+#'  but the package can accomodate any number of age or sex or any demographic groups.}
+#'   \item{mage_1, ..., mage_12}{These correspond to the partially or fully observed number of males
+#'  corresponding to each of the age groups. Note that we have used only 12 age groups here for illustration
+#'  but the package can accomodate any number of age or sex or any demographic groups.}
+#' }
+#' @references This data set was artificially created for the jollof package.
+#' @keywords datasets
+#' @examples
+#'
+#' data(toydata)
+#' names(toydata)
+#' head(toydata)
+#'
+"toydata"
