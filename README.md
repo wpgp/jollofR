@@ -13,10 +13,11 @@ The disaggregation functions within the **jollof** package utilise a multi-stage
 
 $$\eqalign{
  N \sim Poisson(\lambda) \\
- m_k \sim Binomial(N, p_k)  
- logit(p_k) = X\beta + \xi(s) + \varespsilon
- \xi(s) \sim GRF(0, \Sigma)
- \Sigma = Matérn 
+ m_k \sim Binomial(N, p_k) \\ 
+ logit(p_k) = X\beta + \xi(s) + \zeta \\
+ \xi(s) \sim GRF(0, \Sigma)\\
+ \zeta \sim Normal(0, \sigma^2_\zeta) \\
+ \Sigma \sim Matérn 
 }$$
 
 
