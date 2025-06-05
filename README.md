@@ -17,8 +17,8 @@ $$\eqalign{
  logit(p_k) = X\beta + \xi(s) + \zeta \\
  \zeta \sim Normal(0, \sigma^2_\zeta) \\
  \xi(s) \sim GRF(0, \Sigma)\\
- \Sigma \sim Matérn       \tag{1}
-}$$
+ \Sigma \sim Matérn      
+} \tag{1} $$
 
 
 Then, for each group $k$, N$. That is, $m_k$ is the number of individuals in the $k$th demographic group ($k=1, 2, ...., n$). Here, the total population count $N$ naturally follows a Poisson distribution 
