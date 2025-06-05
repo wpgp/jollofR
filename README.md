@@ -24,6 +24,12 @@ Before installing **jollofR**, please ensure that your system meets the followin
 |------|
 |   4   |
 
+
+When $a \ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are
+$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
+
+
+
 1.  **R version**: \>= 4.1.0
 3.  **INLA** (please check that you have INLA already installed)
 
