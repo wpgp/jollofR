@@ -150,11 +150,7 @@ This is the directory with the name of the output folder where the disaggregated
 Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
-### Examples
-```r
-data(toydata)
-result <- cheesepop(df = toydata, output_dir = tempdir())
-```
+
 
 ## 'pyramid'
 ### Description
@@ -175,12 +171,7 @@ A data frame containing the disaggregated population estimates for males across 
 Value
 Data frames of the diaggregated population numbers along with uncertainty for the age and sex groups or other demographic groups.
 ```
-### Examples
-```r
-data(toydata)
-result <- cheesecake(df = toydata, output_dir = tempdir())
-pyramid(result$fem_age_pop,result$male_age_pop)
-```
+
 
 ## 'spices'
 ### Description
@@ -204,11 +195,7 @@ This a vector which provides the levels of the categorical demographic character
 Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
-### Examples
-```r
-data(toydata)
-result <- spices(df = toydata, output_dir = tempdir(), class)
-```
+
 ## 'slices'	
 ### Description
 This function disaggregates population estimates by a single demographic (age or sex or religion, etc) -  with no geospatial covariates. Please use *spices* if covariates are required.
@@ -234,7 +221,8 @@ Data frame objects of the output files including the disaggregated population pr
 ### Examples
 ```r
 data(toydata)
-result <- slices(df = toydata, output_dir = tempdir(), class)
+classes <- names(toydata %>% select(starts_with("age_")))
+result2 <- slices(df = toydata, output_dir = tempdir(), class = classes)
 ```
 
 ## 5. Toy data for illustration
@@ -271,8 +259,43 @@ data(toydata)
 names(toydata)
 head(toydata)
 ```
+## 6. Examples: using jollofR functions
+### cheesecake
+```r
+data(toydata)
+result <- cheesecake(df = toydata, output_dir = tempdir())
+```
 
-## 6. Model validation metrics
+### cheesepop
+```r
+data(toydata)
+result <- cheesepop(df = toydata, output_dir = tempdir())
+```
+
+### pyramid
+```r
+data(toydata)
+result <- cheesecake(df = toydata, output_dir = tempdir())
+pyramid(result$fem_age_pop,result$male_age_pop)
+```
+
+### spices
+```r
+data(toydata)
+classes <- names(toydata %>% select(starts_with("age_")))
+result2 <- spices(df = toydata, output_dir = tempdir(), class = classes)
+```
+
+
+### slices
+```r
+data(toydata)
+classes <- names(toydata %>% select(starts_with("age_")))
+result2 <- slices(df = toydata, output_dir = tempdir(), class = classes)
+```
+
+
+## 7. Model validation metrics
 The **jollofR** package is a model-based approach which enables model validation by automatically computing model fit metrics based on the comparisons between the observed and the predicted values based on the age groups population disaggregation models. The computed metrics include:
 ```
 - MAE: Mean Absolute Error
@@ -282,7 +305,7 @@ The **jollofR** package is a model-based approach which enables model validation
 ```
 
 
-## 7. The output files directly accessible using result$ 
+## 8. The output files directly accessible using result$ 
 **jollofR** automatically saves a number of output files as a list object. This contain 9 dataframes which can be accessed by running the function 'result$"name_of_the_dataframe", if the output object is called 'result' as in our example. These include:
 
 - **age_pop**: This file contains the mean disaggregated population counts by age groups. This is obtained by running the function 'result$age_pop'
@@ -305,7 +328,7 @@ The **jollofR** package is a model-based approach which enables model validation
   
 
 
-## 8. The output files saved in your output folder 
+## 9. The output files saved in your output folder 
 **jollofR** automatically saves 8 .csv files and 1 .png file in the output folder you specified. These include:
 
 - **age_disaggregated_data.csv**: This file contains the mean disaggregated population counts by age groups. Variables are written as "pp_age_1, ....,pp_age_n" within the .csv file, where n is the last age group category.
@@ -327,7 +350,7 @@ The **jollofR** package is a model-based approach which enables model validation
 - **model_validation_scatter_plot.png**: This is the automatically generated correlation plot of the observed total age data versus the model predicted total age data.
   
 
-## 9. Support and Contributions
+## 10. Support and Contributions
 This is a development version of the **jollofR** package and we welcome contributions from the research community to improve **jollofR** and make it even much simpler for everyone to use. For support, bug reports, or feature requests, please contact:
 
 **Chris Nnanatu (Package Developer: https://www.worldpop.org/team/chris_nnanatu/)**
