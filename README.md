@@ -17,7 +17,7 @@ $$\eqalign{
  logit(p_k) = X\beta + \xi(s) + \zeta \\
  \zeta \sim Normal(0, \sigma^2_\zeta) \\
  \xi(s) \sim GRF(0, \Sigma)\\
- \Sigma \sim Matérn                (1)
+ \Sigma \sim Matérn       \tag{1}
 }$$
 
 
