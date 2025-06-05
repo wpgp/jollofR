@@ -7,66 +7,12 @@ The present version of **jollofR** automatically produces subnational age/sex py
 
 # 2. Installation
 
-
-# Statistical Modelling
-The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit (herein also called *admin*) of interest are assigned into only but one of the $K$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_K$. Then, given that $m_1, m_2, .., m_K$ are the corresponding number of individuals within the $K$ groups such thatand $m_j + m_{-j} = N$, where $m_j$ is the number of individuals within group j and $m_{-j}$ is the total number of individuals in the remaining $K-1$ groups ($1, 2, j-1, j+1, ...,K$). Also, let $\pi_j = m_j/N$ denote the proportion of individuals belonging to group k, so that $\pi_{-j} = m_{-j}/N$ is the proportion of individuals not in group j. Then, for $i = 1, 2, ... , M$, (where $M$ is the total number of administrative units of interest), the basic two-stage model is given by
-
-$$\eqalign{
- N_i \sim Poisson(\lambda_i) \\
- m_{ij} \sim Binomial(N_i, \pi_{ij})  &&  (1)
-}$$
-
-where $\lambda_i > 0$ is the mean and variance parameter of the Poisson count process for admnistrative unit $i$, and $\pi_{ij}$ is the proportion of individuals belonging to group j in *admin* i. Oftentimes, $N_i$ is known across all units and can be provided either through national population and housing census, Microcensus or estimated from statistical models. However, in some settings, the demographic groups structured population counts may only be partially observed through sample surveys, for example, with missing information across some units. Here, using information within the observed group-structured data $y = (y_1, y_2, ... , y_M)$, estimates of each group's proportion can be obtained through equation (2)
-
-$$\eqalign{
- y_{ij} \sim Binomial(y_i, p_{ij}) \\ 
- logit(p_{ij}) = X_i\beta + \xi(s) + \zeta_i \\
- \zeta_i \sim Normal(0, \sigma^2_\zeta) \\
- \xi(s) \sim GRF(0, \Sigma)   &&  (2)
-}$$
-
-where $y_{ij}$ is the number of individuals (partially) observed within group $j$ of *admin* *i*, such that $y_{ij} + y_{-ij} = y_i$ and $y_{-ij} = y_i$ is the total number of individuals not in group $j$. Also, $X_i$ and $\beta$ are the design matrix of geospatial covariates and the coresponding unknown fixed parameters, allowing us to accommodate local variabilities within the estimated group proportions. The terms  $\xi(s)$ and $\zeta_i$ are the spatially varying and spatially independent random effects which account for differences due to spatial locations. In addition, the Gaussian Random Field (GRF) $\xi(s)$ allows us to more accurately estimate group-structured in locations with little or no observations through shared information from nearby locations. 
-
-Finally, the predicted probability $\hat{p_{ij}} = exp(X\beta + \xi(s) + \zeta)/(1+exp(X\beta + \xi(s) + \zeta))$ provides estimates of the proportion of the individuals across all administrative units including those without observations, with the corresponding predicted disaggregated number $\hat{m_{ik}}$ of individuals in group k of *admin* *i* given by 
-
-$$\eqalign{
- \hat{m_{ik}} = \hat{p_{ij}}N_i    &&  (3)
-}$$
-
-where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
-We illustrate the model framework example in the case of age-sex disaggregation across sex groups and 4 age groups using Figure 1 below. 
-
-
-```mermaid
-graph TD;
-A[total]-->B[age_1];
-A[total]-->C[age_2];
-A[total]-->D[age_3];
-A[total]-->E[age_4];
-B[total]-->F[fage_1];
-B[total]-->G[mage_1];
-C[total]-->H[fage_2];
-C[total]-->I[mage_2];
-D[total]-->J[fage_3];
-D[total]-->K[mage_3];
-E[total]-->L[fage_4];
-E[total]-->M[mage_4];
-```
 ## System Requirements
 
 Before installing **jollofR**, please ensure that your system meets the following requirements:
-|   2   |
-|------|
-|   4   |
-
-
-When $a \ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are
-$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $
-
-
 
 1.  **R version**: \>= 4.1.0
-3.  **INLA** (please check that you have INLA already installed)
+2.  **INLA** (please check that you have INLA already installed)
 
 ### Platform-Specific Setup
 
@@ -268,7 +214,6 @@ Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
 
-
 ## 5. Toy data for illustration
 Name: **toydata**	
 ### Description
@@ -296,7 +241,7 @@ An object of class "data.frame"
 
 
 ## 6. Examples: using jollofR functions
-### cheesecake
+### cheesecake - 
 ```r
 data(toydata)
 result <- cheesecake(df = toydata, output_dir = tempdir())
@@ -314,7 +259,7 @@ data(toydata)
 result <- cheesecake(df = toydata, output_dir = tempdir())
 pyramid(result$fem_age_pop,result$male_age_pop)
 ```
-
+![Alt Text](pyramid.png)
 ### spices
 ```{r eval=FALSE, include=TRUE}
 data(toydata)
@@ -363,7 +308,6 @@ The **jollofR** package is a model-based approach which enables model validation
 - **full_data**: This file contains both the input datasets and the predicted estimates. This is obtained by running the function 'result$full_data'
   
 
-
 ## 9. The output files saved in your output folder 
 **jollofR** automatically saves 8 .csv files and 1 .png file in the output folder you specified. These include:
 
@@ -385,6 +329,52 @@ The **jollofR** package is a model-based approach which enables model validation
   
 - **model_validation_scatter_plot.png**: This is the automatically generated correlation plot of the observed total age data versus the model predicted total age data.
   
+# Statistical Modelling
+The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit (herein also called *admin*) of interest are assigned into only but one of the $K$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_K$. Then, given that $m_1, m_2, .., m_K$ are the corresponding number of individuals within the $K$ groups such thatand $m_j + m_{-j} = N$, where $m_j$ is the number of individuals within group j and $m_{-j}$ is the total number of individuals in the remaining $K-1$ groups ($1, 2, j-1, j+1, ...,K$). Also, let $\pi_j = m_j/N$ denote the proportion of individuals belonging to group k, so that $\pi_{-j} = m_{-j}/N$ is the proportion of individuals not in group j. Then, for $i = 1, 2, ... , M$, (where $M$ is the total number of administrative units of interest), the basic two-stage model is given by
+
+$$\eqalign{
+ N_i \sim Poisson(\lambda_i) \\
+ m_{ij} \sim Binomial(N_i, \pi_{ij})  &&  (1)
+}$$
+
+where $\lambda_i > 0$ is the mean and variance parameter of the Poisson count process for admnistrative unit $i$, and $\pi_{ij}$ is the proportion of individuals belonging to group j in *admin* i. Oftentimes, $N_i$ is known across all units and can be provided either through national population and housing census, Microcensus or estimated from statistical models. However, in some settings, the demographic groups structured population counts may only be partially observed through sample surveys, for example, with missing information across some units. Here, using information within the observed group-structured data $y = (y_1, y_2, ... , y_M)$, estimates of each group's proportion can be obtained through equation (2)
+
+$$\eqalign{
+ y_{ij} \sim Binomial(y_i, p_{ij}) \\ 
+ logit(p_{ij}) = X_i\beta + \xi(s) + \zeta_i \\
+ \zeta_i \sim Normal(0, \sigma^2_\zeta) \\
+ \xi(s) \sim GRF(0, \Sigma)   &&  (2)
+}$$
+
+where $y_{ij}$ is the number of individuals (partially) observed within group $j$ of *admin* *i*, such that $y_{ij} + y_{-ij} = y_i$ and $y_{-ij} = y_i$ is the total number of individuals not in group $j$. Also, $X_i$ and $\beta$ are the design matrix of geospatial covariates and the coresponding unknown fixed parameters, allowing us to accommodate local variabilities within the estimated group proportions. The terms  $\xi(s)$ and $\zeta_i$ are the spatially varying and spatially independent random effects which account for differences due to spatial locations. In addition, the Gaussian Random Field (GRF) $\xi(s)$ allows us to more accurately estimate group-structured in locations with little or no observations through shared information from nearby locations. 
+
+Finally, the predicted probability $\hat{p_{ij}} = exp(X\beta + \xi(s) + \zeta)/(1+exp(X\beta + \xi(s) + \zeta))$ provides estimates of the proportion of the individuals across all administrative units including those without observations, with the corresponding predicted disaggregated number $\hat{m_{ik}}$ of individuals in group k of *admin* *i* given by 
+
+$$\eqalign{
+ \hat{m_{ik}} = \hat{p_{ij}}N_i    &&  (3)
+}$$
+
+where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
+Parameter estimates were based on the integrated nested Laplace approximation (INLA), thereby enabling higher accuracy and faster computational speed. In addition, stochastic partial differential equation techniques were used to account for spatial autocorrelations within the sample data. However, within the **jollofR** version 0.3.0 package, the final model which consistently provided better fit included only the spatially independent random effect $\zeta_i$ which are implemented with covariates through the **cheesecake** and **spices** functions, or without covariates through the **cheesepop** and **slices** functions. 
+
+We illustrate the model framework example in the case of age-sex disaggregation across sex groups and 4 age groups using Figure below, where the total population in a given administrative unit 'total' was first disaggregated into the 4 age agroups - *age_1*, *age_2*, *age_3*, *age_4*. Then, each age group was further disaggregated into male and female age group totals *mage_* and *fage_*, respectively. 
+
+
+```mermaid
+graph TD;
+A[total]-->B[age_1];
+A[total]-->C[age_2];
+A[total]-->D[age_3];
+A[total]-->E[age_4];
+B[age_1]-->F[fage_1];
+B[age_1]-->G[mage_1];
+C[age_2]-->H[fage_2];
+C[age_2]-->I[mage_2];
+D[age_3]-->J[fage_3];
+D[age_3]-->K[mage_3];
+E[age_4]-->L[fage_4];
+E[age_4]-->M[mage_4];
+```
 
 ## 10. Support and Contributions
 This is a development version of the **jollofR** package and we welcome contributions from the research community to improve **jollofR** and make it even much simpler for everyone to use. For support, bug reports, or feature requests, please contact:
