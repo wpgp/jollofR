@@ -20,6 +20,9 @@ graph TD;
 ## System Requirements
 
 Before installing **jollofR**, please ensure that your system meets the following requirements:
+|   2   |
+|------|
+|   4   |
 
 1.  **R version**: \>= 4.1.0
 3.  **INLA** (please check that you have INLA already installed)
