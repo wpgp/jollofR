@@ -27,13 +27,14 @@ $$\eqalign{
 
 where $y_{ij}$ is the number of individuals (partially) observed within group $j$ of *admin* *i*, such that $y_{ij} + y_{-ij} = y_i$ and $y_{-ij} = y_i$ is the total number of individuals not in group $j$. Also, $X_i$ and $\beta$ are the design matrix of geospatial covariates and the coresponding unknown fixed parameters, allowing us to accommodate local variabilities within the estimated group proportions. The terms  $\xi(s)$ and $\zeta_i$ are the spatially varying and spatially independent random effects which account for differences due to spatial locations. In addition, the Gaussian Random Field (GRF) $\xi(s)$ allows us to more accurately estimate group-structured in locations with little or no observations through shared information from nearby locations. 
 
-Finally, the predicted probability $\hat{p_{ij}} = (exp(X\beta + \xi(s) + \zeta)/(1+X\beta + \xi(s) + \zeta)$ provides estimates of the proportion of the individuals across all administrative units including those without observations, with the corresponding predicted disaggregated number $\hat{m_{ik}}$ of individuals in group k of *admin* *i* given by 
+Finally, the predicted probability $\hat{p_{ij}} = exp(X\beta + \xi(s) + \zeta)/(1+exp(X\beta + \xi(s) + \zeta))$ provides estimates of the proportion of the individuals across all administrative units including those without observations, with the corresponding predicted disaggregated number $\hat{m_{ik}}$ of individuals in group k of *admin* *i* given by 
 
 $$\eqalign{
  \hat{m_{ik}} = \hat{p_{ij}}N_i    &&  (3)
 }$$
 
 where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
+We illustrat
 
 
 ```mermaid
@@ -41,7 +42,7 @@ graph TD;
     A-->B;
     A-->C;
     B-->D;
-    C-->D;
+    C-->D;  && Figure 1
 ```
 ## System Requirements
 
