@@ -15,9 +15,9 @@ $$\eqalign{
  N \sim Poisson(\lambda) \\
  m_k \sim Binomial(N, p_k) \\ 
  logit(p_k) = X\beta + \xi(s) + \zeta \\
- \xi(s) \sim GRF(0, \Sigma)\\
  \zeta \sim Normal(0, \sigma^2_\zeta) \\
- \Sigma \sim Matérn 
+ \xi(s) \sim GRF(0, \Sigma)\\
+ \Sigma \sim Matérn                (1)
 }$$
 
 
