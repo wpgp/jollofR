@@ -80,7 +80,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     mod_cat  <- INLA::inla(form_cat,
                      data = cat_df,
                      family = "binomial", Ntrials = total,
-                     control.predictor = list(compute = TRUE),
+                     control.predictor = list(link=1, compute = TRUE),
                      control.compute = list(dic = TRUE, cpo = TRUE)
     )
     prop_dt[,i] = round(plogis(mod_cat$summary.linear.predictor$mean),7)
