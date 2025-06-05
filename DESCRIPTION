@@ -16,20 +16,23 @@ Description: Automatic dis-aggregation of small area population estimates by
     demographic groups (e.g.,age, sex, race, marital status, educational level, etc) along with the estimates
     of uncertainty, using advanced Bayesian statistical modelling approaches.
 License: MIT + file LICENSE
-URL: https://github.com/wpgp/jollof, https://wpgp.github.io/jollof/, https://wpgp.github.io/jollofR/
+URL: https: https://wpgp.github.io/jollofR/
 BugReports: https://github.com/wpgp/jollof/issues
 SystemRequirements: INLA
 Depends: R (>= 4.1.0)
 Imports:
-    INLA,
     dplyr,
     ggplot2,
     ggpubr,
+    caret,
     reshape2,
+    terra,
+    R6,
+    sf,
     utils
 Suggests:
+    INLA,
     haven,
-    sf,
     tibble,
     tidyr,
     glue,
@@ -44,10 +47,11 @@ Suggests:
     sp,
     stringr,
     testthat (>= 3.0.0)
-VignetteBuilder: 
-    knitr
+VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
+Additional_repositories: https://inla.r-inla-download.org/R/stable/
+Roxygen: list(markdown = TRUE, r6 = TRUE)
 RoxygenNote: 7.3.2
 Config/Needs/website: rmarkdown
