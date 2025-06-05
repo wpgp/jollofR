@@ -9,18 +9,24 @@ The present version of **jollofR** automatically produces subnational age/sex py
 
 
 # Statistical Modelling
-The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit of interest are assigned into only but one of the $n$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_n$. Then, given that $m_1, m_2, .., m_n$ are the corresponding number of individuals within the $n$ groups such thatand $m_k + m_{-k} = N$, where $m_k$ is the number of individuals within group k and $m_{-k}$ is the total number of individuals in the remaining $n-1$ groups ($k=1, 2, ...,n$). The hierachical modelling structure is given below:
+The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit of interest are assigned into only but one of the $n$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_n$. Then, given that $m_1, m_2, .., m_n$ are the corresponding number of individuals within the $n$ groups such thatand $m_k + m_{-k} = N$, where $m_k$ is the number of individuals within group k and $m_{-k}$ is the total number of individuals in the remaining $n-1$ groups (1, 2, k-1, k+1, ...,n$). Also, let $\pi_k = m_k/N$ denote the proportion of individuals belonging to group k and so that $\pi_{-k} = m_{-k}/N$ is the proportion of individuals not in group k. Then, the hierachical modelling structure is given below:
 
 $$\eqalign{
  N \sim Poisson(\lambda) \\
- m_k \sim Binomial(N, p_k) \\ 
- logit(p_k) = X\beta + \xi(s) + \zeta \\
- \zeta \sim Normal(0, \sigma^2_\zeta) \\
- \xi(s) \sim GRF(0, \Sigma)   &&  (1)
+ m_k \sim Binomial(N, \pi_k)  &&  (1)
 }$$
 
 
 Then, for each group $k$, N$. That is, $m_k$ is the number of individuals in the $k$th demographic group ($k=1, 2, ...., n$). Here, the total population count $N$ naturally follows a Poisson distribution 
+
+$$\eqalign{
+ N \sim Poisson(\lambda) \\
+ m_k \sim Binomial(N, \pi_k) \\ 
+ logit(\pi_k) = X\beta + \xi(s) + \zeta \\
+ \zeta \sim Normal(0, \sigma^2_\zeta) \\
+ \xi(s) \sim GRF(0, \Sigma)   &&  (2)
+}$$
+
 
 with mean and variance equals $\lambda$. Also, the vector of the groups total population counts  $\tilde{m}=(m_1, m_2, .., m_n)$ is assumed to be multinomial 
 $$\tilde{m} = Multinomial(N, \Pi)$$ 
