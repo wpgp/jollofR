@@ -16,7 +16,7 @@ $$\eqalign{
  m_k \sim Binomial(N, p_k) \\ 
  logit(p_k) = X\beta + \xi(s) + \zeta \\
  \zeta \sim Normal(0, \sigma^2_\zeta) \\
- \xi(s) \sim GRF(0, \Sigma)     (1)
+ \xi(s) \sim GRF(0, \Sigma)   &&  (1)
 }$$
 
 
