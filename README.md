@@ -8,7 +8,16 @@ The present version of **jollofR** automatically produces subnational age/sex py
 # 2. Installation
 
 
-Here is a simple flow chart:
+# Statistical Modelling framework
+The disaggregation functions within the **jollof** package applies a multi-level statistical modelling appraoch in which individuals within a given administrative are assigned into only but one of the $n$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) **group_1, group_2, ...., group_n**, with the corresponding random variables $M_1, M_2,...,M_n$ and observed counts per group $m_1, m_2, ..., m_n$ such that $m_1 + m_2 + ... +m_n = N$. That is, $m_k$ is the number of individuals in the $k$th demographic group ($k=1, 2, ...., n$). Here, the total population count $N$ naturally follows a Poisson distribution 
+$$ N \sim Poisson(\lambda)
+m_k \sim Binomial()$$
+with mean and variance equals $\lambda$. Also, the vector of the groups total population counts  $\tilde{m}=(m_1, m_2, .., m_n)$ is assumed to be multinomial 
+$$\tilde{m} = Multinomial(N, \Pi)$$ 
+
+where $\Pi = (\pi_1, \pi_2, ..., \pi_n)$ is the corresponding probabilities of belonging to each of the demographic groups. Here, given that each marginal of $\tilde{m}$ is binomials
+
+total population count within an administrtaive unit $N$
 
 ```mermaid
 graph TD;
@@ -281,8 +290,8 @@ pyramid(result$fem_age_pop,result$male_age_pop)
 ```
 
 ### spices
-```{r eval=TRUE, include=TRUE}
-data(data/toydata.RData)
+```{r eval=FALSE, include=TRUE}
+data(toydata)
 classes <- names(toydata %>% select(starts_with("age_")))
 result2 <- spices(df = toydata, output_dir = tempdir(), class = classes)
 ```
