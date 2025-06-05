@@ -34,15 +34,23 @@ $$\eqalign{
 }$$
 
 where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
-We illustrate the model framework example in the case of age-sex disaggregation using Figure 1 below. 
+We illustrate the model framework example in the case of age-sex disaggregation across sex groups and 4 age groups using Figure 1 below. 
 
 
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;  && Figure 1
+A[total]-->B[age_1];
+A[total]-->C[age_2];
+A[total]-->D[age_3];
+A[total]-->E[age_4];
+B[total]-->F[fage_1];
+B[total]-->G[mage_1];
+C[total]-->H[fage_2];
+C[total]-->I[mage_2];
+D[total]-->J[fage_3];
+D[total]-->K[mage_3];
+E[total]-->L[fage_4];
+E[total]-->M[mage_4];
 ```
 ## System Requirements
 
