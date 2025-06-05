@@ -34,7 +34,7 @@ $$\eqalign{
 }$$
 
 where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
-We illustrat
+We illustrate the model framework example in the case of age-sex disaggregation using Figure 1 below. 
 
 
 ```mermaid
