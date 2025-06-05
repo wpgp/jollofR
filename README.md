@@ -9,34 +9,32 @@ The present version of **jollofR** automatically produces subnational age/sex py
 
 
 # Statistical Modelling
-The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit of interest are assigned into only but one of the $n$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_n$. Then, given that $m_1, m_2, .., m_n$ are the corresponding number of individuals within the $n$ groups such thatand $m_k + m_{-k} = N$, where $m_k$ is the number of individuals within group k and $m_{-k}$ is the total number of individuals in the remaining $n-1$ groups ($1, 2, k-1, k+1, ...,n$). Also, let $\pi_k = m_k/N$ denote the proportion of individuals belonging to group k and so that $\pi_{-k} = m_{-k}/N$ is the proportion of individuals not in group k. Then, the basic two-stage model is given below
+The disaggregation functions within the **jollof** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit (herein also called *admin*) of interest are assigned into only but one of the $K$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_K$. Then, given that $m_1, m_2, .., m_K$ are the corresponding number of individuals within the $K$ groups such thatand $m_j + m_{-j} = N$, where $m_j$ is the number of individuals within group j and $m_{-j}$ is the total number of individuals in the remaining $K-1$ groups ($1, 2, j-1, j+1, ...,K$). Also, let $\pi_j = m_j/N$ denote the proportion of individuals belonging to group k, so that $\pi_{-j} = m_{-j}/N$ is the proportion of individuals not in group j. Then, for $i = 1, 2, ... , M$, (where $M$ is the total number of administrative units of interest), the basic two-stage model is given by
 
 $$\eqalign{
- N \sim Poisson(\lambda) \\
- m_k \sim Binomial(N, \pi_k)  &&  (1)
+ N_i \sim Poisson(\lambda_i) \\
+ m_{ij} \sim Binomial(N_i, \pi_{ij})  &&  (1)
 }$$
 
-where $\lambda > 0$ is the mean and variance parameter of the Poisson count process $N$. Often times, $N$ is known either from census, Microcensus or estimated from statistical models, while the demographc group totals $a_1, a_2, .., a_n$ could be only partially observed. In this case, the observed group count $a_k < m_k$  and  $a_k + a_{-k} \ne N$.  then, estimates of the group totals could be obtained through equation (2)
+where $\lambda_i > 0$ is the mean and variance parameter of the Poisson count process for admnistrative unit $i$, and $\pi_{ij}$ is the proportion of individuals belonging to group j in *admin* i. Oftentimes, $N_i$ is known across all units and can be provided either through national population and housing census, Microcensus or estimated from statistical models. However, in some settings, the demographic groups structured population counts may only be partially observed through sample surveys, for example, with missing information across some units. Here, using information within the observed group-structured data $y = (y_1, y_2, ... , y_M)$, estimates of each group's proportion can be obtained through equation (2)
 
 $$\eqalign{
- a_k \sim Binomial(\tilde{n}, p_k) \\ 
- logit(p_k) = X\beta + \xi(s) + \zeta \\
- \zeta \sim Normal(0, \sigma^2_\zeta) \\
+ y_{ij} \sim Binomial(y_i, p_{ij}) \\ 
+ logit(p_{ij}) = X_i\beta + \xi(s) + \zeta_i \\
+ \zeta_i \sim Normal(0, \sigma^2_\zeta) \\
  \xi(s) \sim GRF(0, \Sigma)   &&  (2)
 }$$
 
-where $\tilde{n}$ is the total number of individuals observed across all the  $a_k + a_{-k} = \tilde{n}$ and $p_k$ is the probability of belonging to group $k$ such that $p_k + p_{-k}=1$. That is, the predicted probability $\hat{p_k} = (exp(X\beta + \xi(s) + \zeta)/(1+X\beta + \xi(s) + \zeta)$ providesestimates of the proportion of the individuals in the administrative unit belonging to group k. Then, the disaggregated number of individuals in group k is given by 
+where $y_{ij}$ is the number of individuals (partially) observed within group $j$ of *admin* *i*, such that $y_{ij} + y_{-ij} = y_i$ and $y_{-ij} = y_i$ is the total number of individuals not in group $j$. Also, $X_i$ and $\beta$ are the design matrix of geospatial covariates and the coresponding unknown fixed parameters, allowing us to accommodate local variabilities within the estimated group proportions. The terms  $\xi(s)$ and $\zeta_i$ are the spatially varying and spatially independent random effects which account for differences due to spatial locations. In addition, the Gaussian Random Field (GRF) $\xi(s)$ allows us to more accurately estimate group-structured in locations with little or no observations through shared information from nearby locations. 
+
+Finally, the predicted probability $\hat{p_{ij}} = (exp(X\beta + \xi(s) + \zeta)/(1+X\beta + \xi(s) + \zeta)$ provides estimates of the proportion of the individuals across all administrative units including those without observations, with the corresponding predicted disaggregated number $\hat{m_{ik}}$ of individuals in group k of *admin* *i* given by 
 
 $$\eqalign{
- \tilde{m_k} = \hat{p_k}N   &&  (3)
+ \hat{m_{ik}} = \hat{p_{ij}}N_i    &&  (3)
 }$$
 
-with mean and variance equals $\lambda$. Also, the vector of the groups total population counts  $\tilde{m}=(m_1, m_2, .., m_n)$ is assumed to be multinomial 
-$$\tilde{m} = Multinomial(N, \Pi)$$ 
+where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
 
-where $\Pi = (\pi_1, \pi_2, ..., \pi_n)$ is the corresponding probabilities of belonging to each of the demographic groups. Here, given that each marginal of $\tilde{m}$ is binomials
-
-total population count within an administrtaive unit $N$
 
 ```mermaid
 graph TD;
