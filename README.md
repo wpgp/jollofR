@@ -1,7 +1,7 @@
 # 1. Background
 **jollofR** version 0.3.0 is an R package that allows the disaggregation of small area population estimates into demographic groups such as age and sex groups as well as other socio-demographic and soci-economic categories (e.g., marital status, wealth indices, educationa level, race, etc). The underlying method is based on advanced Bayesian statistical modelling appraoches which first estimates the proportions of each demographic group's composition within the population  of interest based on a (usually partially observed) sample data, and then uses it to disaggregate the total population estimate for each administrtive unit within the population. Note that each administrative unit's total population could come from census or other sources. 
 
-This staistical model-based approach allows us to estimate population proportion and population counts across all the demographic units of interest including where there were no observations within the the sample data. The use of Bayesian inference approach enables us to quantify uncertainties within these parameter estimates based on the 95% credible interval of the posterior probability. The posterior inference utilises the integrated nested Laplace approximation (INLA) strategies thereby leading to significantly high computational speed. Thus, the **jollof** package provides a fast and efficient way to accurately disaggregate population counts by various demographic groups for evidence-based governance and more effective humanitarian response strategies. The package is designed to support population data producers and users as well as policymakers in providing timely spatially detailed small area population data thereby filling data gaps due to outdated or incomplete census. 
+This staistical model-based approach allows us to estimate population proportion and population counts across all the demographic units of interest including where there were no observations within the the sample data. The use of Bayesian inference approach enables us to quantify uncertainties within these parameter estimates based on the 95% credible interval of the posterior probability. The posterior inference utilises the integrated nested Laplace approximation (INLA) strategies thereby leading to significantly high computational speed. Thus, the **jollofR** package provides a fast and efficient way to accurately disaggregate population counts by various demographic groups for evidence-based governance and more effective humanitarian response strategies. The package is designed to support population data producers and users as well as policymakers in providing timely spatially detailed small area population data thereby filling data gaps due to outdated or incomplete census. 
 
 
 # 2. Installation
@@ -94,11 +94,11 @@ The package allows for as many covariates as possible in the model. However, ple
 
 -   **total**: an integer valued variable which contains the values to be disggregated. It is the total number of individuals per given administrative unit. Check to ensure that *total* has values across all the administrative unit of interest. You may wish to first predict all missing total values (mandatory).
 
--   **age_1, ....., age_n**: n age groups of interest containing observed population counts per age group per administrtaive unit. Note that *age_1, ....., age_n* can come from a sample survey, opportunistically generated data or from incomplete census data. **jollof** predicts any missing age proportion, and the these are used to disaggregate the *total* population count. - *mandatory*
+-   **age_1, ....., age_n**: n age groups of interest containing observed population counts per age group per administrtaive unit. Note that *age_1, ....., age_n* can come from a sample survey, opportunistically generated data or from incomplete census data. **jollofR** predicts any missing age proportion, and the these are used to disaggregate the *total* population count. - *mandatory*
 
--   **fage_1, ....., fage_n**: n age groups of interest containing observed population counts per age group of females per administrtaive unit. Note that *fage_1, ....., fage_n* can come from a sample survey, opportunistically generated data or from incomplete census data. **jollof** predicts any missing age proportion, and the these are used to disaggregate the *total* population count.- *mandatory*
+-   **fage_1, ....., fage_n**: n age groups of interest containing observed population counts per age group of females per administrtaive unit. Note that *fage_1, ....., fage_n* can come from a sample survey, opportunistically generated data or from incomplete census data. **jollofR** predicts any missing age proportion, and the these are used to disaggregate the *total* population count.- *mandatory*
 
--   **mage_1, ....., mage_n**: n age groups of interest containing observed population counts per age group of males per administrtaive unit. Note that *mage_1, ....., mage_n* can come from a sample survey, opportunistically generated data or from incomplete census data. **jollof** predicts any missing age proportion, and the these are used to disaggregate the total population count.
+-   **mage_1, ....., mage_n**: n age groups of interest containing observed population counts per age group of males per administrtaive unit. Note that *mage_1, ....., mage_n* can come from a sample survey, opportunistically generated data or from incomplete census data. **jollofR** predicts any missing age proportion, and the these are used to disaggregate the total population count.
 
 
 # 4. Key functions and usage
@@ -266,7 +266,7 @@ head(toydata)
 ```
 
 ## 6. Model validation metrics
-The **jollof** package is a model-based approach which enables model validation by automatically computing model fit metrics based on the comparisons between the observed and the predicted values based on the age groups population disaggregation models. The computed metrics include:
+The **jollofR** package is a model-based approach which enables model validation by automatically computing model fit metrics based on the comparisons between the observed and the predicted values based on the age groups population disaggregation models. The computed metrics include:
 ```
 - MAE: Mean Absolute Error
 - MAPE: Mean Absolute Percentage Error
