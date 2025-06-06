@@ -78,8 +78,8 @@ As soon as **jollofR** becomes available on CRAN, you can then install it direct
 graph TD;
 A[Install INLA and jollofR]-->B[Prepare the input data];
 B[Prepare the input data]-->C[Specify the output folder];
-C[Specify the output folder]-->D[Run the desired function(s)];
-D[Run the desired function(s)]-->E[Collate results];
+C[Specify the output folder]-->D[Run the desired functions];
+D[Run the desired functions]-->E[Collate results];
 ```
 
 ##  Initialise
