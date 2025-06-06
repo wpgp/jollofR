@@ -89,7 +89,10 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
 
     age_df[,colnames(age_df)[i]] <- round(age_df[,i])
 
-    form_age <- as.formula(paste0(colnames(age_df)[i], " ~ 1 + f(ID, model = 'iid', hyper = prior.prec) +",
+   # form_age <- as.formula(paste0(colnames(age_df)[i], " ~ 1 + f(ID, model = 'iid', hyper = prior.prec) +",
+                               #   paste(cov_names, collapse = " + ")))
+
+    form_age <- as.formula(paste0(colnames(age_df)[i], " ~ 1 + ",
                                   paste(cov_names, collapse = " + ")))
     mod_age  <- inla(form_age,
                      data = age_df,
