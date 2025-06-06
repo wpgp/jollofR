@@ -372,18 +372,18 @@ We illustrate the model framework example in the case of age-sex disaggregation 
 
 ```mermaid
 graph TD;
-A[total]-->B[age_1];
-A[total]-->C[age_2];
-A[total]-->D[age_3];
-A[total]-->E[age_4];
-B[age_1]-->F[fage_1];
-B[age_1]-->G[mage_1];
-C[age_2]-->H[fage_2];
-C[age_2]-->I[mage_2];
-D[age_3]-->J[fage_3];
-D[age_3]-->K[mage_3];
-E[age_4]-->L[fage_4];
-E[age_4]-->M[mage_4];
+A[total]-->B[pp_age_1];
+A[total]-->C[pp_age_2];
+A[total]-->D[pp_age_3];
+A[total]-->E[pp_age_4];
+B[pp_age_1]-->F[pp_fage_1];
+B[pp_age_1]-->G[pp_mage_1];
+C[pp_age_2]-->H[pp_fage_2];
+C[pp_age_2]-->I[pp_mage_2];
+D[pp_age_3]-->J[pp_fage_3];
+D[pp_age_3]-->K[pp_mage_3];
+E[pp_age_4]-->L[pp_fage_4];
+E[pp_age_4]-->M[pp_mage_4];
 ```
 
 ## 10. Support and Contributions
