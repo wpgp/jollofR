@@ -363,7 +363,7 @@ $$\eqalign{
  m_{ij} \sim Binomial(N_i, \pi_{ij})  &&  (1)
 }$$
 
-where $\lambda_i > 0$ is the mean and variance parameter of the Poisson count process for admnistrative unit $i$, and $\pi_{ij}$ is the proportion of individuals belonging to group j in *admin* i. Oftentimes, $N_i$ is known across all units and can be provided either through national population and housing census, Microcensus or estimated from statistical models. However, in some settings, the demographic groups structured population counts may only be partially observed through sample surveys, for example, with missing information across some units. Here, using information within the observed group-structured data $y = (y_1, y_2, ... , y_M)$, estimates of each group's proportion can be obtained through equation (2)
+where $\lambda_i > 0$ is the mean and variance parameter of the Poisson count process for admnistrative unit $i$, and $\pi_{ij}$ is the proportion of individuals belonging to group j in *admin* i. Oftentimes, $N_i$ is known across all units and can be provided either through national population and housing census, Microcensus or estimated from statistical models. However, in some settings, the demographic groups-structured population counts may only be partially observed through sample surveys, for example, with missing information across some units. Here, using information within the observed group-structured data $y = (y_1, y_2, ... , y_M)$, estimates of each group's proportion can be obtained through equation (2)
 
 $$\eqalign{
  y_{ij} \sim Binomial(y_i, p_{ij}) \\ 
@@ -374,10 +374,10 @@ $$\eqalign{
 
 where $y_{ij}$ is the number of individuals (partially) observed within group $j$ of *admin* *i*, such that $y_{ij} + y_{-ij} = y_i$ and $y_{-ij}$ is the total number of individuals not in group $j$. Also, $X_i$ and $\beta$ are the design matrix of geospatial covariates and the coresponding unknown fixed effects parameters, allowing us to accommodate local variabilities within the estimated group proportions. The terms  $\xi(s)$ and $\zeta_i$ are the spatially varying and spatially independent random effects which account for differences due to spatial locations. In addition, the Gaussian Random Field (GRF) $\xi(s)$ allows us to more accurately estimate group-structured population counts in locations with little or no observations through shared information from nearby locations. 
 
-Finally, the predicted probability $\hat{p_{ij}} = exp(X\beta + \xi(s) + \zeta)/(1+exp(X\beta + \xi(s) + \zeta))$ provides estimates of the proportion of the individuals across all administrative units including those without observations, with the corresponding predicted disaggregated number $\hat{m_{ik}}$ of individuals in group k of *admin* *i* given by 
+Finally, the predicted probability $\hat{p_{ij}} = exp(X\beta + \xi(s) + \zeta)/(1+exp(X\beta + \xi(s) + \zeta))$ provides estimates of the proportion of the individuals in group $j$ across all administrative units including those without observations, with the corresponding predicted disaggregated number $\hat{m_{ij}}$ of individuals in group j of *admin* *i* given by 
 
 $$\eqalign{
- \hat{m_{ik}} = \hat{p_{ij}}N_i    &&  (3)
+ \hat{m_{ij}} = \hat{p_{ij}}N_i    &&  (3)
 }$$
 
 where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
