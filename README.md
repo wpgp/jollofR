@@ -72,7 +72,7 @@ As soon as **jollofR** becomes available on CRAN, you can then install it direct
 ```
 
 # 3. Workflow Overview
-**jollofR** is designed to provide a very simple, efficient and statistically robust appraoch for providing disaggregated population counts across various demographic groups at operational admnistrative unit levels thus making it handy for the production of rapid demographically structured small area population counts. The **jollofR** package allows for population disaggregation with or without geospatial covariates. However, note that these geospatial covariates are those indentified apriori to significantly predict population distributions (functions which allow for wider range of geospatial covariates and automatically selects and retains the best fit covariates within the package are being developed by the authors). In all cases, estimates of uncertainties are also produced, and age-sex pyramid graphs are automatically generated for age-sex disaggregations. Below is the flowchart for the key stages involved in the implementation of the **jollofR** package.
+**jollofR** is designed to provide a very simple, efficient and statistically robust appraoch for providing disaggregated population counts across various demographic groups at operational admnistrative unit levels thus making it handy for the production of rapid demographically structured small area population counts. The **jollofR** package allows for population disaggregation with or without geospatial covariates. However, note that these geospatial covariates are those indentified apriori to significantly predict population distributions (functions which allow for wider range of geospatial covariates and automatically selects and retains the best fit covariates within the package are being developed by the authors). In all cases, estimates of uncertainties are also produced, and age-sex pyramid graphs are automatically generated for age-sex disaggregations. Below is the flowchart (Figure 1) for the key stages involved in the implementation of the **jollofR** package.
 
 ```mermaid
 graph TD;
@@ -81,6 +81,8 @@ B[Prepare the input data]-->C[Specify the output folder];
 C[Specify the output folder]-->D[Run the desired functions];
 D[Run the desired functions]-->E[Collate results];
 ```
+#### Figure 1: Flowchart of jollofR implementation steps
+
 
 ##  Initialise
 
@@ -268,6 +270,9 @@ result <- cheesecake(df = toydata, output_dir = tempdir())
 pyramid(result$fem_age_pop,result$male_age_pop)
 ```
 ![Alt Text](pyramid.png)
+
+#### Figure 2: Population pyramid from the toydate based on 'cheesecake' function. 
+
 ### spices
 ```{r eval=FALSE, include=TRUE}
 data(toydata)
@@ -375,7 +380,7 @@ $$\eqalign{
 where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
 Parameter estimates were based on the integrated nested Laplace approximation (INLA), thereby enabling higher accuracy and faster computational speed. In addition, stochastic partial differential equation techniques were used to account for spatial autocorrelations within the sample data. However, within the **jollofR** version 0.3.0 package, the final model which consistently provided better fit included only the spatially independent random effect $\zeta_i$ which are implemented with covariates through the **cheesecake** and **spices** functions, or without covariates through the **cheesepop** and **slices** functions. 
 
-We illustrate the model framework example in the case of age-sex disaggregation across sex groups and 4 age groups using Figure below, where the total population in a given administrative unit 'total' was first disaggregated into the 4 age agroups - 'pp_age_1', 'pp_age_2', 'pp_age_3', 'pp_age_4'. Then, each age group was further disaggregated into male and female age group totals 'pp_mage_' and 'pp_fage_', respectively. 
+We illustrate the model framework example in the case of age-sex disaggregation across sex groups and 4 age groups using Figure 3 below, where the total population in a given administrative unit 'total' was first disaggregated into the 4 age agroups - 'pp_age_1', 'pp_age_2', 'pp_age_3', 'pp_age_4'. Then, each age group was further disaggregated into male and female age group totals 'pp_mage_' and 'pp_fage_', respectively. 
 
 
 ```mermaid
@@ -393,6 +398,7 @@ D[pp_age_3]-->K[pp_mage_3];
 E[pp_age_4]-->L[pp_fage_4];
 E[pp_age_4]-->M[pp_mage_4];
 ```
+#### Figure 3: Schematic representation of age-sex disaggregation steps. Example for 4 age groups. 
 
 ## Support and Contributions
 This is a development version of the **jollofR** package and we welcome contributions from the research community to improve **jollofR** and make it even much simpler for everyone to use. For support, bug reports, or feature requests, please contact:
