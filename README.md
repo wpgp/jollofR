@@ -81,7 +81,7 @@ B[Prepare the input data]-->C[Specify the output folder];
 C[Specify the output folder]-->D[Run the desired functions];
 D[Run the desired functions]-->E[Collate results];
 ```
-#### Figure 1: Flowchart of jollofR implementation steps
+#### Figure 1: Flowchart of jollofR implementation steps.
 
 
 ##  Initialise
@@ -271,7 +271,7 @@ pyramid(result$fem_age_pop,result$male_age_pop)
 ```
 ![Alt Text](pyramid.png)
 
-#### Figure 2: Population pyramid from the toydate based on 'cheesecake' function. 
+#### Figure 2: Population pyramid from the toydata based on 'cheesecake' function. 
 
 ### spices
 ```{r eval=FALSE, include=TRUE}
