@@ -378,7 +378,7 @@ $$\eqalign{
 }$$
 
 where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
-Parameter estimates were based on the integrated nested Laplace approximation (INLA), thereby enabling higher accuracy and faster computational speed. In addition, stochastic partial differential equation techniques were used to account for spatial autocorrelations within the sample data. However, within the **jollofR** version 0.3.0 package, the final model which consistently provided better fit included only the spatially independent random effect $\zeta_i$ which are implemented with covariates through the **cheesecake** and **spices** functions, or without covariates through the **cheesepop** and **slices** functions. 
+Parameter estimates were based on the integrated nested Laplace approximation (INLA; Rue et al., 2009), thereby enabling higher accuracy and faster computational speed. In addition, stochastic partial differential equation (SPDE; Lindgren et al., 2011) techniques were used to account for spatial autocorrelations within the sample data. However, within the **jollofR** version 0.3.0 package, the final model which consistently provided better fit included only the spatially independent random effect $\zeta_i$ which are implemented with covariates through the **cheesecake** and **spices** functions, or without covariates through the **cheesepop** and **slices** functions. 
 
 We illustrate the model framework example in the case of age-sex disaggregation across sex groups and 4 age groups using Figure 3 below, where the total population in a given administrative unit 'total' was first disaggregated into the 4 age agroups - 'pp_age_1', 'pp_age_2', 'pp_age_3', 'pp_age_4'. Then, each age group was further disaggregated into male and female age group totals 'pp_mage_' and 'pp_fage_', respectively. 
 
@@ -414,3 +414,8 @@ This is a development version of the **jollofR** package and we welcome contribu
 Alternatively, please feel free to open an issue on the GitHub repository via https://github.com/wpgp/jollof/issues.
 
 **Suggested citation**: Nnanatu C, Chaudhuri S, Lazar A, Tatem A (2025). **jollofR**: A Bayesian statistical model-based approach for disaggregating small area population estimates by demographic characteristics. R package version 0.3.0, https://github.com/wpgp/jollofR/. 
+
+
+## References
+1) Rue, H., Martino, S. & Chopin, N.(2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. *J R Stat Soc Series B Stat Methodol* 71.
+2) Lindgren, F., Rue, H. & Lindström, J.(2011). An explicit link between gaussian fields and gaussian markov random fields: The stochastic partial differential equation approach. *J R Stat Soc Series B Stat Methodol*. doi:10.1111/j.1467-9868.2011.00777.x.
