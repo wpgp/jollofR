@@ -209,10 +209,13 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
   write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = F)
 
   # join all data
-  full_dat <- cbind(df,
-                    pred_dt, pred_dtL,pred_dtU,
-                    f.pred_dt,f.pred_dtL,f.pred_dtU,
-                    m.pred_dt, m.pred_dtL, m.pred_dtU) # everything
+    full_dat <- cbind(df, 
+                    pred_dt, pred_dtL, pred_dtU, 
+                    prop_dt, prop_dtL, prop_dtU, 
+                    f.pred_dt, f.pred_dtL, f.pred_dtU, 
+                    f.prop_dt, f.prop_dtL, f.prop_dtU, 
+                    m.pred_dt, m.pred_dtL, m.pred_dtU,
+                    m.prop_dt, m.prop_dtL, m.prop_dtU) # everything
 
   # saving datasets to output folder
   write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)
