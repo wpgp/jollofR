@@ -13,6 +13,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/wpgp/jollof}
   \item \url{https://wpgp.github.io/jollof/}
+  \item \url{https://wpgp.github.io/jollofR/}
   \item Report bugs at \url{https://github.com/wpgp/jollof/issues}
 }
 

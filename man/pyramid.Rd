@@ -2,26 +2,24 @@
 % Please edit documentation in R/pyramid.R
 \name{pyramid}
 \alias{pyramid}
-\title{pyramid: making population pyramid of demographics (for cheesecake and cheesepop age-sex output data)}
+\title{pyramid: Produces population pyramid (graphs) of demographics (for cheesecake and cheesepop age-sex output data)}
 \usage{
 pyramid(female_pop, male_pop)
 }
 \arguments{
-\item{female_pop}{A data frame containing the disaggregated population estimates for females across all ages groups.
-considered.}
+\item{female_pop}{A data frame containing the disaggregated population estimates for females across all ages groups.}
 
-\item{male_pop}{A data frame containing the disaggregated population estimates for males across all ages groups.
-considered.}
+\item{male_pop}{A data frame containing the disaggregated population estimates for males across all ages groups.}
 }
 \value{
 A graphic image of age-sex population distribution pyramid
 }
 \description{
-This function creates population pyramid based on the outputs from the 'cheesecake' or
-'cheesepop' functions.
+This function creates population pyramid for age and sex output data from the 'cheesecake' or
+'cheesepop' functions outputs. It could also be used to visualize observed age-sex compositions.
 }
 \examples{
 data(toydata)
-result <- cheesecake(df = toydata, output_dir = tempdir())
+result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 pyramid(result$fem_age_pop,result$male_age_pop)
 }

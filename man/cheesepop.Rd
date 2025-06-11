@@ -2,7 +2,7 @@
 % Please edit documentation in R/cheesepop.R
 \name{cheesepop}
 \alias{cheesepop}
-\title{cheesepop}
+\title{cheesepop: Population disaggregation by two-level demographic groups (eg., age and sex), without covariates}
 \usage{
 cheesepop(df, output_dir)
 }
@@ -26,9 +26,9 @@ However, unlike the 'cheesecake' function which uses geospatial covariates to pr
 'cheesepop' does not use covariates.
 
 It uses Bayesian statistical models to predict population proportions and population totals across demographic groups.
-Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census.
+Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
 }
 \examples{
 data(toydata)
-result <- cheesepop(df = toydata, output_dir = tempdir())
+result <- cheesepop(df = toydata$admin, output_dir = tempdir())
 }

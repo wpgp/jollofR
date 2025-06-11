@@ -3,8 +3,8 @@
 \name{slices}
 \alias{slices}
 \title{slices: Disaggregating population counts for a single level of demographics
-(e.g., age groups only or sex group only) - no geospatial covariates.
-Please use 'spices' if you want covariates used.}
+(e.g., age groups only or sex group only) - without covariates.
+Please use 'spices' if you want covariates included.}
 \usage{
 slices(df, output_dir, class)
 }
@@ -16,7 +16,7 @@ as well as the estimated overall total counts per administrative unit.}
 disaggregated population proportions and population totals are
 automatically saved.}
 
-\item{class}{This are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.}
+\item{class}{These are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -28,6 +28,6 @@ This function disaggregates population estimates by a single demographic (age or
 }
 \examples{
 \dontrun{data(toydata)
-classes <- names(toydata \%>\% dplyr::select(starts_with("age_")))
-result2 <- slices(df = toydata, output_dir = tempdir(), class = classes)}
+classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)}
 }

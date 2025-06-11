@@ -2,13 +2,13 @@
 % Please edit documentation in R/cheesecake.R
 \name{cheesecake}
 \alias{cheesecake}
-\title{cheesecake}
+\title{cheesecake: Population disaggregation by two-level demographic groups (eg., age and sex), with covariates}
 \usage{
 cheesecake(df, output_dir)
 }
 \arguments{
-\item{df}{A data frame object containing sample data (often partially observed) on age and sex groups population data
-as well as the estimated overall total counts per administrative unit.}
+\item{df}{A data frame object containing sample data (often partially observed) on age and sex groups population data, for example,
+as well as the overall total population counts per administrative unit.}
 
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
@@ -24,9 +24,9 @@ Used to disaggregate small area population estimates by age, sex, and
 other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
 
 It uses statistical models to predict population proportions and population totals across demographic groups.
-Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census.
+Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
 }
 \examples{
 data(toydata)
-result <- cheesecake(df = toydata, output_dir = tempdir())
+result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 }

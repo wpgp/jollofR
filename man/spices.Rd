@@ -2,8 +2,8 @@
 % Please edit documentation in R/spices.R
 \name{spices}
 \alias{spices}
-\title{spices: Disaggregating population counts for a single level of demographics
-(e.g., age groups only or sex group only) with geospatial covariates.}
+\title{spices: Disaggregates population counts for a single level of demographics
+(e.g., age groups only or sex group only) with covariates.}
 \usage{
 spices(df, output_dir, class)
 }
@@ -27,6 +27,6 @@ This function disaggregates population estimates by a single demographic (age or
 }
 \examples{
 \dontrun{data(toydata)
-classes <- names(toydata \%>\% dplyr::select(starts_with("age_")))
-result2 <- spices(df = toydata, output_dir = tempdir(), class = classes)}
+classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)}
 }
