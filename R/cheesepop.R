@@ -1,4 +1,4 @@
-#' @title cheesepop
+#' @title cheesepop: Population disaggregation by two-level demographic groups (eg., age and sex), without covariates
 #'
 #' @description Similar to the 'cheesecake' function, 'cheesepop' disaggregates small area population estimates by age, sex, and
 #' other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
@@ -6,7 +6,7 @@
 #' 'cheesepop' does not use covariates.
 #'
 #' It uses Bayesian statistical models to predict population proportions and population totals across demographic groups.
-#' Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census.
+#' Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
 #'
 #' @param df A data frame object containing sample data (often partially observed) on age and sex groups population data
 #' as well as the estimated overall total counts per administrative unit.
@@ -21,7 +21,7 @@
 #'
 #'@examples
 #'data(toydata)
-#' result <- cheesepop(df = toydata, output_dir = tempdir())
+#' result <- cheesepop(df = toydata$admin, output_dir = tempdir())
 #' @export
 #' @importFrom dplyr "%>%"
 #' @importFrom INLA "inla"
@@ -79,17 +79,20 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
     age_df[,colnames(age_df)[i]] <- round(age_df[,i]) # input count should be integer
 
 
-    #form_age <- as.formula(paste0(colnames(age_df)[i], " ~ ",
-                                #  "1 +   f(ID, model = 'iid', hyper = prior.prec)"))# Adding the IID here
-
     form_age <- as.formula(paste0(colnames(age_df)[i], " ~ ",
-                                  "1"))# Adding the IID here
-    mod_age  <- inla(form_age,
+                                  "1 +   f(ID, model = 'iid', hyper = prior.prec)"))# Adding the IID here
+
+    if (requireNamespace("INLA", quietly = TRUE)) {
+    mod_age  <- INLA::inla(form_age,
                      data = age_df,
                      family = "binomial", Ntrials = total,
                      control.predictor = list(link=1, compute = TRUE),
                      control.compute = list(dic = TRUE, cpo = TRUE)
     )
+  } else {
+    stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
+  }
+
     prop_dt[,i] = round(plogis(mod_age$summary.linear.predictor$mean),5)
     prop_dtL[,i] = round(plogis(mod_age$summary.linear.predictor$'0.025quant'),5)
     prop_dtU[,i] = round(plogis(mod_age$summary.linear.predictor$'0.975quant'),5)
@@ -105,13 +108,16 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
     form_sex <- as.formula(paste0(colnames(f_dat)[i], " ~ ",
                                   "1 +   f(ID, model = 'iid', hyper = prior.prec)"))# Adding the IID here
 
-
-    mod_sex  <- inla(form_sex,
+    if (requireNamespace("INLA", quietly = TRUE)) {
+    mod_sex  <- INLA::inla(form_sex,
                      data = f_dat,
                      family = "binomial", Ntrials = age_df[,i],
                      control.predictor = list(link = 1, compute = TRUE),
                      control.compute = list(dic = TRUE, cpo = TRUE)
     )
+} else {
+  stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
+}
     f.prop_dt[,i] = round(plogis(mod_sex$summary.linear.predictor$mean),5) # female proportion - mean
     m.prop_dt[,i] = 1- f.prop_dt[,i] # male proportion
 
@@ -209,13 +215,10 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
   write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = F)
 
   # join all data
-    full_dat <- cbind(df, 
-                    pred_dt, pred_dtL, pred_dtU, 
-                    prop_dt, prop_dtL, prop_dtU, 
-                    f.pred_dt, f.pred_dtL, f.pred_dtU, 
-                    f.prop_dt, f.prop_dtL, f.prop_dtU, 
-                    m.pred_dt, m.pred_dtL, m.pred_dtU,
-                    m.prop_dt, m.prop_dtL, m.prop_dtU) # everything
+  full_dat <- cbind(df,
+                    pred_dt, pred_dtL,pred_dtU,
+                    f.pred_dt,f.pred_dtL,f.pred_dtU,
+                    m.pred_dt, m.pred_dtL, m.pred_dtU) # everything
 
   # saving datasets to output folder
   write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)

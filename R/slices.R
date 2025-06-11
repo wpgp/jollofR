@@ -1,7 +1,7 @@
 
 #' @title slices: Disaggregating population counts for a single level of demographics
-#' (e.g., age groups only or sex group only) - no geospatial covariates.
-#' Please use 'spices' if you want covariates used.
+#' (e.g., age groups only or sex group only) - without covariates.
+#' Please use 'spices' if you want covariates included.
 #'
 #' @description This function disaggregates population estimates by a single demographic (age or sex or religion, etc)
 #'
@@ -12,7 +12,7 @@
 #' disaggregated population proportions and population totals are
 #' automatically saved.
 #'
-#' @param class This are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.
+#' @param class These are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.
 #'
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
@@ -20,8 +20,8 @@
 #'
 #'@examples
 #'\dontrun{data(toydata)
-#'classes <- names(toydata %>% dplyr::select(starts_with("age_")))
-#'result2 <- slices(df = toydata, output_dir = tempdir(), class = classes)}
+#'classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+#'result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)}
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"
@@ -59,7 +59,6 @@ slices <-function(df,output_dir, class)# disaggregates by age only - no covariat
   cat_df$pop <- df$total
   cat_df$ID <- 1:nrow(cat_df) # add IID
 
-
   # covariates
   covs <- df %>% dplyr::select(starts_with("x"))
   cov_names <- names(covs)# extract covariates names
@@ -77,13 +76,16 @@ slices <-function(df,output_dir, class)# disaggregates by age only - no covariat
 
     form_cat <- as.formula(paste0(colnames(cat_df)[i], " ~ ",
                                   "1 +   f(ID, model = 'iid', hyper = prior.prec)"))# Adding the IID here
-
+    if (requireNamespace("INLA", quietly = TRUE)) {
     mod_cat  <- INLA::inla(form_cat,
                            data = cat_df,
                            family = "binomial", Ntrials = total,
-                           control.predictor = list(link=1, compute = TRUE),
+                           control.predictor = list(compute = TRUE),
                            control.compute = list(dic = TRUE, cpo = TRUE)
     )
+  } else {
+    stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
+  }
     prop_dt[,i] = round(plogis(mod_cat$summary.linear.predictor$mean),7)
     prop_dtL[,i] = round(plogis(mod_cat$summary.linear.predictor$'0.025quant'),7)
     prop_dtU[,i] = round(plogis(mod_cat$summary.linear.predictor$'0.975quant'),7)
@@ -135,8 +137,7 @@ slices <-function(df,output_dir, class)# disaggregates by age only - no covariat
 
   # join all data
   full_dat <- cbind(df,
-                    pred_dt, pred_dtL,pred_dtU,
-                   prop_dt, prop_dtL,prop_dtU) # everything
+                    pred_dt, pred_dtL,pred_dtU) # everything
 
   # save the datasets
   write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)

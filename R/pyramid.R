@@ -1,20 +1,18 @@
-#' @title pyramid: making population pyramid of demographics (for cheesecake and cheesepop age-sex output data)
+#' @title pyramid: Produces population pyramid (graphs) of demographics (for cheesecake and cheesepop age-sex output data)
 #'
-#'@description This function creates population pyramid based on the outputs from the 'cheesecake' or
-#' 'cheesepop' functions.
+#'@description This function creates population pyramid for age and sex output data from the 'cheesecake' or
+#' 'cheesepop' functions outputs. It could also be used to visualize observed age-sex compositions.
 #'
 
 #'@param female_pop A data frame containing the disaggregated population estimates for females across all ages groups.
-#' considered.
 #'
 #'@param male_pop A data frame containing the disaggregated population estimates for males across all ages groups.
-#' considered.
 #'
 #'@return A graphic image of age-sex population distribution pyramid
 #'
 #'@examples
 #'data(toydata)
-#'result <- cheesecake(df = toydata, output_dir = tempdir())
+#'result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 #' pyramid(result$fem_age_pop,result$male_age_pop)
 #'@export
 #'@importFrom dplyr "%>%"

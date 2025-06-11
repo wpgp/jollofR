@@ -1,6 +1,6 @@
 
-#' @title spices: Disaggregating population counts for a single level of demographics
-#' (e.g., age groups only or sex group only) with geospatial covariates.
+#' @title spices: Disaggregates population counts for a single level of demographics
+#' (e.g., age groups only or sex group only) with covariates.
 #'
 #' @description This function disaggregates population estimates by a single demographic (age or sex or religion, etc)
 #'
@@ -19,8 +19,8 @@
 #'
 #'@examples
 #'\dontrun{data(toydata)
-#'classes <- names(toydata %>% dplyr::select(starts_with("age_")))
-#'result2 <- spices(df = toydata, output_dir = tempdir(), class = classes)}
+#'classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+#'result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)}
 #' @export
 #' @importFrom dplyr "%>%"
 #' @importFrom INLA "inla"
@@ -77,12 +77,19 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     form_cat <- as.formula(paste0(colnames(cat_df)[i], " ~ 1 + f(ID, model = 'iid', hyper = prior.prec) +",
                                   paste(cov_names, collapse = " + ")))
 
+
+    if (requireNamespace("INLA", quietly = TRUE)) {
     mod_cat  <- INLA::inla(form_cat,
                      data = cat_df,
                      family = "binomial", Ntrials = total,
-                     control.predictor = list(link=1, compute = TRUE),
+                     control.predictor = list(compute = TRUE),
                      control.compute = list(dic = TRUE, cpo = TRUE)
     )
+
+    } else {
+      stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
+    }
+
     prop_dt[,i] = round(plogis(mod_cat$summary.linear.predictor$mean),7)
     prop_dtL[,i] = round(plogis(mod_cat$summary.linear.predictor$'0.025quant'),7)
     prop_dtU[,i] = round(plogis(mod_cat$summary.linear.predictor$'0.975quant'),7)
@@ -133,9 +140,8 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
   write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = F)
 
   # join all data
-   full_dat <- cbind(df,
-                   pred_dt, pred_dtL,pred_dtU,
-                   prop_dt, prop_dtL,prop_dtU) # everything
+  full_dat <- cbind(df,
+                    pred_dt, pred_dtL,pred_dtU) # everything
 
   # save the datasets
   write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)
