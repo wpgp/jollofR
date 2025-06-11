@@ -141,7 +141,8 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
 
   # join all data
   full_dat <- cbind(df,
-                    pred_dt, pred_dtL,pred_dtU) # everything
+                    prop_dt, prop_dtL,prop_dtU,
+                   pred_dt, pred_dtL,pred_dtU) # everything
 
   # save the datasets
   write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)
