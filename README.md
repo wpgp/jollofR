@@ -1,53 +1,6 @@
 # 1. Background
 **jollofR** version 0.3.0 is an R package that enables rapid disaggregation of small area population estimates into demographic groups such as age and sex groups as well as other socio-demographic and socio-economic categories (e.g., marital status, wealth indices, educationa level, race, etc). It facilitates the filling of important population data gaps especially across settings where census data are either outdated or incomplete. **jollofR** is based on advanced multi-steps Bayesian hierarchical statistical modelling approach which first estimates the proportions of each demographic group’s composition within the population of interest based on a (usually partially observed) sample data, and then uses it to disaggregate the total population estimate for each administrative unit within the population. **jollofR** also includes functions to easily disaggregate the population proportions and population numbers at high-resolution grid cells (e.g., 100m by 100m) along with the estimates of uncertaintity thereby facilitating the design and implementation of more effective governance and humanitarian response strategies. Note that the input population data could come from census, Microcensus, household surveys or other sources.
 
-# 2. Installation
-Users of **jollofR** must eansure that they are using R version 4.1.0 and above and that they already have INLA installed on their machine before installing **jollofR** either from CRAN or from GitHub using the instructions below.
-
-### INLA and devtools installation
-install.packages("devtools")
-install.packages("INLA", repos=c(getOption("repos"),
-                                 INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
-                            
-### Install jollofR from GitHub
-devtools::install_github("wpgp/jollofR")
-                                 
-### Install jollofR from CRAN
-install.packages("jollofR")
-                                
-For more details on installation and usage, please visit the package site on https://github.com/wpgp/jollofR and read the ReadMe file. 
-
-# Key functions
-boxLine: For producing boxplots and line plot of the estimates of the disaggregated population counts across the various groups of interest. It could be used for estimates produced at both the administrative unit level and at the grid cell level.
-
-cheesecake: For producing group-structured population counts and proportions across two levels of hierarchy (e.g., age and sex) at administrative units using geospatial covariates.
-
-cheesepop: For producing group-structured population counts and proportions across two levels of hierarchy (e.g., age and sex) at administrative units without using geospatial covariates.
-
-plotHist:For producing histograms of the estimates of the disaggregated population counts across the various groups of interest. It could be used for estimates produced at both the administrative unit level and at the grid cell level.
-
-plotRast:For producing high-resolution raster maps of the estimates of the disaggregated population counts across the various groups of interest. It could only be used for estimates produced at the grid cell level.
-
-pyramid:For producing pyramid plots of the estimates of the disaggregated population counts or proportions across the various groups of interest. It could be used for estimates produced at both the administrative unit level and at the grid cell level.
-
-spices:For producing group-structured population counts and proportions across a single level of hierarchy (e.g., age or sex) at administrative units using geospatial covariates.
-
-slices: For producing group-structured population counts and proportions across a single level of hierarchy (e.g., age or sex) at administrative units without geospatial covariates.
-
-splash:For producing high-resolution gridded group-structured population counts and proportions across two levels of hierarchy (e.g., age and sex) at grid cell levels  using the grid cell's total building counts as a weighting parameter.
-
-splash1:For producing high-resolution gridded group-structured population counts and proportions across a single level of hierarchy (e.g., age or sex) at grid cell levels  using the grid cell's total building counts as a weighting parameter.
-
-spray: For producing high-resolution gridded group-structured population counts and proportions across two levels of hierarchy (e.g., age and sex) at grid cell levels by assigning equal weights to each grid cell.
-
-spray1:For producing high-resolution gridded group-structured population counts and proportions across a single level of hierarchy (e.g., age or sex) at grid cell levels by assigning equal weights to each grid cell.
-
-sprinkle:For producing high-resolution gridded group-structured population counts and proportions across two levels of hierarchy (e.g., age and sex) at grid cell levels  based on the grid cell's total population counts.
-
-sprinkle1:For producing high-resolution gridded group-structured population counts and proportions across a single level of hierarchy (e.g., age or sex) at grid cell levels  based on the grid cell's total population counts.
-
-In addition to the above listed functions, **jollofR** also contains an embedded example datasets called 'toydata' which a list of two data frames - 'admin' which is the administrative unit data for predicting population proportions, and 'grid' which is the corresponding grid cell level data for disggregating the predicted population proportions and population counts at high-resolution. The 'grid' toydata used here is at 1km by 1km spatial resolution. More details on these functions and the toy data, their arguments, usages and examples are provided below. 
-
 This statistical model-based approach allows us to estimate population proportion and population counts across all the demographic units of interest including at locations with no observations within the the sample data. The use of Bayesian inference approach enables us to quantify uncertainties within these parameter estimates based on the 95% credible interval of the posterior probability. The posterior inference utilises the integrated nested Laplace approximation (INLA) strategies thereby leading to significantly high computational speed. Thus, the **jollofR** package provides a fast and efficient way to accurately disaggregate population counts by various demographic groups for evidence-based governance and more effective humanitarian response strategies. The package is designed to support population data producers and users as well as policymakers in providing timely spatially detailed small area population data, thereby making it a useful tool for filling population data gaps due to outdated or incomplete census enumerations. Further details of the underlying statistical methods are provided in **section 10**. 
 
 The present version of **jollofR** automatically produces subnational age/sex pyramids (or other demographic groups such as ethnicity, wealth indices, etc), which could then be used to produce the associated high resolution age/sex gridded layers as a separate step (if required). However, the version of the package which simultaneously creates both the subnational demographically structured population counts and proportions as well as the corresponding high-resolution raster files within a robust statistical modelling framework is currently under development by the authors.
