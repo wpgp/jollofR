@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/article: article.html
   vignette: vignette.html
-last_built: 2025-06-11T04:12Z
+last_built: 2025-06-12T02:54Z
 urls:
   reference: https://wpgp.github.io/jollofR/reference
   article: https://wpgp.github.io/jollofR/articles
