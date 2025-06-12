@@ -1,24 +1,26 @@
-#' @title boxLine: Produces  two graphs - boxplots of disaggregated population counts across groups and a line plot showing the mean distribution of the
-#' disaggregated counts.
+#' @title boxLine: Produces  two graphs - boxplots of disaggregated population counts across groups and a line plot showing the distribution of the
+#' aggregated totals of the disaggregated counts
 #'
-#'@description This function automarically generate two graphs that are combined together - a boxplot graph (a) of the distribution of of the various group's
-#'disaggregated population count, and (b) a line graph of the aggregated counts across all groups (e.g., total number of individuals for each group).
-#'Its input data could come from any of the disaggregation functions within the 'jollofR' package such as 'cheesecake', 'cheesepop', 'slices', etc.
+#'@description This function automatically generates two graphs that are combined together - (a) a boxplot  of the distribution of the various groups'
+#'disaggregated population counts, and (b) a line graph of the aggregated counts across all groups (e.g., total number of individuals for each group).
+#'Here, the input data could come from any of the disaggregation functions within the 'jollofR' package such as 'cheesecake', 'cheesepop', 'slices' & 'spices'.
 #'
-#'@param dmat A data frame containing the group-structured disaggregated population estimates which could be an observed data or model estimates from
-#' 'cheesecake', 'cheesepop', 'slices','spices', 'spray' , 'sprinkle', 'splash', 'spray', 'sprinkle1', 'splash1', or 'spray1'.
+#'@param dmat A data frame containing the group-structured disaggregated population estimates which could be observed or from modelled estimates based on any of the functions -
+#' cheesecake', 'cheesepop', 'slices','spices', 'spray' , 'sprinkle', 'splash', 'spray', 'sprinkle1', 'splash1', or 'spray1'.
 #' considered.
 #'
-#'@param xlab A user-defined label for the x-axis (e.g., 'Frequency').
+#'@param xlab A user-defined label for the x-axis (e.g., 'Age group').
 #'@param ylab A user-defined label for the y-axis (e.g., 'Population count').
-#'@return A graphic image of combined boxplot and line plots of population counts across groups.
+#'@return A graphic image of two combined graphs - a boxplot and a line plot showing the distribution of the disaggregated  population counts across the groups.
 #'
 #'@examples
+#'library(ggplot2)
 #'data(toydata)
-#'result <- cheesecake(df = toydata$admin, output_dir = tempdir())
-#' boxLine(dmat=result$male_age_pop,
-#' xlab="Age group (years)",
-#' ylab = "Population Count")
+#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'boxLine(dmat=result$male_age_pop,
+#'        xlab="Age group (years)",
+#'        ylab = "Population Count")
+#'
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"

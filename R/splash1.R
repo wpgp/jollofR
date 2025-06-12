@@ -1,5 +1,5 @@
 
-#' @title splash1: Disaggregates population counts at high-resolution grid cells using building counts values of grid cells as a weighting layer. However, unlike 'splash' it is used for 0ne-level disaggregation.
+#' @title splash1: Disaggregates population counts at high-resolution grid cells using building counts values of grid cells as a weighting layer. However, unlike 'splash' it is used for one-level disaggregation
 #'
 #' @description This function disaggregates population estimates at grid cell levels for one level of classification only. It uses the building counts of each grid cell to first disaggregate the admin unit's
 #' total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.
@@ -22,16 +22,27 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'data(toydata)
-#'result <- cheesepop(df = toydata$admin,output_dir = tempdir()) # run cheesepop
-#'
-#'rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
-#'class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
-#'result2 <- splash1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
-#'ras2<- raster(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#' # load key libraries
+#' library(raster)
+#' library(dplyr)
+#' library(terra)
+#'  # load toy data
+#' data(toydata)
+#'  # run 'cheesepop' to obtain admin-level proportions
+#' result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'  # specify the names to assign to the raster files
+#'  class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+#' rclass <- paste0("TOY_population_v1_0_age",1:12)
+#'   # run the splash function to disaggregate at grid cells
+#' result2 <- splash1(df = result$full_data, rdf = toydata$grid,
+#' class, rclass, output_dir = tempdir())
+#'   # read and visualise one of the saved raster files
+#' ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#' plot(ras2)
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"
+#'@importFrom raster "rasterFromXYZ"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"
@@ -177,8 +188,8 @@ splash1 <- function (df, rdf, class, rclass, output_dir)
   # Calculate fit metrics (evaluated at admin level)
   all_pop <- as.data.frame(pred_dt)
   all_pop <- cbind(rdf, all_pop)
-  all_pop <-  all_pop %>% group_by(admin_id) %>%
-    summarise_at(vars(cat_classes_pop), sum, na.rm=T) %>%
+  all_pop <-  all_pop %>% dplyr::group_by(admin_id) %>%
+    dplyr::summarise_at(cat_classes_pop, sum, na.rm=T) %>%
     dplyr::select(-admin_id)
 
   all_pop$total <- round(apply(all_pop, 1, sum))

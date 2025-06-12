@@ -1,11 +1,11 @@
 #' @title cheesepop: Population disaggregation by two-level demographic groups (eg., age and sex), without covariates
 #'
 #' @description Similar to the 'cheesecake' function, 'cheesepop' disaggregates small area population estimates by age, sex, and
-#' other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
-#' However, unlike the 'cheesecake' function which uses geospatial covariates to predict missing data values,
-#' 'cheesepop' does not use covariates.
+#' other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc), at the administrative unit level.
+#' However, unlike the 'cheesecake' function which uses geospatial covariates to predict missing data values, the
+#' 'cheesepop' does not require the use of geospatial covariates.
 #'
-#' It uses Bayesian statistical models to predict population proportions and population totals across demographic groups.
+#' It uses Bayesian statistical models to predict population proportions and population totals for the demographic groups of interest.
 #' Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
 #'
 #' @param df A data frame object containing sample data (often partially observed) on age and sex groups population data
@@ -25,6 +25,7 @@
 #' @export
 #' @importFrom dplyr "%>%"
 #' @importFrom INLA "inla"
+#'@importFrom raster "rasterFromXYZ"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"
@@ -121,11 +122,11 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
     f.prop_dt[,i] = round(plogis(mod_sex$summary.linear.predictor$mean),5) # female proportion - mean
     m.prop_dt[,i] = 1- f.prop_dt[,i] # male proportion
 
-    f.prop_dtL[,i] = round(plogis(mod_sex$summary.linear.predictor$'0.025quant'),5) # female proportion - lower
-    m.prop_dtL[,i] = 1- f.prop_dtL[,i] # male proportion
-
-    f.prop_dtU[,i] = round(plogis(mod_sex$summary.linear.predictor$'0.975quant'),5) # female proportion - upper
-    m.prop_dtU[,i] = 1- f.prop_dtU[,i] # male proportion
+    # please ignore uncertainties (lower and upper bounds estimates for the sex proportions only)
+    f.prop_dtL[,i] = round(plogis(mod_sex$summary.linear.predictor$'0.025quant'),5)
+    m.prop_dtL[,i] = 1- f.prop_dtL[,i] # please ignore
+    f.prop_dtU[,i] = round(plogis(mod_sex$summary.linear.predictor$'0.975quant'),5)
+    m.prop_dtU[,i] = 1- f.prop_dtU[,i] # please ignore
 
     f.pred_dt[,i] = round(f.prop_dt[,i]*pred_dt[,i])# female counts
     f.pred_dtL[,i] = round(f.prop_dt[,i]*pred_dtL[,i])# female counts - lower
@@ -170,6 +171,8 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
   # proportion
   fage_classes_prop = paste0("prp_",fage_classes)
   colnames(f.prop_dt) <- fage_classes_prop # predicted population counts
+
+  # please ignore
   fage_classes_propL = paste0(fage_classes_prop,"L")
   colnames(f.prop_dtL) <- fage_classes_propL # lower bound of predicted population counts
   fage_classes_propU = paste0(fage_classes_prop,"U")
@@ -187,6 +190,8 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
   # proportion
   mage_classes_prop = paste0("prp_",mage_classes)
   colnames(m.prop_dt) <- mage_classes_prop # predicted population counts
+
+  # please ignore
   mage_classes_propL = paste0(mage_classes_prop,"L")
   colnames(m.prop_dtL) <- mage_classes_propL # lower bound of predicted population counts
   mage_classes_propU = paste0(mage_classes_prop,"U")
@@ -215,11 +220,12 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
   write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = F)
 
   # join all data
-   full_dat <- cbind(df, pred_dt, pred_dtL, pred_dtU, 
-                    prop_dt, prop_dtL, prop_dtU,
-                    f.pred_dt, f.pred_dtL, f.pred_dtU, 
+  full_dat <- cbind(df,
+                    pred_dt, pred_dtL,pred_dtU,
+                    prop_dt, prop_dtL,prop_dtU,
+                    f.pred_dt,f.pred_dtL,f.pred_dtU,
                     f.prop_dt, m.prop_dt,
-                    m.pred_dt, m.pred_dtL, m.pred_dtU)
+                    m.pred_dt, m.pred_dtL, m.pred_dtU) # everything
 
   # saving datasets to output folder
   write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)
@@ -242,10 +248,3 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
                      full_data = full_dat))
 
 }
-
-
-#githublink <- "https://raw.github.com/wpgp/CheeseCake/main/example_data.Rdata"
-#load(url(githublink))
-#output_dir <- tempdir()# please specify your output folder here
-#system.time(age_dis <- cheesepop(example_data,output_dir))
-

@@ -1,5 +1,5 @@
 
-#' @title sprinkle1: Disaggregates population counts at high-resolution grid cells using the grid's total population. This can also be applied to one-level disaggregation.
+#' @title sprinkle1: Disaggregates population counts at high-resolution grid cells using the grid's total population. This can also be applied to one-level disaggregation
 #'
 #' @description This function disaggregates population estimates at grid cell levels using the population counts of each grid cell.
 #'
@@ -21,15 +21,27 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
+#'  # load relevant libraries
+#'library(raster)
+#'library(dplyr)
+#'library(terra)
+#' # load the toy data
 #'data(toydata)
-#'result <- cheesepop(df = toydata$admin,output_dir = tempdir()) # run cheesepop
+#'  # run 'cheesepop' function for admin level disaggregation
+#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
 #'
-#'rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
-#'result2 <- sprinkle1(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
-#'ras2<- raster(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'rclass <- paste0("TOY_population_v1_0_age",1:12)
+#'   # run 'sprinkle1' function for grid cell disaggregation at one level
+#'result2 <- sprinkle1(df = result$full_data,
+#'rdf = toydata$grid, class, rclass, output_dir = tempdir())
+#'ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'plot(ras2) # visulize raster
+#'
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"
+#'@importFrom raster "rasterFromXYZ"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"
@@ -46,19 +58,18 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
   else {
     message(paste("Directory", output_dir, "already exists."))
   }
-  # df = dat
-  # rdf = rdatf
+  # df = result$full_data
+  # rdf = toydata$grid
 
 
   # define categorical classes
   cat_classes <- class
-  cat_df <- df[,cat_classes]
   prp_cat_classes <- paste0("prp_",cat_classes)
   prp_cat_classesL <- paste0("prp_",cat_classes, "L")
   prp_cat_classesU <- paste0("prp_",cat_classes, "U")
 
 
-
+  cat_df <- df[,cat_classes]
   # specify grids for all ages
   pred_dt <- pred_dtL <- pred_dtU <- matrix(0, ncol = length(cat_classes), nrow = nrow(rdf))
   prop_dt <- prop_dtL <- prop_dtU <- pred_dt

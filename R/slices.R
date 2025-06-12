@@ -1,9 +1,9 @@
 
 #' @title slices: Disaggregating population counts for a single level of demographics
-#' (e.g., age groups only or sex group only) - without covariates.
+#' (e.g., age groups only or sex group only) - without covariates
 #' Please use 'spices' if you want covariates included.
 #'
-#' @description This function disaggregates population estimates by a single demographic (age or sex or religion, etc)
+#' @description This function disaggregates population estimates by a single demographic group (age or sex or religion, etc)
 #'
 #' @param df A data frame object containing sample data (often partially observed) on age or sex groups population data
 #' as well as the estimated overall total counts per administrative unit.
@@ -19,9 +19,10 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{data(toydata)
+#'data(toydata)
+#'library(dplyr)
 #'classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
-#'result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)}
+#'result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"
@@ -137,8 +138,7 @@ slices <-function(df,output_dir, class)# disaggregates by age only - no covariat
 
   # join all data
   full_dat <- cbind(df,
-                     prop_dt, prop_dtL,prop_dtU,
-                   pred_dt, pred_dtL,pred_dtU) # everything
+                    pred_dt, pred_dtL,pred_dtU) # everything
 
   # save the datasets
   write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)

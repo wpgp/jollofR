@@ -18,9 +18,10 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{data(toydata)
+#'data(toydata)
+#'library(dplyr)
 #'classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
-#'result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)}
+#'result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)
 #' @export
 #' @importFrom dplyr "%>%"
 #' @importFrom INLA "inla"
@@ -141,8 +142,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
 
   # join all data
   full_dat <- cbind(df,
-                    prop_dt, prop_dtL,prop_dtU,
-                   pred_dt, pred_dtL,pred_dtU) # everything
+                    pred_dt, pred_dtL,pred_dtU) # everything
 
   # save the datasets
   write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)
@@ -158,7 +158,3 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
                      full_data = full_dat))
 
 }
-#githublink <- "https://raw.github.com/wpgp/CheeseCake/main/example_data.Rdata"
-#load(url(githublink))
-#output_dir <- tempdir()# please specify your output folder here
-#system.time(age_dis <- spices(example_data,output_dir))

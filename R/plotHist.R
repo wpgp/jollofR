@@ -1,21 +1,26 @@
-#' @title plotHist: Produces histogram of the disaggregated population counts for each group
+#' @title plotHist: Produces histogram of the disaggregated population counts across all groups
 #'
-#'@description This function produces multi-panel histogram plots of the disaggregated population counts for each group.
-#'Its input data can come from any of the disaggregation functions within the 'jollofR' package such as 'cheesecake', 'cheesepop', 'slices', etc.
+#'@description This function produces a multi-panel histogram plot of the disaggregated population counts across all the groups.
+#'The input data could come from any of the disaggregation functions within the 'jollofR' package (both at admin and grid levels) such as 'cheesecake', 'cheesepop', 'slices', etc.
 #'
 #'@param dmat A data frame containing the group-structured disaggregated population estimates which could either be observed or predicted from
 #' 'cheesecake', 'cheesepop', 'slices','spices', 'spray' , 'sprinkle', 'splash', 'spray', 'sprinkle1', 'splash1', and 'spray1'.
 #'
-#'@param xlab A user-defined label for the x-axis (e.g., 'Frequency')
+#'@param xlab A user-defined label for the x-axis (e.g., 'Population Count')
 #' considered.
-#'@param ylab A user-defined label for the y-axis (e.g., 'Population count')
+#'@param ylab A user-defined label for the y-axis (e.g., 'Frequency')
 #' considered.
 #'@return A graphic image of histogram of the disaggregated population count
 #'
 #'@examples
+#'
 #'data(toydata)
-#'result <- cheesecake(df = toydata$admin, output_dir = tempdir())
-#' plotHist(dmat=result$age_pop, xlab="Population Count", ylab = "Frequency")
+#'library(ggplot2)
+#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'plotHist(dmat=result$age_pop,
+#'         xlab="Population Count",
+#'         ylab = "Frequency")
+#'
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"
@@ -32,7 +37,6 @@
 #'@importFrom utils "write.csv"
 #'@importFrom reshape2 "melt"
 #'
-
 
 plotHist <- function(dmat, xlab, ylab)
 {
@@ -64,6 +68,3 @@ pdens_dist <- ggpubr::ggpar(dens_dist, ylab=ylab, xlab=xlab,
 print(pdens_dist)
 
 }
-#plotHist(dmat=result$age_pop,
-  #      xlab="Population Count",
-  #      ylab = "Frequency")

@@ -22,16 +22,25 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'data(toydata)
-#'result <- cheesepop(df = toydata$admin,output_dir = tempdir()) # run cheesepop
+#'library(raster) # load relevant libraries
+#'library(dplyr)
+#'library(terra)
+#'data(toydata) # load toy data
 #'
-#'rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
-#'class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
-#'result2 <- spray(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
-#'ras2<- raster(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'  # run 'cheesepop' admin unit disaggregation function
+#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'class <- class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+#'rclass <- paste0("TOY_population_v1_0_age",1:12)
+#'
+#' # run spray1 grid cell disaggregation function
+#'result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
+#'ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'plot(ras2) # visulize of the raster files produced
+#'
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"
+#'@importFrom raster "rasterFromXYZ"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"
@@ -174,8 +183,11 @@ spray1 <- function (df, rdf, class, rclass, output_dir)
   all_pop <- as.data.frame(pred_dt)
   all_pop <- cbind(rdf, all_pop)
   all_pop <-  all_pop %>% group_by(admin_id) %>%
-    summarise_at(vars(cat_classes_pop), sum, na.rm=T) %>%
+    dplyr::summarise_at(cat_classes_pop, sum, na.rm=T) %>%
     dplyr::select(-admin_id)
+
+
+
 
   all_pop$total <- round(apply(all_pop, 1, sum))
   png(paste0(output_dir, "/model_validation_scatter_plot.png"))

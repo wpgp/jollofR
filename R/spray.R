@@ -1,6 +1,6 @@
 
 #' @title Spray: Disaggregates population counts by dividing the admin total by the number of grid cells within the
-#' administrative units. Then admin proportions are used to further disaggregate the grid cell totals by groups.
+#' administrative units. Then admin proportions are used to further disaggregate the grid cell totals by groups
 #'
 #' @description This function disaggregates population estimates at grid cell levels when there are no information on the building and population counts.
 #'
@@ -15,22 +15,28 @@
 #' disaggregated population proportions and population totals are
 #' automatically saved.
 #'
-#' @param class These are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.
-#'
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
+#'  # load relevant libraries
+#'library(raster)
+#'library(terra)
+#'   # load toy data
 #'data(toydata)
-#'result <- cheesepop(df = toydata$admin,output_dir = tempdir()) # run cheesepop
-#'
+#'  # run 'cheesepop' function for admin level disaggregation
+#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 #'rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
+#'   # run 'spray' for grid cell level disaggregation
 #'result2 <- spray(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
-#'ras2<- raster(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'plot(ras2) # visualize
+#'
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"
+#'@importFrom raster "rasterFromXYZ"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"
@@ -47,6 +53,9 @@ spray <- function (df, rdf, rclass, output_dir)
   else {
     message(paste("Directory", output_dir, "already exists."))
   }
+
+  # df = result$full_data
+  # rdf = toydata$grid
 
   # create age classes
   age_classes <- names(df %>% dplyr::select(starts_with("age_")))
@@ -184,32 +193,32 @@ spray <- function (df, rdf, rclass, output_dir)
     #AGE
     z1a <- as.matrix(prop_dt[,k])
     h1a <- rasterFromXYZ(cbind(xx, z1a))
-    writeRaster(h1a, filename=paste0(output_dir,"/prop_",rclass[k], ".tif"),
+    raster::writeRaster(h1a, filename=paste0(output_dir,"/prop_",rclass[k], ".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
 
     z2a <- as.matrix(prop_dtL[,k])
     h2a <- rasterFromXYZ(cbind(xx, z2a))
-    writeRaster(h2a, filename=paste0(output_dir,"/prop_",rclass[k], "_lower",".tif"),
+    raster::writeRaster(h2a, filename=paste0(output_dir,"/prop_",rclass[k], "_lower",".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
 
     z3a <- as.matrix(prop_dtU[,k])
     h3a <- rasterFromXYZ(cbind(xx, z3a))
-    writeRaster(h3a, filename=paste0(output_dir,"/prop_",rclass[k],"_upper", ".tif"),
+    raster::writeRaster(h3a, filename=paste0(output_dir,"/prop_",rclass[k],"_upper", ".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
     # SEX
     # FEMALE
     z4a<- as.matrix(fprop_dt[,k])
     h4a <- rasterFromXYZ(cbind(xx, z4a))
-    writeRaster(h4a, filename=paste0(output_dir,"/prop_",frclass[k],".tif"),
+    raster::writeRaster(h4a, filename=paste0(output_dir,"/prop_",frclass[k],".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
     # MALE
     z5a <- as.matrix(mprop_dt[,k])
     h5a <- rasterFromXYZ(cbind(xx, z5a))
-    writeRaster(h5a, filename=paste0(output_dir,"/prop_",mrclass[k], ".tif"),
+    raster::writeRaster(h5a, filename=paste0(output_dir,"/prop_",mrclass[k], ".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
     #--------------------------------------------------------------------------------
     # populations
@@ -217,52 +226,52 @@ spray <- function (df, rdf, rclass, output_dir)
     #AGE
     z1b <- as.matrix(pred_dt[,k])
     h1b <- rasterFromXYZ(cbind(xx, z1b))
-    writeRaster(h1b, filename=paste0(output_dir,"/pop_",rclass[k], ".tif"),
+    raster::writeRaster(h1b, filename=paste0(output_dir,"/pop_",rclass[k], ".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
 
     z2b <- as.matrix(pred_dtL[,k])
     h2b <- rasterFromXYZ(cbind(xx, z2b))
-    writeRaster(h2b, filename=paste0(output_dir,"/pop_",rclass[k], "_lower",".tif"),
+    raster::writeRaster(h2b, filename=paste0(output_dir,"/pop_",rclass[k], "_lower",".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
 
     z3b <- as.matrix(pred_dtU[,k])
     h3b <- rasterFromXYZ(cbind(xx, z3b))
-    writeRaster(h3b, filename=paste0(output_dir,"/pop_",rclass[k],"_upper", ".tif"),
+    raster::writeRaster(h3b, filename=paste0(output_dir,"/pop_",rclass[k],"_upper", ".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
     # SEX
     # FEMALE
     z4b<- as.matrix(fpred_dt[,k]) # mean
     h4b <- rasterFromXYZ(cbind(xx, z4b))
-    writeRaster(h4b, filename=paste0(output_dir,"/pop_",frclass[k],".tif"),
+    raster::writeRaster(h4b, filename=paste0(output_dir,"/pop_",frclass[k],".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
     z4bL<- as.matrix(fpred_dtL[,k])
     h4bL <- rasterFromXYZ(cbind(xx, z4bL)) # lower
-    writeRaster(h4bL, filename=paste0(output_dir,"/pop_",frclass[k],"_lower",".tif"),
+    raster::writeRaster(h4bL, filename=paste0(output_dir,"/pop_",frclass[k],"_lower",".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
     z4bU<- as.matrix(fpred_dtU[,k])
     h4bU <- rasterFromXYZ(cbind(xx, z4bU)) # upper
-    writeRaster(h4bU, filename=paste0(output_dir,"/pop_",frclass[k],"_upper",".tif"),
+    raster::writeRaster(h4bU, filename=paste0(output_dir,"/pop_",frclass[k],"_upper",".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
     # MALE
     z5b <- as.matrix(mpred_dt[,k])
     h5b <- rasterFromXYZ(cbind(xx, z5b)) # mean
-    writeRaster(h5b, filename=paste0(output_dir,"/pop_",mrclass[k], ".tif"),
+    raster::writeRaster(h5b, filename=paste0(output_dir,"/pop_",mrclass[k], ".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
     z5bL <- as.matrix(mpred_dtL[,k])
     h5bL <- rasterFromXYZ(cbind(xx, z5bL)) # lower
-    writeRaster(h5bL, filename=paste0(output_dir,"/pop_",mrclass[k],"_lower", ".tif"),
+    raster::writeRaster(h5bL, filename=paste0(output_dir,"/pop_",mrclass[k],"_lower", ".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
 
     z5bU <- as.matrix(mpred_dtU[,k])
     h5bU <- rasterFromXYZ(cbind(xx, z5bU)) # upper
-    writeRaster(h5bU, filename=paste0(output_dir,"/pop_",mrclass[k],"_upper", ".tif"),
+    raster::writeRaster(h5bU, filename=paste0(output_dir,"/pop_",mrclass[k],"_upper", ".tif"),
                 overwrite=TRUE, options = c('COMPRESS' = 'LZW'))
   }
 
@@ -270,8 +279,8 @@ spray <- function (df, rdf, rclass, output_dir)
   # Calculate fit metrics (evaluated at admin level)
   all_pop <- as.data.frame(fpred_dt + mpred_dt)
   all_pop <- cbind(rdf, all_pop)
-  all_pop <-  all_pop %>% group_by(admin_id) %>%
-    summarise_at(vars(fage_classes_pop), sum, na.rm=T) %>%
+  all_pop <- all_pop %>% dplyr::group_by(admin_id) %>%
+    dplyr::summarise_at(fage_classes_pop, sum, na.rm=T)%>%
     dplyr::select(-admin_id)
 
   all_pop$total <- round(apply(all_pop, 1, sum))
