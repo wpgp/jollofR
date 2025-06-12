@@ -71,6 +71,15 @@ As soon as **jollofR** becomes available on CRAN, you can then install it direct
 # install.packages("jollofR")
 ```
 
+## Other dependencies
+In addition to **INLA** package, you may also need to confirm that you have the following packages installed successfully after installing **jollofR**
+```{r eval=FALSE, include=TRUE}
+library(ggplot2) # use install.packages("ggplot2") to install, if not available
+library(dplyr)   # use install.packages("dplyr") to install, if not available
+library(terra)   # use install.packages("terra") to install, if not available
+library(raster)  # use install.packages("raster") to install, if not available
+```
+
 # 3. Workflow Overview
 **jollofR** is designed to provide a very simple, efficient and statistically robust appraoch for providing disaggregated population counts across various demographic groups at operational admnistrative unit levels thus making it handy for the production of rapid demographically structured small area population counts. The **jollofR** package allows for population disaggregation with or without geospatial covariates. However, note that these geospatial covariates are those indentified apriori to significantly predict population distributions (functions which allow for wider range of geospatial covariates and automatically selects and retains the best fit covariates within the package are being developed by the authors). In all cases, estimates of uncertainties are also produced, and age-sex pyramid graphs are automatically generated for age-sex disaggregations. Below is the flowchart (Figure 1) for the key stages involved in the implementation of the **jollofR** package.
 
