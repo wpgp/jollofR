@@ -21,10 +21,10 @@ In addition, a file containing the model performance/model fit evaluation metric
 }
 \description{
 Used to disaggregate small area population estimates by age, sex, and
-other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
+other socio-demographic or socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
 
-It uses statistical models to predict population proportions and population totals across demographic groups.
-Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
+It uses Bayesian hierachical statistical models to predict population proportions and population totals across demographic groups.
+Primarily designed to support users (e.g., National Statistical Offices) in filling population data gaps across various demographic groups due to outdated or incomplete census/population data.
 }
 \examples{
 data(toydata)

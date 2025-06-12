@@ -21,11 +21,11 @@ In addition, a file containing the model performance/model fit evaluation metric
 }
 \description{
 Similar to the 'cheesecake' function, 'cheesepop' disaggregates small area population estimates by age, sex, and
-other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
-However, unlike the 'cheesecake' function which uses geospatial covariates to predict missing data values,
-'cheesepop' does not use covariates.
+other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc), at the administrative unit level.
+However, unlike the 'cheesecake' function which uses geospatial covariates to predict missing data values, the
+'cheesepop' does not require the use of geospatial covariates.
 
-It uses Bayesian statistical models to predict population proportions and population totals across demographic groups.
+It uses Bayesian statistical models to predict population proportions and population totals for the demographic groups of interest.
 Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sprinkle1.R
 \name{sprinkle1}
 \alias{sprinkle1}
-\title{sprinkle1: Disaggregates population counts at high-resolution grid cells using the grid's total population. This can also be applied to one-level disaggregation.}
+\title{sprinkle1: Disaggregates population counts at high-resolution grid cells using the grid's total population. This can also be applied to one-level disaggregation}
 \usage{
 sprinkle1(df, rdf, class, rclass, output_dir)
 }
@@ -31,10 +31,21 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels using the population counts of each grid cell.
 }
 \examples{
+ # load relevant libraries
+library(raster)
+library(dplyr)
+library(terra)
+# load the toy data
 data(toydata)
-result <- cheesepop(df = toydata$admin,output_dir = tempdir()) # run cheesepop
+ # run 'cheesepop' function for admin level disaggregation
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
 
-rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
-result2 <- sprinkle1(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
-ras2<- raster(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+  # run 'sprinkle1' function for grid cell disaggregation at one level
+result2 <- sprinkle1(df = result$full_data,
+rdf = toydata$grid, class, rclass, output_dir = tempdir())
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2) # visulize raster
+
 }

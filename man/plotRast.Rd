@@ -4,41 +4,49 @@
 \alias{plotRast}
 \title{plotRast: Produces multi-panel maps of the raster files of the grid-cell disaggregated structured population counts}
 \usage{
-plotRast(output_dir, names, nrow, ncol)
+plotRast(title, output_dir, raster_files, names, nrow, ncol)
 }
 \arguments{
-\item{output_dir}{The raster files folder directory for the disaggregated population estimates}
+\item{title}{This is the title of the multi-panel maps of the gridded structured estimates}
 
-\item{names}{A user-defined names for the x-axis ticks labels.}
+\item{output_dir}{The directory for saving the raster files of the disaggregated population estimates}
+
+\item{raster_files}{The names of the raster files to visualize. This must be the same as saved in the raster output folder}
+
+\item{names}{A user-defined names for the plot panels labels. For example, this could be the labels of different age groups.
+It must be the same length as the 'raster_files'.}
 
 \item{nrow}{Number of rows of the multi-panel maps. The value depends on the number of groups being displayed.}
 
-\item{ncol}{Number of columns of the multi-panel maps. The value depends on the number of groups being displayed.}
+\item{ncol}{Number of columns of the multi-panel maps. The value depends on the number of groups being displayed.
+For example, for 12 raster files the products of ncol and nrow must be at least 12.}
 }
 \value{
-A graphic image of multi-panel maps of population disaggregated raster files
+A graphic image of the multi-panel maps of population disaggregated raster files
 }
 \description{
-This function produces multi-frame maps of the raster files across the various demographic groups of interest.
+This function produces multi-panel maps of the raster files across the various demographic groups of interest.
 The input data could come from any of the jolloR disaggregation functions at grid cell levels, e.g.,'sprinkle', 'spray', 'splash',
 'sprinkle1', 'spray1', 'and splash1',
 }
 \examples{
-dontrun{data(toydata)
-# run the appropriate function
-result <- cheesepop(df = toydata$admin, output_dir) # run cheesepop or cheesecake
-rclass <- paste0("TOY_population_v1_0_age",1:12) # specify the names of the raster files to be saved
-class <- names(result$full_data \%>\% dplyr::select(starts_with("age_"))) # specify the raster files to visualise
-output_dir <- paste0(out_path, "/raster/spray2") # set output directory
+data(toydata)
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+rclass <- paste0("TOY_population_v1_0_age",1:12)
 result2b <- spray(df=result$full_data, rdf=toydata$grid,
-                rclass, output_dir)
-#make raster maps
-  #- use below to see the list of raster files saved in the directory
-list.files(output_dir, pattern = "\\\\.tif$", full.names = TRUE)
+                 rclass, output_dir= tempdir())
 
-group <- 1:12 # customised group #
-raster_files <- paste0(tempdir(), "/pop_",paste0("TOY_population_v1_0_age",group), ".tif")
-names <- paste0("Age ", group) # Customised names of the plot panels (same length as rclass)
-nrow = 4; ncol = 3 # rows and columns of the panels of the output maps
-plotRast(tempdir(), names, nrow, ncol)} # make the maps
+# make raster maps
+        #list.files(output_dir, pattern = "\\.tif$",full.names = TRUE) #-
+        #use this to see the list of raster files in the directory
+group <- 1:12 # customised group
+rclass <- paste0("TOY_population_v1_0_age",group)
+plt1 <- plotRast(title = "Age disaggregated population counts", # title of the plot
+output_dir = tempdir(), # directory where the raster files are saved
+raster_files = paste0(output_dir=tempdir(), "/pop_",rclass, ".tif") , # raster files to plot
+names = paste0("Age ", group),  # Customised names of the plot panels (same length as rclass)
+nrow = 4, ncol =3)# rows and columns of the panels of the output maps
+#ggsave(paste0(out_path, "/grid_maps.tif"),#plot = plt1, dpi = 300) - save in output folder
+
+
 }

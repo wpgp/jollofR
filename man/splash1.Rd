@@ -2,7 +2,7 @@
 % Please edit documentation in R/splash1.R
 \name{splash1}
 \alias{splash1}
-\title{splash1: Disaggregates population counts at high-resolution grid cells using building counts values of grid cells as a weighting layer. However, unlike 'splash' it is used for 0ne-level disaggregation.}
+\title{splash1: Disaggregates population counts at high-resolution grid cells using building counts values of grid cells as a weighting layer. However, unlike 'splash' it is used for one-level disaggregation}
 \usage{
 splash1(df, rdf, class, rclass, output_dir)
 }
@@ -31,11 +31,21 @@ This function disaggregates population estimates at grid cell levels for one lev
 total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.
 }
 \examples{
+# load key libraries
+library(raster)
+library(dplyr)
+library(terra)
+ # load toy data
 data(toydata)
-result <- cheesepop(df = toydata$admin,output_dir = tempdir()) # run cheesepop
-
-rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
-class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
-result2 <- splash1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
-ras2<- raster(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ # run 'cheesepop' to obtain admin-level proportions
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ # specify the names to assign to the raster files
+ class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+  # run the splash function to disaggregate at grid cells
+result2 <- splash1(df = result$full_data, rdf = toydata$grid,
+class, rclass, output_dir = tempdir())
+  # read and visualise one of the saved raster files
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2)
 }

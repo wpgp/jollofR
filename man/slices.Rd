@@ -3,7 +3,7 @@
 \name{slices}
 \alias{slices}
 \title{slices: Disaggregating population counts for a single level of demographics
-(e.g., age groups only or sex group only) - without covariates.
+(e.g., age groups only or sex group only) - without covariates
 Please use 'spices' if you want covariates included.}
 \usage{
 slices(df, output_dir, class)
@@ -24,10 +24,11 @@ along with the corresponding measures of uncertainties (lower and upper bounds o
 In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 }
 \description{
-This function disaggregates population estimates by a single demographic (age or sex or religion, etc)
+This function disaggregates population estimates by a single demographic group (age or sex or religion, etc)
 }
 \examples{
-\dontrun{data(toydata)
+data(toydata)
+library(dplyr)
 classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
-result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)}
+result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)
 }

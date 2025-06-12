@@ -3,7 +3,7 @@
 \name{spray}
 \alias{spray}
 \title{Spray: Disaggregates population counts by dividing the admin total by the number of grid cells within the
-administrative units. Then admin proportions are used to further disaggregate the grid cell totals by groups.}
+administrative units. Then admin proportions are used to further disaggregate the grid cell totals by groups}
 \usage{
 spray(df, rdf, rclass, output_dir)
 }
@@ -19,8 +19,6 @@ in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and L
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
-
-\item{class}{These are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -31,10 +29,17 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels when there are no information on the building and population counts.
 }
 \examples{
+ # load relevant libraries
+library(raster)
+library(terra)
+  # load toy data
 data(toydata)
-result <- cheesepop(df = toydata$admin,output_dir = tempdir()) # run cheesepop
-
+ # run 'cheesepop' function for admin level disaggregation
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
+  # run 'spray' for grid cell level disaggregation
 result2 <- spray(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
-ras2<- raster(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2) # visualize
+
 }

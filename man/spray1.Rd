@@ -31,11 +31,19 @@ This function disaggregates population estimates at grid cell levels using the b
 total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.
 }
 \examples{
-data(toydata)
-result <- cheesepop(df = toydata$admin,output_dir = tempdir()) # run cheesepop
+library(raster) # load relevant libraries
+library(dplyr)
+library(terra)
+data(toydata) # load toy data
 
-rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
-class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
-result2 <- spray(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
-ras2<- raster(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ # run 'cheesepop' admin unit disaggregation function
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+class <- class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+
+# run spray1 grid cell disaggregation function
+result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2) # visulize of the raster files produced
+
 }

@@ -6,15 +6,13 @@
 \alias{jollofR-package}
 \title{jollofR: A Bayesian statistical model-based approach for disaggregating small area population estimates by demographic characteristics}
 \description{
-Automatic dis-aggregation of small area population estimates by demographic groups (e.g.,age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches.
+Automatic disaggregation of small area population estimates by demographic groups (e.g.,age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/wpgp/jollof}
-  \item \url{https://wpgp.github.io/jollof/}
   \item \url{https://wpgp.github.io/jollofR/}
-  \item Report bugs at \url{https://github.com/wpgp/jollof/issues}
+  \item Report bugs at \url{https://github.com/wpgp/jollofR/issues}
 }
 
 }
