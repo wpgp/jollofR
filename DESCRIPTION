@@ -12,29 +12,29 @@ Authors@R: c(
     person("Andrew J", "Tatem", role = "aut",
            comment = c(ORCID = "0000-0002-7270-941X"))
   )
-Description: Automatic dis-aggregation of small area population estimates by
-    demographic groups (e.g.,age, sex, race, marital status, educational level, etc) along with the estimates
-    of uncertainty, using advanced Bayesian statistical modelling approaches.
+Description: Automatic disaggregation of small area population estimates by
+    demographic groups (e.g.,age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches.
 License: MIT + file LICENSE
-URL: https://github.com/wpgp/jollof, https://wpgp.github.io/jollof/, https://wpgp.github.io/jollofR/
-BugReports: https://github.com/wpgp/jollof/issues
-SystemRequirements: R (>= 4.1.0)
-Depends: INLA
+URL: https://wpgp.github.io/jollofR/
+BugReports: https://github.com/wpgp/jollofR/issues
+SystemRequirements:INLA
+Depends: R (>= 4.1.0)
 Imports:
-    dplyr,
+    terra, 
+    raster,
+    INLA,
     ggplot2,
-    ggpubr,
-    caret,
-    reshape2,
-    terra,
-    rasterVis,
-    R6,
-    sf,
-    utils
-Suggests:
-    haven,
-    tibble,
+    dplyr,
     tidyr,
+    ggpubr,
+    reshape2,
+    utils
+Suggests:tidyverse,
+    haven,
+    caret,
+    tibble,
+    sf,
+    R6,
     glue,
     knitr,
     matrixStats,
