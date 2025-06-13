@@ -5,7 +5,7 @@ This statistical model-based approach allows us to estimate population proportio
 
 Altogether, the **jollofR** package contains 14 'simplified' functions and a 'toy' dataset to illustrate its implementations across different scenarios. These include functions for population prediction and disaggregation at the administrative units level ('cheesecake', 'cheesepop', 'spices' & 'slices') and those used for disaggregation at grid-cell level ('sprinkle', 'sprinkle1', 'splash', 'splash1', 'spray' & 'spray1'). Other functions ('boxLine', 'plotHist', 'plotRast' & 'pyramid') available within the **jollofR** package are used for data visualization which enable quick visual assessments of the disaggregated estimates. These functions which are embedded within a robust statistical modelling framework automatically create subnational demographically structured population counts and proportions tables as well as the corresponding high-resolution grid cell raster files in a very simple and efficient manner. 
 
-Further details on these functions, their arguments, usage and examples are provided in **Section 5** of this document, while further details on the underlying statistical methods are provided in **Section 10**.  Finally, while **jollofR** could be used to disaggregate population counts and population proportions across any mutually exclusive and exhaustive groups, here, our data description and usage examples are based on age-sex disaggregation, for ease of exposition. Note that, 'mutually exclusive' means that every individual within the population is only allowed to belong to one of the non-overlapping groups, while 'exhaustive' means that every individual within the entire population must belong to one of the groups and no one is left out. The **jollofR** functions are designed to be fully flexible to allow for a straightforward implementation for other socio-economic and socio-demographic groups so long as the 'mutually exclusive and exhaustive' requirements are met.  
+Further details on these functions, their arguments, usage and examples are provided in **Section 5** of this document, while further details on the underlying statistical methods are provided in **Section 9**.  Finally, while **jollofR** could be used to disaggregate population counts and population proportions across any mutually exclusive and exhaustive groups, here, our data description and usage examples are based on age-sex disaggregation, for ease of exposition. Note that, 'mutually exclusive' means that every individual within the population is only allowed to belong to one of the non-overlapping groups, while 'exhaustive' means that every individual within the entire population must belong to one of the groups and no one is left out. The **jollofR** functions are designed to be fully flexible to allow for a straightforward implementation for other socio-economic and socio-demographic groups so long as the 'mutually exclusive and exhaustive' requirements are met.  
 
 # 2. Installation
 
@@ -161,7 +161,7 @@ An object of class "list"- a list object containing two dataframes - an administ
 The 'admin' data is used to fit statistical models to predict subnational population estimates and proportions across various groups, while the 'grid' data is used for the prediction of the disggregatted population structures at high resolution grid cells. Within the **jollofR** package the grid data used within the toydata provides estimates of population numbers and proportions at 1km-by-1km spatial resolution. However, **jollofR** allow for structured population predictions at any spatial resolution of interest. The 'grid' data contains six key variables -  the administrative unit identifier (admin_id) which must be identical to the those in the 'admin' data; the grid cell identifier (grd_id); the total number of people per grid cell (total), if available; the total number of buildings per grid cell (bld), if available; and the longitude (lon) and latitude (lat) variables for the grid cell centroids.
 
 
-### Usage example
+### Example
 ```r{}
 data(toydata)
 admin_data <- toydata$admin # subset the admin data
@@ -171,13 +171,12 @@ grid_data <- toydata$grid  # subset the grid cell data
 # 5. Key functions
 ## 'cheesecake'
 ### Description
-Used to disaggregate small area population estimates by age, sex, and other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
-
-It uses statistical models to predict population proportions and population totals across demographic groups. Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census.
+Used to disaggregate small area population estimates by age, sex, and other socio-demographic or socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
+It uses Bayesian hierachical statistical models to predict population proportions and population totals across demographic groups. Primarily designed to support users (e.g., National Statistical Offices) in filling population data gaps across various demographic groups due to outdated or incomplete census/population data.
 
 ### Usage
 ```r
-result <- cheesecake(df, output_dir)
+cheesecake(df, output_dir)
 ```
 ### Arguments
 ```
@@ -186,19 +185,24 @@ A data frame object containing sample data (often partially observed) on age and
 
 output_dir	
 This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
-
-Value
+```
+### Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+
+### Example
+```
+data(toydata)
+result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
 
 ## 'cheesepop'	
 ### Description
-Similar to the 'cheesecake' function, 'cheesepop' disaggregates small area population estimates by age, sex, and other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc). However, unlike the 'cheesecake' function which uses geospatial covariates to predict missing data values, 'cheesepop' does not use covariates.
-It uses Bayesian statistical models to predict population proportions and population totals across demographic groups. Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census.
+Similar to the 'cheesecake' function, 'cheesepop' disaggregates small area population estimates by age, sex, and other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc), at the administrative unit level. However, unlike the 'cheesecake' function which uses geospatial covariates to predict missing data values, the 'cheesepop' does not require the use of geospatial covariates.
+It uses Bayesian statistical models to predict population proportions and population totals for the demographic groups of interest. Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
 
 ### Usage
 ```r
-result <- cheesepop(df, output_dir)
+cheesepop(df, output_dir)
 ```
 ### Arguments
 ```
@@ -207,19 +211,23 @@ A data frame object containing sample data (often partially observed) on age and
 
 output_dir	
 This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
-
-Value
-Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
+### Value
+Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 
+### Example
+```
+data(toydata)
+result <- cheesepop(df = toydata$admin, output_dir = tempdir())
+```
 
 ## 'pyramid'
 ### Description
-This function creates population pyramid based on the outputs from the '*cheesecake*' or '*cheesepop*' functions.
+This function creates population pyramid for age and sex output data from the 'cheesecake' or 'cheesepop' functions outputs. It could also be used to visualize observed age-sex compositions.
 
 ### Usage
 ```r
-plot <- pyramid(female_pop, male_pop)
+pyramid(female_pop, male_pop)
 ``` 
 ### Arguments
 ```
@@ -228,19 +236,34 @@ A data frame containing the disaggregated population estimates for females acros
 
 male_pop	
 A data frame containing the disaggregated population estimates for males across all ages groups. considered.
-
-Value
-Data frames of the diaggregated population numbers along with uncertainty for the age and sex groups or other demographic groups.
 ```
+### Value
+A graphic image of age-sex population distribution pyramid
 
+### Example
+```
+data(toydata)
+result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+pyramid(result$fem_age_pop,result$male_age_pop)
+```
+### Making pyramid graph of the observed age-sex data
+```
+female_pop <- data.frame(toydata %>% dplyr::select(starts_with("fage_"))) # extract females age data
+names(female_pop) <- paste0("pp_", names(female_pop)) # rename the variables by adding "pp_" as suffix to the existing names
+
+male_pop <- data.frame(toydata %>% dplyr::select(starts_with("mage_")))# extract males age data
+names(male_pop) <- paste0("pp_", names(male_pop))# rename the variables by adding "pp_" as suffix to the existing names
+
+pyramid(female_pop,male_pop) # make the observed pyramid plot
+```
 
 ## 'spices'
 ### Description
-This function disaggregates population estimates by a single demographic (age or sex or religion, etc) - with geospatial covariates. Please use the *slices* function if no covariates are required.
+Disaggregates population counts for a single level of demographics (e.g., age groups only or sex group only) with covariates.
 
 ### Usage
 ```r
-result <- spices(df, output_dir, class)
+spices(df, output_dir, class)
 ```
 ### Arguments
 ```
@@ -252,9 +275,16 @@ This is the directory with the name of the output folder where the disaggregated
 
 class	
 This a vector which provides the levels of the categorical demographic characteristics of interest. For example, for disaggregating population by educational level, class could be the vector containing the elements "no education", "primary education", "secondary education", "tertiary education", etc.
+```
+### Value
+A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 
-Value
-Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+### Example
+```
+data(toydata)
+library(dplyr)
+classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)
 ```
 
 ## 'slices'	
@@ -263,7 +293,7 @@ This function disaggregates population estimates by a single demographic (age or
 
 ### Usage
 ```r
-result <- slices(df, output_dir, class)
+slices(df, output_dir, class)
 ```
 ### Arguments
 ```
@@ -275,18 +305,24 @@ This is the directory with the name of the output folder where the disaggregated
 
 class	
 This a vector which provides the levels of the categorical demographic characteristics of interest. For example, for disaggregating population by educational level, class could be the vector containing the elements "no education", "primary education", "secondary education", "tertiary education", etc.
+``` 
+### Value
+A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 
-Value
-Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+### Example
 ```
-
+data(toydata)
+library(dplyr)
+classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)
+```
 ## 'sprinkle'	
 ### Description
 Disaggregates population counts at high-resolution grid cells using the grid cell's total population counts. Note that this could also be applied to more than two levels scenarios.
 
 ### Usage
 ```r
-result2 <- sprinkle(df, rdf, rclass, output_dir)
+sprinkle(df, rdf, rclass, output_dir)
 ```
 ### Arguments
 ```
@@ -301,61 +337,386 @@ This is a user-defined names of the files to be saved in the output folder.
 
 output_dir	
 This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
-
-Value
+```
+### Value
 A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
-```
 
-## 6. Examples: using jollofR functions
-### cheesecake - 
+### Example
+```
+# load necessary libraries
+library(raster)
+library(terra)
+# load toy data
+data(toydata)
+# run 'cheesepop' function for admin level disaggregation
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+# run 'sprinkle' function for grid cell disaggregation and save
+result2 <- sprinkle(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2) # visualize raster
+```
+## 'sprinkle1'	
+### Description
+Disaggregates population counts at high-resolution grid cells using the grid's total population for a single level of demographics (e.g., age or sex).
+
+### Usage
 ```r
+sprinkle1(df, rdf, class, rclass, output_dir)
+```
+### Arguments
+```
+df	
+A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's total populatioin count to be disaggregated as well as other key variables as defined within the 'toydata'.
+
+rdf	
+A gridded data frame object containing key information on the grid cells. Variables include the admin_id which must be identical to the one in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and Latitude (lat) of the grid cell's centroids.
+
+class	
+These are the categories of the variables of interest. For example, for educational level, it could be 'no education', ' primary education', 'secondary education', 'tertiary education'.
+
+rclass	
+This is a user-defined names of the files to be saved in the output folder.
+
+output_dir	
+This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
+```
+### Value
+A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+
+### Example
+```
+ # load relevant libraries
+library(raster)
+library(dplyr)
+library(terra)
+# load the toy data
 data(toydata)
-result <- cheesecake(df = toydata, output_dir = tempdir())
+ # run 'cheesepop' function for admin level disaggregation
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+  # run 'sprinkle1' function for grid cell disaggregation at one level
+result2 <- sprinkle1(df = result$full_data,
+rdf = toydata$grid, class, rclass, output_dir = tempdir())
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2) # visulize raster
 ```
 
-### cheesepop
+## 'splash'	
+### Description
+Disaggregates population counts at high-resolution grid cells using building counts values of grid cells as a weighting layer. It is used for two-level disaggregation (e.g., age and sex).It first disaggregates the admin unit's total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.
+
+### Usage
 ```r
+splash(df, rdf, rclass, output_dir)
+```
+### Arguments
+```
+df	
+A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's total populatioin count to be disaggregated as well as other key variables as defined within the 'toydata'.
+
+rdf	
+A gridded data frame object containing key information on the grid cells. Variables include the admin_id which must be identical to the one in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and Latitude (lat) of the grid cell's centroids.
+
+rclass	
+This is a user-defined names of the files to be saved in the output folder.
+
+output_dir	
+This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
+```
+### Value
+A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+
+### Example
+```
+*# load key libraries*
+# load key libraries
+library(raster)
+library(dplyr)
+library(terra)
+ # load toy data
 data(toydata)
-result <- cheesepop(df = toydata, output_dir = tempdir())
+ # run 'cheesepop' to obtain admin-level proportions
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ # specify the names to assign to the raster files
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+  # run the splash function to disaggregate at grid cells
+result2 <- splash(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
+  # read and visualise one of the saved raster files
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2)
 ```
 
-### pyramid
+
+## 'splash1'	
+### Description
+Disaggregates population counts at high-resolution grid cells using building counts values of grid cells as a weighting layer. However, unlike 'splash' it is used for one-level disaggregation. 
+
+### Usage
 ```r
-data(toydata)
-result <- cheesecake(df = toydata, output_dir = tempdir())
-pyramid(result$fem_age_pop,result$male_age_pop)
+splash1(df, rdf, class, rclass, output_dir)
 ```
-![Alt Text](pyramid.png)
+### Arguments
+```
+df	
+A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's total populatioin count to be disaggregated as well as other key variables as defined within the 'toydata'.
 
-#### Figure 2: Population pyramid from the toydata based on 'cheesecake' function. 
+rdf	
+A gridded data frame object containing key information on the grid cells. Variables include the admin_id which must be identical to the one in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and Latitude (lat) of the grid cell's centroids.
 
-### spices
-```{r eval=FALSE, include=TRUE}
+class	
+These are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.
+
+rclass	
+This is a user-defined names of the files to be saved in the output folder.
+
+output_dir	
+This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
+```
+### Value
+A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+
+### Example
+```
+ **load key libraries**
+library(raster)
+library(dplyr)
+library(terra)
+ # load toy data
 data(toydata)
-classes <- names(toydata %>% select(starts_with("age_")))
-result2 <- spices(df = toydata, output_dir = tempdir(), class = classes)
+ # run 'cheesepop' to obtain admin-level proportions
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ # specify the names to assign to the raster files
+ class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+  # run the splash1 function to disaggregate at grid cells
+result2 <- splash1(df = result$full_data, rdf = toydata$grid,
+class, rclass, output_dir = tempdir())
+  # read and visualise one of the saved raster files
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2)
+
 ```
 
 
-### slices
+## 'spray'	
+### Description
+Disaggregates population counts by dividing the admin total by the number of grid cells within the administrative units. Then admin proportions are used to further disaggregate the grid cell totals by groups. It assigns equal weights across all the grid cells within each administrative unit of interest. 
+
+### Usage
 ```r
+spray(df, rdf, rclass, output_dir)
+```
+### Arguments
+```
+
+df	
+A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's total populatioin count to be disaggregated as well as other key variables as defined within the 'toydata'.
+
+rdf	
+A gridded data frame object containing key information on the grid cells. Variables include the admin_id which must be identical to the one in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and Latitude (lat) of the grid cell's centroids.
+
+rclass	
+This is a user-defined names of the files to be saved in the output folder.
+
+output_dir	
+This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
+```
+### Value
+A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+
+### Example
+```
+ # load relevant libraries
+library(raster)
+library(terra)
+  # load toy data
 data(toydata)
-classes <- names(toydata %>% select(starts_with("age_")))
-result2 <- slices(df = toydata, output_dir = tempdir(), class = classes)
+ # run 'cheesepop' function for admin level disaggregation
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
+  # run 'spray' for grid cell level disaggregation
+result2 <- spray(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2) # visualize
+
 ```
 
-### Making pyramid graph of the observed age-sex data
+## 'spray1'	
+### Description
+This function disaggregates population estimates at grid cell levels using the building counts of each grid cell to first disaggregate the admin unit's total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.Disaggregates population counts at high-resolution grid cells in the absence population and building counts - for one group level only.
+
+### Usage
+```r
+spray1(df, rdf, class, rclass, output_dir)
 ```
-female_pop <- data.frame(toydata %>% dplyr::select(starts_with("fage_"))) # extract females age data
-names(female_pop) <- paste0("pp_", names(female_pop)) # rename the variables by adding "pp_" as suffix to the existing names
+### Arguments
+```
+df	
+A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's total populatioin count to be disaggregated as well as other key variables as defined within the 'toydata'.
 
-male_pop <- data.frame(toydata %>% dplyr::select(starts_with("mage_")))# extract males age data
-names(male_pop) <- paste0("pp_", names(male_pop))# rename the variables by adding "pp_" as suffix to the existing names
+rdf	
 
-pyramid(female_pop,male_pop) # make the observed pyramid plot
+df	
+A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's total populatioin count to be disaggregated as well as other key variables as defined within the 'toydata'.
+
+rdf	
+A gridded data frame object containing key information on the grid cells. Variables include the admin_id which must be identical to the one in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and Latitude (lat) of the grid cell's centroids.
+
+class	
+These are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.
+
+rclass	
+This is a user-defined names of the files to be saved in the output folder.
+
+output_dir	
+This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
+```
+### Value
+A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+
+### Example
+```
+library(raster) # load relevant libraries
+library(dplyr)
+library(terra)
+data(toydata) # load toy data
+
+ # run 'cheesepop' admin unit disaggregation function
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+class <- class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+
+# run spray1 grid cell disaggregation function
+result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+plot(ras2) # visulize of the raster files produced
 ```
 
-## 7. Model validation metrics
+## 'boxLine'	
+### Description
+This function automatically generates two graphs that are combined together - (a) a boxplot of the distribution of the various groups' disaggregated population counts, and (b) a line graph of the aggregated counts across all groups (e.g., total number of individuals for each group). Here, the input data could come from any of the disaggregation functions within the 'jollofR' package such as 'cheesecake', 'cheesepop', 'slices' & 'spices'.
+
+### Usage
+```r
+boxLine(dmat, xlab, ylab)
+```
+### Arguments
+```
+dmat	
+A data frame containing the group-structured disaggregated population estimates which could be observed or from modelled estimates based on any of the functions - cheesecake', 'cheesepop', 'slices','spices', 'spray' , 'sprinkle', 'splash', 'spray', 'sprinkle1', 'splash1', or 'spray1'. considered.
+
+xlab	
+A user-defined label for the x-axis (e.g., 'Age group').
+
+ylab	
+A user-defined label for the y-axis (e.g., 'Population count').
+```
+### Value
+A graphic image of two combined graphs - a boxplot and a line plot showing the distribution of the disaggregated population counts across the groups.
+
+### Example
+```
+library(ggplot2)
+data(toydata)
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+boxLine(dmat=result$male_age_pop,
+       xlab="Age group (years)",
+       ylab = "Population Count")
+
+```
+
+
+# 'plotHist'	
+### Description
+This function produces a multi-panel histogram plot of the disaggregated population counts across all the groups. The input data could come from any of the disaggregation functions within the 'jollofR' package (both at admin and grid levels) such as 'cheesecake', 'cheesepop', 'slices', etc.
+
+### Usage
+```r
+plotHist(dmat, xlab, ylab)
+```
+### Arguments
+```
+
+dmat	
+A data frame containing the group-structured disaggregated population estimates which could either be observed or predicted from 'cheesecake', 'cheesepop', 'slices','spices', 'spray' , 'sprinkle', 'splash', 'spray', 'sprinkle1', 'splash1', and 'spray1'.
+
+xlab	
+A user-defined label for the x-axis (e.g., 'Population Count') considered.
+
+ylab	
+A user-defined label for the y-axis (e.g., 'Frequency') considered.
+```
+### Value
+A graphic image of histogram of the disaggregated population count
+
+### Example
+```
+data(toydata)
+library(ggplot2)
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+plotHist(dmat=result$age_pop,
+        xlab="Population Count",
+        ylab = "Frequency")
+
+```
+
+# 'plotRast'	
+### Description
+This function produces multi-panel maps of the raster files across the various demographic groups of interest. The input data could come from any of the jolloR disaggregation functions at grid cell levels, e.g.,'sprinkle', 'spray', 'splash', 'sprinkle1', 'spray1', and 'splash1'.
+
+### Usage
+```r
+plotRast(title, output_dir, raster_files, names, nrow, ncol)
+```
+### Arguments
+```
+title	
+This is the title of the multi-panel maps of the gridded structured estimates
+
+output_dir	
+The directory for saving the raster files of the disaggregated population estimates
+
+raster_files	
+The names of the raster files to visualize. This must be the same as saved in the raster output folder
+
+names	
+A user-defined names for the plot panels labels. For example, this could be the labels of different age groups. It must be the same length as the 'raster_files'.
+
+nrow	
+Number of rows of the multi-panel maps. The value depends on the number of groups being displayed.
+
+ncol	
+Number of columns of the multi-panel maps. The value depends on the number of groups being displayed. For example, for 12 raster files the products of ncol and nrow must be at least 12.
+```
+### Value
+A graphic image of the multi-panel maps of population disaggregated raster files
+
+### Example
+```
+data(toydata)
+result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+rclass <- paste0("TOY_population_v1_0_age",1:12)
+result2b <- spray(df=result$full_data, rdf=toydata$grid,
+                 rclass, output_dir= tempdir())
+
+# make raster maps
+        #list.files(output_dir, pattern = "\.tif$",full.names = TRUE) #-
+        #use this to see the list of raster files in the directory
+group <- 1:12 # customised group
+rclass <- paste0("TOY_population_v1_0_age",group)
+plt1 <- plotRast(title = "Age disaggregated population counts", # title of the plot
+output_dir = tempdir(), # directory where the raster files are saved
+raster_files = paste0(output_dir=tempdir(), "/pop_",rclass, ".tif") , # raster files to plot
+names = paste0("Age ", group),  # Customised names of the plot panels (same length as rclass)
+nrow = 4, ncol =3)# rows and columns of the panels of the output maps
+#ggsave(paste0(out_path, "/grid_maps.tif"),#plot = plt1, dpi = 300) - save in output folder
+
+```
+
+## 6. Model validation metrics
 The **jollofR** package is a model-based approach which enables model validation by automatically computing model fit metrics based on the comparisons between the observed and the predicted values based on the age groups population disaggregation models. The computed metrics include:
 ```
 - MAE: Mean Absolute Error
@@ -365,7 +726,7 @@ The **jollofR** package is a model-based approach which enables model validation
 ```
 
 
-## 8. The output files directly accessible using result$ 
+## 7. The output files directly accessible using result$ 
 **jollofR** automatically saves a number of output files as a list object. This contain 9 dataframes which can be accessed by running the function 'result$"name_of_the_dataframe", if the output object is called 'result' as in our example. These include:
 
 - **age_pop**: This file contains the mean disaggregated population counts by age groups. This is obtained by running the function 'result$age_pop'
@@ -387,7 +748,7 @@ The **jollofR** package is a model-based approach which enables model validation
 - **full_data**: This file contains both the input datasets and the predicted estimates. This is obtained by running the function 'result$full_data'
   
 
-## 9. The output files saved in your output folder 
+## 8. The output files saved in your output folder 
 **jollofR** automatically saves 8 .csv files and 1 .png file in the output folder you specified. These include:
 
 - **age_disaggregated_data.csv**: This file contains the mean disaggregated population counts by age groups. Variables are written as "pp_age_1, ....,pp_age_n" within the .csv file, where n is the last age group category.
@@ -408,7 +769,7 @@ The **jollofR** package is a model-based approach which enables model validation
   
 - **model_validation_scatter_plot.png**: This is the automatically generated correlation plot of the observed total age data versus the model predicted total age data.
   
-## 10 Statistical Modelling
+## 9 Statistical Modelling
 The disaggregation functions within the **jollofR** package utilise a multi-stage hierarchical statistical modelling appraoch in which $N$ individuals within a given administrative unit (herein also called *admin*) of interest are assigned into only but one of the $K$ mutually exclusive and exhaustive demographic groups (e.g., age, sex, ethnicity) $group_1, group_2, ...., group_K$. Then, given that $m_1, m_2, .., m_K$ are the corresponding number of individuals within the $K$ groups such that $m_j + m_{-j} = N$, where $m_j$ is the number of individuals within group j and $m_{-j}$ is the total number of individuals in the remaining $K-1$ groups ($1, 2, j-1, j+1, ...,K$). Also, let $\pi_j = m_j/N$ denote the proportion of individuals belonging to group $k$, so that $\pi_{-j} = m_{-j}/N$ is the proportion of individuals not in group $j$. 
 
 We define the number of individuals belonging to group $j$ ($m_j$) as "success" while the number of individuals not belonging to group $j$ ($m_{-j}$) is the "failure" of a Binomial distribution, since the two groups are mutually exclusive and exhaustive, with a fixed number of trials (Chattamvelli & Shanmugam, 2020). 
