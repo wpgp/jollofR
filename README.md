@@ -233,6 +233,32 @@ Value
 Data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 ```
 
+## 'sprinkle'	
+### Description
+Disaggregates population counts at high-resolution grid cells using the grid cell's total population counts. Note that this could also be applied to more than two levels scenarios.
+
+### Usage
+```r
+result2 <- sprinkle(df, rdf, rclass, output_dir)
+```
+### Arguments
+```
+df	
+A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's total populatioin count to be disaggregated as well as other key variables as defined within the 'toydata'.
+
+rdf
+A gridded data frame object containing key information on the grid cells. Variables include the admin_id which must be identical to the one in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and Latitude (lat) of the grid cell's centroids.
+
+rclass	
+This is a user-defined names of the files to be saved in the output folder.
+
+output_dir	
+This is the directory with the name of the output folder where the disaggregated population proportions and population totals are automatically saved.
+
+Value
+A list of data frame objects of the output files including the disaggregated population proportions and population totals along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic. In addition, a file containing the model performance/model fit evaluation metrics is also produced.
+```
+
 ## 5. Toy data for illustration
 Name: **toydata**	
 ### Description
