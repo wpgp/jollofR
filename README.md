@@ -167,7 +167,8 @@ data(toydata)
 admin_data <- toydata$admin # subset the admin data
 grid_data <- toydata$grid  # subset the grid cell data
 ```
-  
+
+# 5. Key functions
 ## 'cheesecake'
 ### Description
 Used to disaggregate small area population estimates by age, sex, and other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc).
