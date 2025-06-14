@@ -827,7 +827,7 @@ plotHist(dmat=result$age_pop,
 
 # 'plotRast'	
 ### Description
-This function produces multi-panel maps of the raster files across the various demographic groups of interest. The input data could come from any of the jolloR disaggregation functions at grid cell levels, e.g.,'sprinkle', 'spray', 'splash', 'sprinkle1', 'spray1', and 'splash1'.
+This function produces multi-panel maps of the raster files across the various demographic groups of interest. The input data could come from any of the jollofR disaggregation functions at grid cell levels, e.g.,'sprinkle', 'spray', 'splash', 'sprinkle1', 'spray1', and 'splash1'.
 
 ### Usage
 ```r
@@ -984,6 +984,54 @@ E[pp_age_4]-->L[pp_fage_4];
 E[pp_age_4]-->M[pp_mage_4];
 ```
 **Figure 7**: Schematic representation of age-sex disaggregation steps. Example for 4 age groups. 
+
+
+## 10 Disaggregation at high-resolution grid cells
+**jollofR** package also allows for easy disaggregation of the estimates of population counts and proportions structured across different groups (e.g., age and sex) at high resolution grid cells. These are implemented using the 'sprinkle', 'splash' and 'spray' functions along with their conterparts 'sprinkle1', 'splash1' and 'spray1' which are used for the disaggregation of the population estimates at one group level only (e.g., age or sex). Below, we provide the descriptions of these different approaches in more details.
+
+### 'sprinkle'
+The *sprinkle* function is used to disaggregate administrative unit *i*'s total population estimate $N_i$ across $K$ groups within grid cell *g*, based on grid cell *g*'s total population estimate $m_{ig}$, where $m_{ig}$ is known *apriori* (either from a statistical model or from other sources). That is,
+
+$$\eqalign{
+ \hat{m_{ijg}} = \hat{p_{ij}}m_{ig}    &&  (4)
+}$$
+
+where $\hat{m_{ijg}}$ is the predicted number of people in group $j(j = 1,.., K)$ of grid $g$ within administrative unit $i$, and $\hat{p_{ij}}$ is the predicted proportion of group $j$ within administrative unit $i$. Note that the two key validity requirements of equation (4) here are that $\sum_jp_{ij}=1$ and $\sum_g m_{ig} = N_i$, i.e., all group proportions within *admin* $i$ must add up to 1, and the total population counts across all the grid cells in *admin* $i$ must add up to the estimated total population for *admin* $i$.
+
+Note that the *sprinkle1* function is also based on equation (4) under the same assumptions and validity requirements, however, as noted earlier, *sprinkle1* is only used for disaggregating population for only one group level at a time. In other works, while *sprinkle* can be used to disaggregate into age and sex groups at the same time, for example, *sprinkle1* can only be used to disaggregate either age or sex, or ethnicity groups one at a time. 
+
+### 'splash'
+The *splash* function is used to disaggregate administrative unit *i*'s total population estimate $N_i$ across $K$ groups within grid cell *g*, based on grid cell *g*'s total building count $b_{ig}$, where $b_{ig}$ is known *apriori* (either from satellite imagery or other sources). That is,
+
+$$\eqalign{
+ m_{ig} = w_{ig}N_i\\
+ \hat{m_{ijg}} = \hat{p_{ij}}m_{ig}    &&  (5)
+}$$
+
+where $m_{ig}$ is the weighted total population count of grid $g$ of *admin* $i$, and $w_{ig}$ is the grid $g$'s weight calculated as
+$$\eqalign{
+ w_{ig} = b_{ig}/\sum_gb_{ig}}    &&  (6)
+}$$
+As before, $\hat{p_{ij}}$ is the predicted proportion of group $j$ within administrative unit $i$, and the validity requirements of equation (5) are $\sum_gw_{ig}=1$, $\sum_jp_{ij}=1$ and $\sum_g m_{ig} = N_i$. That is, all weights and group proportions within *admin* $i$ must add up to 1 separately, and the total population counts across all the grid cells in administrative unit $i$ must add up to the estimated total population for administrative unit $i$. 
+
+Note that the *splash1* function is also based on equation (5) under the same assumptions and validity requirements, however, as noted earlier, *splash1* is only used for disaggregating population for only one group level at a time. In other works, while *splash* can be used to disaggregate into age and sex groups at the same time, for example, *splash* can only be used to disaggregate either age or sex, or ethnicity groups one at a time. 
+
+
+### 'splash'
+The *splash* function is used to disaggregate administrative unit *i*'s total population estimate $N_i$ across $K$ groups within grid cell *g*, based on grid cell *g*'s total building count $b_{ig}$, where $b_{ig}$ is known *apriori* (either from satellite imagery or other sources). That is,
+
+$$\eqalign{
+ m_{ig} = w_{ig}N_i\\
+ \hat{m_{ijg}} = \hat{p_{ij}}m_{ig}    &&  (5)
+}$$
+
+where $m_{ig}$ is the weighted total population count of grid $g$ of *admin* $i$, and $w_{ig}$ is the grid $g$'s weight calculated as
+$$\eqalign{
+ w_{ig} = b_{ig}/\sum_gb_{ig}}    &&  (6)
+}$$
+As before, $\hat{p_{ij}}$ is the predicted proportion of group $j$ within administrative unit $i$, and the validity requirements of equation (5) are $\sum_gw_{ig}=1$, $\sum_jp_{ij}=1$ and $\sum_g m_{ig} = N_i$. That is, all weights and group proportions within *admin* $i$ must add up to 1 separately, and the total population counts across all the grid cells in administrative unit $i$ must add up to the estimated total population for administrative unit $i$. 
+
+Note that the *splash1* function is also based on equation (5) under the same assumptions and validity requirements, however, as noted earlier, *splash1* is only used for disaggregating population for only one group level at a time. In other works, while *splash* can be used to disaggregate into age and sex groups at the same time, for example, *splash* can only be used to disaggregate either age or sex, or ethnicity groups one at a time. 
 
 ## Support and Contributions
 This is a development version of the **jollofR** package and we welcome contributions from the research community to improve **jollofR** and make it even much simpler for everyone to use. For support, bug reports, or feature requests, please contact:
