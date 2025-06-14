@@ -464,10 +464,57 @@ library(terra)
 data(toydata)
 # run 'cheesepop' function for admin level disaggregation
 result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+```
+```
 rclass <- paste0("TOY_population_v1_0_age",1:12)
+```
+```
+> rclass
+ [1] "TOY_population_v1_0_age1"  "TOY_population_v1_0_age2"  "TOY_population_v1_0_age3"  "TOY_population_v1_0_age4" 
+ [5] "TOY_population_v1_0_age5"  "TOY_population_v1_0_age6"  "TOY_population_v1_0_age7"  "TOY_population_v1_0_age8" 
+ [9] "TOY_population_v1_0_age9"  "TOY_population_v1_0_age10" "TOY_population_v1_0_age11" "TOY_population_v1_0_age12"
+```
+```
 # run 'sprinkle' function for grid cell disaggregation and save
 result2 <- sprinkle(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
-ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+```
+
+```
+> names(result2$full_data)
+  [1] "admin_id"    "grd_id"      "total"       "bld"         "lon"         "lat"         "pp_age_1"    "pp_age_2"    "pp_age_3"   
+ [10] "pp_age_4"    "pp_age_5"    "pp_age_6"    "pp_age_7"    "pp_age_8"    "pp_age_9"    "pp_age_10"   "pp_age_11"   "pp_age_12"  
+ [19] "pp_age_1L"   "pp_age_2L"   "pp_age_3L"   "pp_age_4L"   "pp_age_5L"   "pp_age_6L"   "pp_age_7L"   "pp_age_8L"   "pp_age_9L"  
+ [28] "pp_age_10L"  "pp_age_11L"  "pp_age_12L"  "pp_age_1U"   "pp_age_2U"   "pp_age_3U"   "pp_age_4U"   "pp_age_5U"   "pp_age_6U"  
+ [37] "pp_age_7U"   "pp_age_8U"   "pp_age_9U"   "pp_age_10U"  "pp_age_11U"  "pp_age_12U"  "prp_age_1"   "prp_age_2"   "prp_age_3"  
+ [46] "prp_age_4"   "prp_age_5"   "prp_age_6"   "prp_age_7"   "prp_age_8"   "prp_age_9"   "prp_age_10"  "prp_age_11"  "prp_age_12" 
+ [55] "prp_age_1L"  "prp_age_2L"  "prp_age_3L"  "prp_age_4L"  "prp_age_5L"  "prp_age_6L"  "prp_age_7L"  "prp_age_8L"  "prp_age_9L" 
+ [64] "prp_age_10L" "prp_age_11L" "prp_age_12L" "prp_age_1U"  "prp_age_2U"  "prp_age_3U"  "prp_age_4U"  "prp_age_5U"  "prp_age_6U" 
+ [73] "prp_age_7U"  "prp_age_8U"  "prp_age_9U"  "prp_age_10U" "prp_age_11U" "prp_age_12U" "pp_fage_1"   "pp_fage_2"   "pp_fage_3"  
+ [82] "pp_fage_4"   "pp_fage_5"   "pp_fage_6"   "pp_fage_7"   "pp_fage_8"   "pp_fage_9"   "pp_fage_10"  "pp_fage_11"  "pp_fage_12" 
+ [91] "pp_fage_1L"  "pp_fage_2L"  "pp_fage_3L"  "pp_fage_4L"  "pp_fage_5L"  "pp_fage_6L"  "pp_fage_7L"  "pp_fage_8L"  "pp_fage_9L" 
+[100] "pp_fage_10L" "pp_fage_11L" "pp_fage_12L" "pp_fage_1U"  "pp_fage_2U"  "pp_fage_3U"  "pp_fage_4U"  "pp_fage_5U"  "pp_fage_6U" 
+[109] "pp_fage_7U"  "pp_fage_8U"  "pp_fage_9U"  "pp_fage_10U" "pp_fage_11U" "pp_fage_12U" "pp_mage_1"   "pp_mage_2"   "pp_mage_3"  
+[118] "pp_mage_4"   "pp_mage_5"   "pp_mage_6"   "pp_mage_7"   "pp_mage_8"   "pp_mage_9"   "pp_mage_10"  "pp_mage_11"  "pp_mage_12" 
+[127] "pp_mage_1L"  "pp_mage_2L"  "pp_mage_3L"  "pp_mage_4L"  "pp_mage_5L"  "pp_mage_6L"  "pp_mage_7L"  "pp_mage_8L"  "pp_mage_9L" 
+[136] "pp_mage_10L" "pp_mage_11L" "pp_mage_12L" "pp_mage_1U"  "pp_mage_2U"  "pp_mage_3U"  "pp_mage_4U"  "pp_mage_5U"  "pp_mage_6U" 
+[145] "pp_mage_7U"  "pp_mage_8U"  "pp_mage_9U"  "pp_mage_10U" "pp_mage_11U" "pp_mage_12U"
+```
+```
+ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif")) # read in one of the saved rasters for checks, if required. 
+```
+```
+> ras2
+class       : SpatRaster 
+dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
+resolution  : 0.0083, 0.0083  (x, y)
+extent      : 0.00000000000000001301043, 0.996, 0.004, 1  (xmin, xmax, ymin, ymax)
+coord. ref. : lon/lat WGS 84 (CRS84) (OGC:CRS84) 
+source      : pop_TOY_population_v1_0_age4.tif 
+name        : pop_TOY_population_v1_0_age4 
+min value   :                         1.73 
+max value   :                      4429.04
+```
+```
 plot(ras2) # visualize raster
 ```
 ## 'sprinkle1'	
