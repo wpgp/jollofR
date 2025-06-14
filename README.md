@@ -271,7 +271,7 @@ Directory C:\Users\ccn1r22\AppData\Local\Temp\RtmpAf73n3 already exists.
 [1] "(10) age_10 model is running"
 [1] "(11) age_11 model is running"
 [1] "(12) age_12 model is running"
-          MAE       MAPE    RMSE corr
+       MAE       MAPE     RMSE    corr
 [1,] 3.068889 0.01599678 5.73314    1
 ```
 
