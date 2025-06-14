@@ -261,7 +261,7 @@ data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
 ![Alt text](cheesepop_result.png)
-
+**Figure 1**: A screenshot of result output from 'cheesecake' function (same as 'cheesepop') showing the various data frames derived from the posterior estimates. 
 
 ```
 # view progress in R
