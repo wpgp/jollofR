@@ -1046,14 +1046,14 @@ Alternatively, please feel free to open an issue on the GitHub repository via ht
 
 
 ## References
-1) Chattamvelli, R., Shanmugam, R. (2020). *Binomial Distribution*. In: Discrete Distributions in Engineering and the Applied Sciences. Synthesis Lectures on Mathematics & Statistics. Springer, Cham. https://doi.org/10.1007/978-3-031-02425-2_2
-2) Rue, H., Martino, S. & Chopin, N.(2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. *J R Stat Soc Series B Stat Methodol* 71.
-3) Lindgren, F., Rue, H. & Lindström, J.(2011). An explicit link between gaussian fields and gaussian markov random fields: The stochastic partial differential equation approach. *J R Stat Soc Series B Stat Methodol*. doi:10.1111/j.1467-9868.2011.00777.x.
+1) Boo, G., Darin, E., Leasure, D.R. et al.(2022). High-resolution population estimation using household survey data and building footprints. Nat Commun 13, 1330. https://doi.org/10.1038/s41467-022-29094-x
+2) Chattamvelli, R., Shanmugam, R. (2020). *Binomial Distribution*. In: Discrete Distributions in Engineering and the Applied Sciences. Synthesis Lectures on Mathematics & Statistics. Springer, Cham. https://doi.org/10.1007/978-3-031-02425-2_2
+3) Darin, E., Kuépié, M., Bassinga, H., Boo, G. & Tatem, A. J. (2022). La population vue du ciel : quand l’imagerie satellite vient au secours du recensement. Population (Wash DC).  doi:10.3917/popu.2203.0467
 4) Leasure, D. R., Jochem, W. C., Weber, E. M., Seaman, V. & Tatem, A. J.(2020). National population mapping from sparse survey data: A hierarchical Bayesian modeling framework to account for uncertainty. Proc Natl Acad Sci U S A 117.
-5) Boo, G., Darin, E., Leasure, D.R. et al.(2022). High-resolution population estimation using household survey data and building footprints. Nat Commun 13, 1330. https://doi.org/10.1038/s41467-022-29094-x
+5) Lindgren, F., Rue, H. & Lindström, J.(2011). An explicit link between gaussian fields and gaussian markov random fields: The stochastic partial differential equation approach. *J R Stat Soc Series B Stat Methodol*. doi:10.1111/j.1467-9868.2011.00777.x.
 6) Nnanatu, C. et al. (2024) Modelled gridded population estimates for Cameroon 2022. Version 1.0, University of Southampton, 17 Jun 2024, DOI: 10.5258/SOTON/WP00784, https://data.worldpop.org/repo/wopr/CMR/population/v1.0/.
 7) Nnanatu, C.C., et al. (2025a) Efficient Bayesian Hierarchical Small Area Population Estimation Using INLA-SPDE: Integrating Multiple Data Sources and Spatial-Autocorrelation. in Preprints; 10.20944/preprints202501.0588.v1.
 8) Nnanatu, C.C., Bonnie, A., Joseph, J. et al.(2025). Estimating small area population from health intervention campaign surveys and partially observed settlement data. Nat Commun 16, 4951. https://doi.org/10.1038/s41467-025-59862-4
-9) Darin, E., Kuépié, M., Bassinga, H., Boo, G. & Tatem, A. J. (2022). La population vue du ciel : quand l’imagerie satellite vient au secours du recensement. Population (Wash DC).  doi:10.3917/popu.2203.0467
+9) Rue, H., Martino, S. & Chopin, N.(2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. *J R Stat Soc Series B Stat Methodol* 71.
 
    
