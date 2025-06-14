@@ -169,7 +169,7 @@ data(toydata)
 admin_data <- toydata$admin # subset the admin data
 ```
 ```
-str(admin_data)
+str(admin_data)   # view the structure of the administrative data
 'data.frame':	900 obs. of  45 variables:
  $ admin_id: int  1 2 3 4 5 6 7 8 9 10 ...
  $ x1      : num  0.503 0.516 0.493 0.477 0.456 ...
@@ -221,7 +221,7 @@ str(admin_data)
 grid_data <- toydata$grid  # subset the grid cell data
 ```
 ```
-str(grid_data)
+str(grid_data)  # view the structure of the grid data
 'data.frame':	14400 obs. of  6 variables:
  $ admin_id: int  1 1 1 1 2 2 2 2 3 3 ...
  $ grd_id  : int  1 2 3 4 5 6 7 8 9 10 ...
