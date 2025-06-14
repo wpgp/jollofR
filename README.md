@@ -167,6 +167,8 @@ The 'admin' data is used to fit statistical models to predict subnational popula
 ```r{}
 data(toydata)
 admin_data <- toydata$admin # subset the admin data
+```
+```
 str(admin_data)
 'data.frame':	900 obs. of  45 variables:
  $ admin_id: int  1 2 3 4 5 6 7 8 9 10 ...
@@ -214,9 +216,11 @@ str(admin_data)
  $ mage_12 : int  28 NA NA 27 NA NA NA NA 36 28 ...
  $ lon     : num  0.0167 0.05 0.0833 0.1167 0.15 ...
  $ lat     : num  0.983 0.983 0.983 0.983 0.983 ...
-
-
+```
+```
 grid_data <- toydata$grid  # subset the grid cell data
+```
+```
 str(grid_data)
 'data.frame':	14400 obs. of  6 variables:
  $ admin_id: int  1 1 1 1 2 2 2 2 3 3 ...
