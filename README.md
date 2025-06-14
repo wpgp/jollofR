@@ -217,9 +217,11 @@ str(admin_data)   # view the structure of the administrative data
  $ lon     : num  0.0167 0.05 0.0833 0.1167 0.15 ...
  $ lat     : num  0.983 0.983 0.983 0.983 0.983 ...
 ```
+
 ```
 grid_data <- toydata$grid  # subset the grid cell data
 ```
+
 ```
 str(grid_data)  # view the structure of the grid data
 'data.frame':	14400 obs. of  6 variables:
@@ -258,7 +260,7 @@ data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
 ```
-Directory C:\Users\ccn1r22\AppData\Local\Temp\RtmpAf73n3 already exists.
+# view progress in R
 [1] "(1) age_1 model is running"
 [1] "(2) age_2 model is running"
 [1] "(3) age_3 model is running"
@@ -271,11 +273,11 @@ Directory C:\Users\ccn1r22\AppData\Local\Temp\RtmpAf73n3 already exists.
 [1] "(10) age_10 model is running"
 [1] "(11) age_11 model is running"
 [1] "(12) age_12 model is running"
-       MAE       MAPE     RMSE    corr
+       MAE       MAPE     RMSE    corr # model fit metrics
 [1,] 3.068889 0.01599678 5.73314    1
 ```
 ```
-names(result$full_data)
+names(result$full_data) # view column names
   [1] "admin_id"    "x1"          "x2"          "x3"          "bld"         "total"       "age_1"       "age_2"       "age_3"       "age_4"       "age_5"      
  [12] "age_6"       "age_7"       "age_8"       "age_9"       "age_10"      "age_11"      "age_12"      "total2"      "fage_1"      "fage_2"      "fage_3"     
  [23] "fage_4"      "fage_5"      "fage_6"      "fage_7"      "fage_8"      "fage_9"      "fage_10"     "fage_11"     "fage_12"     "mage_1"      "mage_2"     
