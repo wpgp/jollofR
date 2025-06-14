@@ -250,10 +250,10 @@ pyramid(result$fem_age_pop,result$male_age_pop)
 ```
 ### Making pyramid graph of the observed age-sex data
 ```
-female_pop <- data.frame(toydata %>% dplyr::select(starts_with("fage_"))) # extract females age data
+female_pop <- data.frame(toydata$admin %>% dplyr::select(starts_with("fage_"))) # extract females age data
 names(female_pop) <- paste0("pp_", names(female_pop)) # rename the variables by adding "pp_" as suffix to the existing names
 
-male_pop <- data.frame(toydata %>% dplyr::select(starts_with("mage_")))# extract males age data
+male_pop <- data.frame(toydata$admin %>% dplyr::select(starts_with("mage_")))# extract males age data
 names(male_pop) <- paste0("pp_", names(male_pop))# rename the variables by adding "pp_" as suffix to the existing names
 
 pyramid(female_pop,male_pop) # make the observed pyramid plot
