@@ -168,6 +168,7 @@ The 'admin' data is used to fit statistical models to predict subnational popula
 data(toydata)
 admin_data <- toydata$admin # subset the admin data
 ```
+
 ```
 str(admin_data)   # view the structure of the administrative data
 'data.frame':	900 obs. of  45 variables:
@@ -356,6 +357,9 @@ pyramid(result$fem_age_pop,result$male_age_pop)
 ```
 ### Making pyramid graph of the observed age-sex data
 ```
+
+![Alt text](pyramid.png)
+
 female_pop <- data.frame(toydata$admin %>% dplyr::select(starts_with("fage_"))) # extract females age data
 names(female_pop) <- paste0("pp_", names(female_pop)) # rename the variables by adding "pp_" as suffix to the existing names
 
@@ -735,7 +739,7 @@ boxLine(dmat=result$male_age_pop,
        ylab = "Population Count")
 
 ```
-
+![Alt text](boxLine.png)
 
 # 'plotHist'	
 ### Description
@@ -770,6 +774,8 @@ plotHist(dmat=result$age_pop,
         ylab = "Frequency")
 
 ```
+![Alt text](plotHist.png)
+
 
 # 'plotRast'	
 ### Description
@@ -823,6 +829,7 @@ nrow = 4, ncol =3)# rows and columns of the panels of the output maps
 #ggsave(paste0(out_path, "/grid_maps.tif"),plot = plt1, dpi = 300) #- save in output folder
 
 ```
+![Alt text](plotRast.png)
 
 ## 6. Model validation metrics
 The **jollofR** package is a model-based approach which enables model validation by automatically computing model fit metrics based on the comparisons between the observed and the predicted values based on the age groups population disaggregation models. The computed metrics include:
