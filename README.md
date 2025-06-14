@@ -712,7 +712,7 @@ output_dir = tempdir(), # directory where the raster files are saved
 raster_files = paste0(output_dir=tempdir(), "/pop_",rclass, ".tif") , # raster files to plot
 names = paste0("Age ", group),  # Customised names of the plot panels (same length as rclass)
 nrow = 4, ncol =3)# rows and columns of the panels of the output maps
-#ggsave(paste0(out_path, "/grid_maps.tif"),#plot = plt1, dpi = 300) - save in output folder
+#ggsave(paste0(out_path, "/grid_maps.tif"),plot = plt1, dpi = 300) #- save in output folder
 
 ```
 
@@ -833,7 +833,7 @@ This is a development version of the **jollofR** package and we welcome contribu
 
 Alternatively, please feel free to open an issue on the GitHub repository via https://github.com/wpgp/jollof/issues.
 
-**Suggested citation**: Nnanatu C, Chaudhuri S, Lazar A, Tatem A (2025). **jollofR**: A Bayesian statistical model-based approach for disaggregating small area population estimates by demographic characteristics. R package version 0.3.0, https://github.com/wpgp/jollofR/. 
+**Suggested citation**: Nnanatu C, Chaudhuri S, Yankey O, Lazar A, Tatem A (2025). **jollofR**: A Bayesian statistical model-based approach for disaggregating small area population estimates by demographic characteristics. R package version 0.3.0, https://github.com/wpgp/jollofR/. 
 
 
 ## References
