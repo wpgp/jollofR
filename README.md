@@ -76,6 +76,8 @@ As soon as **jollofR** becomes available on CRAN, you can then install it direct
 ## Other dependencies
 In addition to **INLA** package, you may also need to confirm that you have the following packages installed successfully after installing **jollofR**
 ```{r eval=FALSE, include=TRUE}
+library(INLA)
+library(jolofR)
 library(ggplot2) # use install.packages("ggplot2") to install, if not available
 library(dplyr)   # use install.packages("dplyr") to install, if not available
 library(terra)   # use install.packages("terra") to install, if not available
