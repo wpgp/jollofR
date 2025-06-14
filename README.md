@@ -787,7 +787,7 @@ boxLine(dmat=result$male_age_pop,
 
 ```
 ![Alt text](boxLine.png)
-**Figure 4**: a) Boxplots of the porterior distribution of population counts across the various age groups, and b) line plot of the aggregated population counts across all administrative units for each age group.  The 'boxLine' function can be used for the outputs from all the disaggregation functions. 
+**Figure 4**: a) Boxplots of the porterior distribution of population counts across the various age groups, and b) line plot of the aggregated population counts across all administrative units for each age group.  The 'boxLine' function can be used for the outputs from all the **jollofR** disaggregation functions. 
 
 # 'plotHist'	
 ### Description
