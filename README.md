@@ -261,10 +261,10 @@ data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
 ![Alt text](cheesepop_result.png)
-**Figure 1**: A screenshot of result output from 'cheesecake' function (same as 'cheesepop') showing the various data frames derived from the posterior estimates. 
+**Figure 1**: A screenshot of result output from 'cheesecake' function (same as 'cheesepop') showing the various data frames derived from the posterior estimates. 'age_pop' - dataframe containing predicted age groups population counts; 'age_popL' - dataframe containing the lower bound of the predicted age groups population counts at 95% credible intervals; 'age_popU' - dataframe containing upper bound of the predicted age groups population counts at 95% credible intervals; 'age_prop' - dataframe containing predicted age groups population proportions; 'fem_age_pop' - dataframe containing predicted age groups population for females; 'fem_age_prop' - dataframe containing predicted age groups population proportions for females; 'male_age_pop' - dataframe containing predicted age groups population for males; 'male_age_prop' - dataframe containing predicted age groups population proportions for males. 
 
 ```
-# view progress in R
+# ... progress in R
 [1] "(1) age_1 model is running"
 [1] "(2) age_2 model is running"
 [1] "(3) age_3 model is running"
@@ -280,6 +280,7 @@ result <- cheesecake(df = toydata$admin, output_dir = tempdir())
        MAE       MAPE     RMSE    corr # model fit metrics
 [1,] 3.068889 0.01599678 5.73314    1
 ```
+
 ```
 names(result$full_data) # view column names
   [1] "admin_id"    "x1"          "x2"          "x3"          "bld"         "total"       "age_1"       "age_2"       "age_3"       "age_4"       "age_5"      
