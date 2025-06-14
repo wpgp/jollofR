@@ -275,7 +275,7 @@ Directory C:\Users\ccn1r22\AppData\Local\Temp\RtmpAf73n3 already exists.
 [1,] 3.068889 0.01599678 5.73314    1
 ```
 ```
-> names(result$full_data)
+names(result$full_data)
   [1] "admin_id"    "x1"          "x2"          "x3"          "bld"         "total"       "age_1"       "age_2"       "age_3"       "age_4"       "age_5"      
  [12] "age_6"       "age_7"       "age_8"       "age_9"       "age_10"      "age_11"      "age_12"      "total2"      "fage_1"      "fage_2"      "fage_3"     
  [23] "fage_4"      "fage_5"      "fage_6"      "fage_7"      "fage_8"      "fage_9"      "fage_10"     "fage_11"     "fage_12"     "mage_1"      "mage_2"     
@@ -297,6 +297,7 @@ Directory C:\Users\ccn1r22\AppData\Local\Temp\RtmpAf73n3 already exists.
 [199] "pp_mage_10L" "pp_mage_11L" "pp_mage_12L" "pp_mage_1U"  "pp_mage_2U"  "pp_mage_3U"  "pp_mage_4U"  "pp_mage_5U"  "pp_mage_6U"  "pp_mage_7U"  "pp_mage_8U" 
 [210] "pp_mage_9U"  "pp_mage_10U" "pp_mage_11U" "pp_mage_12U"
 ```
+
 ## 'cheesepop'	
 ### Description
 Similar to the 'cheesecake' function, 'cheesepop' disaggregates small area population estimates by age, sex, and other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc), at the administrative unit level. However, unlike the 'cheesecake' function which uses geospatial covariates to predict missing data values, the 'cheesepop' does not require the use of geospatial covariates.
