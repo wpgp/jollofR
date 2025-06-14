@@ -274,7 +274,29 @@ Directory C:\Users\ccn1r22\AppData\Local\Temp\RtmpAf73n3 already exists.
        MAE       MAPE     RMSE    corr
 [1,] 3.068889 0.01599678 5.73314    1
 ```
-
+```
+> names(result$full_data)
+  [1] "admin_id"    "x1"          "x2"          "x3"          "bld"         "total"       "age_1"       "age_2"       "age_3"       "age_4"       "age_5"      
+ [12] "age_6"       "age_7"       "age_8"       "age_9"       "age_10"      "age_11"      "age_12"      "total2"      "fage_1"      "fage_2"      "fage_3"     
+ [23] "fage_4"      "fage_5"      "fage_6"      "fage_7"      "fage_8"      "fage_9"      "fage_10"     "fage_11"     "fage_12"     "mage_1"      "mage_2"     
+ [34] "mage_3"      "mage_4"      "mage_5"      "mage_6"      "mage_7"      "mage_8"      "mage_9"      "mage_10"     "mage_11"     "mage_12"     "lon"        
+ [45] "lat"         "pp_age_1"    "pp_age_2"    "pp_age_3"    "pp_age_4"    "pp_age_5"    "pp_age_6"    "pp_age_7"    "pp_age_8"    "pp_age_9"    "pp_age_10"  
+ [56] "pp_age_11"   "pp_age_12"   "pp_age_1L"   "pp_age_2L"   "pp_age_3L"   "pp_age_4L"   "pp_age_5L"   "pp_age_6L"   "pp_age_7L"   "pp_age_8L"   "pp_age_9L"  
+ [67] "pp_age_10L"  "pp_age_11L"  "pp_age_12L"  "pp_age_1U"   "pp_age_2U"   "pp_age_3U"   "pp_age_4U"   "pp_age_5U"   "pp_age_6U"   "pp_age_7U"   "pp_age_8U"  
+ [78] "pp_age_9U"   "pp_age_10U"  "pp_age_11U"  "pp_age_12U"  "prp_age_1"   "prp_age_2"   "prp_age_3"   "prp_age_4"   "prp_age_5"   "prp_age_6"   "prp_age_7"  
+ [89] "prp_age_8"   "prp_age_9"   "prp_age_10"  "prp_age_11"  "prp_age_12"  "prp_age_1L"  "prp_age_2L"  "prp_age_3L"  "prp_age_4L"  "prp_age_5L"  "prp_age_6L" 
+[100] "prp_age_7L"  "prp_age_8L"  "prp_age_9L"  "prp_age_10L" "prp_age_11L" "prp_age_12L" "prp_age_1U"  "prp_age_2U"  "prp_age_3U"  "prp_age_4U"  "prp_age_5U" 
+[111] "prp_age_6U"  "prp_age_7U"  "prp_age_8U"  "prp_age_9U"  "prp_age_10U" "prp_age_11U" "prp_age_12U" "pp_fage_1"   "pp_fage_2"   "pp_fage_3"   "pp_fage_4"  
+[122] "pp_fage_5"   "pp_fage_6"   "pp_fage_7"   "pp_fage_8"   "pp_fage_9"   "pp_fage_10"  "pp_fage_11"  "pp_fage_12"  "pp_fage_1L"  "pp_fage_2L"  "pp_fage_3L" 
+[133] "pp_fage_4L"  "pp_fage_5L"  "pp_fage_6L"  "pp_fage_7L"  "pp_fage_8L"  "pp_fage_9L"  "pp_fage_10L" "pp_fage_11L" "pp_fage_12L" "pp_fage_1U"  "pp_fage_2U" 
+[144] "pp_fage_3U"  "pp_fage_4U"  "pp_fage_5U"  "pp_fage_6U"  "pp_fage_7U"  "pp_fage_8U"  "pp_fage_9U"  "pp_fage_10U" "pp_fage_11U" "pp_fage_12U" "prp_fage_1" 
+[155] "prp_fage_2"  "prp_fage_3"  "prp_fage_4"  "prp_fage_5"  "prp_fage_6"  "prp_fage_7"  "prp_fage_8"  "prp_fage_9"  "prp_fage_10" "prp_fage_11" "prp_fage_12"
+[166] "prp_mage_1"  "prp_mage_2"  "prp_mage_3"  "prp_mage_4"  "prp_mage_5"  "prp_mage_6"  "prp_mage_7"  "prp_mage_8"  "prp_mage_9"  "prp_mage_10" "prp_mage_11"
+[177] "prp_mage_12" "pp_mage_1"   "pp_mage_2"   "pp_mage_3"   "pp_mage_4"   "pp_mage_5"   "pp_mage_6"   "pp_mage_7"   "pp_mage_8"   "pp_mage_9"   "pp_mage_10" 
+[188] "pp_mage_11"  "pp_mage_12"  "pp_mage_1L"  "pp_mage_2L"  "pp_mage_3L"  "pp_mage_4L"  "pp_mage_5L"  "pp_mage_6L"  "pp_mage_7L"  "pp_mage_8L"  "pp_mage_9L" 
+[199] "pp_mage_10L" "pp_mage_11L" "pp_mage_12L" "pp_mage_1U"  "pp_mage_2U"  "pp_mage_3U"  "pp_mage_4U"  "pp_mage_5U"  "pp_mage_6U"  "pp_mage_7U"  "pp_mage_8U" 
+[210] "pp_mage_9U"  "pp_mage_10U" "pp_mage_11U" "pp_mage_12U"
+```
 ## 'cheesepop'	
 ### Description
 Similar to the 'cheesecake' function, 'cheesepop' disaggregates small area population estimates by age, sex, and other socio-demographic and socio-economic characteristics (e.g., ethnicity, religion, educational level, immigration status, etc), at the administrative unit level. However, unlike the 'cheesecake' function which uses geospatial covariates to predict missing data values, the 'cheesepop' does not require the use of geospatial covariates.
