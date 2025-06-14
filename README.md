@@ -259,7 +259,7 @@ Data frame objects of the output files including the disaggregated population pr
 data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
-![Alt text](pyramid.png)
+![Alt text](cheesepop_result.png)
 
 
 ```
