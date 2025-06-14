@@ -339,6 +339,7 @@ This function creates population pyramid for age and sex output data from the 'c
 ```r
 pyramid(female_pop, male_pop)
 ``` 
+
 ### Arguments
 ```
 female_pop	
@@ -368,6 +369,7 @@ pyramid(female_pop,male_pop) # make the observed pyramid plot
 ```
 
 ![Alt text](pyramid.png)
+**Figure 3**: Example of pyramid graph from 'cheesecake', 'cheesepop', 'sprinkle', 'splash' or 'spray' functions which produce two-level disaggregations (e.g., age and sex). 
 
 ## 'spices'
 ### Description
@@ -543,7 +545,7 @@ A list of data frame objects of the output files including the disaggregated pop
 
 ### Example
 ```
-*# load key libraries*
+# load key libraries
 # load key libraries
 library(raster)
 library(dplyr)
@@ -560,7 +562,6 @@ result2 <- splash(df = result$full_data, rdf = toydata$grid, rclass, output_dir 
 ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 plot(ras2)
 ```
-
 
 ## 'splash1'	
 ### Description
@@ -592,7 +593,7 @@ A list of data frame objects of the output files including the disaggregated pop
 
 ### Example
 ```
- **load key libraries**
+# load key libraries
 library(raster)
 library(dplyr)
 library(terra)
@@ -611,7 +612,6 @@ ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 plot(ras2)
 
 ```
-
 
 ## 'spray'	
 ### Description
@@ -740,6 +740,7 @@ boxLine(dmat=result$male_age_pop,
 
 ```
 ![Alt text](boxLine.png)
+**Figure 4**: a) Boxplots of the porterior distribution of population counts across the various age groups, and b) line plot of the aggregated population counts across all administrative units for each age group.  The 'boxLine' function can be used for the outputs from all the disaggregation functions. 
 
 # 'plotHist'	
 ### Description
@@ -775,7 +776,7 @@ plotHist(dmat=result$age_pop,
 
 ```
 ![Alt text](plotHist.png)
-
+**Figure 5**: Histograms of the posterior distribution of population counts across different age groups. The 'plotHist' function can be used for the outputs from all the disaggregation functions. 
 
 # 'plotRast'	
 ### Description
@@ -830,6 +831,8 @@ nrow = 4, ncol =3)# rows and columns of the panels of the output maps
 
 ```
 ![Alt text](plotRast.png)
+**Figure 6**: Maps of the gridded raster files of the posterior estimates of population across the age groups. The 'plotRast' function can only be used to visualize outputs from the 'sprinkle', 'sprinkle1', 'splash', 'splash1', 'spray', and 'spray1' functions.
+
 
 ## 6. Model validation metrics
 The **jollofR** package is a model-based approach which enables model validation by automatically computing model fit metrics based on the comparisons between the observed and the predicted values based on the age groups population disaggregation models. The computed metrics include:
@@ -915,7 +918,7 @@ $$\eqalign{
 where $N_i$ is as defined in equation (1). Note that for the above models to be valid, the proportions must add up to unity, that is, $\hat{p_{ij}} + \hat{p_{-ij}} = 1$.
 Parameter estimates were based on the integrated nested Laplace approximation (INLA; Rue et al., 2009), thereby enabling higher accuracy and faster computational speed. In addition, stochastic partial differential equation (SPDE; Lindgren et al., 2011) techniques were used to account for spatial autocorrelations within the sample data. However, within the **jollofR** version 0.3.0 package, the final model which consistently provided better fit included only the spatially independent random effect $\zeta_i$ which are implemented with covariates through the **cheesecake** and **spices** functions, or without covariates through the **cheesepop** and **slices** functions. 
 
-We illustrate the model framework example in the case of age-sex disaggregation across sex groups and 4 age groups using Figure 3 below. Here, the total population in a given administrative unit 'total' was first disaggregated into the 4 age agroups - 'pp_age_1', 'pp_age_2', 'pp_age_3', 'pp_age_4'. Then, each age group was further disaggregated into male and female age group totals 'pp_mage_' and 'pp_fage_', respectively. 
+We illustrate the model framework example in the case of age-sex disaggregation across sex groups and 4 age groups using **Figure 7** below. Here, the total population in a given administrative unit 'total' was first disaggregated into the 4 age agroups - 'pp_age_1', 'pp_age_2', 'pp_age_3', 'pp_age_4'. Then, each age group was further disaggregated into male and female age group totals 'pp_mage_' and 'pp_fage_', respectively. 
 
 
 ```mermaid
@@ -933,7 +936,7 @@ D[pp_age_3]-->K[pp_mage_3];
 E[pp_age_4]-->L[pp_fage_4];
 E[pp_age_4]-->M[pp_mage_4];
 ```
-#### Figure 3: Schematic representation of age-sex disaggregation steps. Example for 4 age groups. 
+**Figure 7**: Schematic representation of age-sex disaggregation steps. Example for 4 age groups. 
 
 ## Support and Contributions
 This is a development version of the **jollofR** package and we welcome contributions from the research community to improve **jollofR** and make it even much simpler for everyone to use. For support, bug reports, or feature requests, please contact:
