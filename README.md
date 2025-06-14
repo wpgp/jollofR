@@ -143,7 +143,7 @@ An object of class "list"- a list object containing two dataframes - an administ
   
 - **grd_id**: Available in the 'grid' dataset only. It is a numerical value which serves as the grid cell unique indentifier.
   
-- **x1,x2,x3**: These are the samples of geospatial covariates (only required for the 'cheesecake' and the 'slices' functions). Note that these are the covariates identified to significantly predict population distribution among the demographic groups. The package allows the user to include any number of covariates in their own datasets.
+- **x1, x2, x3**: These are the samples of geospatial covariates (only required for the 'cheesecake' and the 'slices' functions). Note that these are the covariates identified to significantly predict population distribution among the demographic groups. The package allows the user to include any number of covariates in their own datasets.
   
 - **total**: Available in both the 'admin' and 'grid' datasets. It provides estimates of the total population counts to be disaggregated. It DOES NOT necessarily have to be a rowsum of the age groups totals.
   
@@ -261,7 +261,7 @@ data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
 ![Alt text](cheesepop_result.png)
-**Figure 1**: A screenshot of result output from 'cheesecake' function (same as 'cheesepop') showing the various data frames derived from the posterior estimates. **age_pop** - dataframe containing predicted age groups population counts; **age_popL** - dataframe containing the lower bound of the predicted age groups population counts at 95% credible intervals; **age_popU** - dataframe containing upper bound of the predicted age groups population counts at 95% credible intervals; **age_prop** - dataframe containing predicted age groups population proportions; **fem_age_pop** - dataframe containing predicted age groups population for females; **fem_age_prop** - dataframe containing predicted age groups population proportions for females; **male_age_pop** - dataframe containing predicted age groups population for males; **male_age_prop** - dataframe containing predicted age groups population proportions for males. 
+**Figure 2**: A screenshot of result output from 'cheesecake' function (same as 'cheesepop') showing the various data frames derived from the posterior estimates. **age_pop** - dataframe containing predicted age groups population counts; **age_popL** - dataframe containing the lower bound of the predicted age groups population counts at 95% credible intervals; **age_popU** - dataframe containing upper bound of the predicted age groups population counts at 95% credible intervals; **age_prop** - dataframe containing predicted age groups population proportions; **fem_age_pop** - dataframe containing predicted age groups population for females; **fem_age_prop** - dataframe containing predicted age groups population proportions for females; **male_age_pop** - dataframe containing predicted age groups population for males; **male_age_prop** - dataframe containing predicted age groups population proportions for males. 
 
 ```
 # ... progress in R
@@ -466,7 +466,7 @@ data(toydata)
 result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 ```
 ```
-rclass <- paste0("TOY_population_v1_0_age",1:12)
+rclass <- paste0("TOY_population_v1_0_age",1:12) # names of the raster files as saved in the output folder.
 ```
 ```
 > rclass
@@ -480,7 +480,7 @@ result2 <- sprinkle(df = result$full_data, rdf = toydata$grid, rclass, output_di
 ```
 
 ```
-> names(result2$full_data)
+> names(result2$full_data) # view columns of the output full data.
   [1] "admin_id"    "grd_id"      "total"       "bld"         "lon"         "lat"         "pp_age_1"    "pp_age_2"    "pp_age_3"   
  [10] "pp_age_4"    "pp_age_5"    "pp_age_6"    "pp_age_7"    "pp_age_8"    "pp_age_9"    "pp_age_10"   "pp_age_11"   "pp_age_12"  
  [19] "pp_age_1L"   "pp_age_2L"   "pp_age_3L"   "pp_age_4L"   "pp_age_5L"   "pp_age_6L"   "pp_age_7L"   "pp_age_8L"   "pp_age_9L"  
@@ -503,7 +503,7 @@ result2 <- sprinkle(df = result$full_data, rdf = toydata$grid, rclass, output_di
 ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif")) # read in one of the saved rasters for checks, if required. 
 ```
 ```
-> ras2
+> ras2 # view properties of the raster file
 class       : SpatRaster 
 dimensions  : 120, 120, 1  (nrow, ncol, nlyr)
 resolution  : 0.0083, 0.0083  (x, y)
