@@ -259,7 +259,9 @@ Data frame objects of the output files including the disaggregated population pr
 data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
-![alt text](https://github.com/wpgp/jollofR/pyramid.png)
+![Alt text](pyramid.png)
+
+
 ```
 # view progress in R
 [1] "(1) age_1 model is running"
