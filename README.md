@@ -1008,10 +1008,12 @@ $$\eqalign{
  \hat{m_{ijg}} = \hat{p_{ij}}m_{ig}    &&  (5)
 }$$
 
-where $m_{ig}$ is the weighted total population count of grid $g$ of *admin* $i$, and $w_{ig}$ is the grid $g$'s weight calculated as
+where $m_{ig}$ is the weighted total population count of grid $g$ of *admin* $i$, and $w_{ig}$ is the grid $g$'s weight calculated as,
+
 $$\eqalign{
- w_{ig} = b_{ig}/\sum_gb_{ig}}    &&  (6)
+ w_{ig} = b_{ig}/\sum_g b_{ig}    &&  (6)
 }$$
+
 As before, $\hat{p_{ij}}$ is the predicted proportion of group $j$ within administrative unit $i$, and the validity requirements of equation (5) are $\sum_gw_{ig}=1$, $\sum_jp_{ij}=1$ and $\sum_g m_{ig} = N_i$. That is, all weights and group proportions within *admin* $i$ must add up to 1 separately, and the total population counts across all the grid cells in administrative unit $i$ must add up to the estimated total population for administrative unit $i$. 
 
 Note that the *splash1* function is also based on equation (5) under the same assumptions and validity requirements, however, as noted earlier, *splash1* is only used for disaggregating population for only one group level at a time. In other works, while *splash* can be used to disaggregate into age and sex groups at the same time, for example, *splash* can only be used to disaggregate either age or sex, or ethnicity groups one at a time. 
