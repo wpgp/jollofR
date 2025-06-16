@@ -1042,7 +1042,7 @@ This is a development version of the **jollofR** package and we welcome contribu
 
 Alternatively, please feel free to open an issue on the GitHub repository via https://github.com/wpgp/jollof/issues.
 
-**Suggested citation**: Nnanatu C, Chaudhuri S, Yankey O, Lazar A, Tatem A (2025). **jollofR**: A Bayesian statistical model-based approach for disaggregating small area population estimates by demographic characteristics. R package version 0.3.0, https://github.com/wpgp/jollofR/. 
+**Suggested citation**: Nnanatu, C.C., Chaudhuri, S., Yankey, O., Lazar, A.N., Tatem, A.J.(2025). **jollofR**: A Bayesian statistical model-based approach for disaggregating small area population estimates by demographic characteristics. R package version 0.3.0, https://github.com/wpgp/jollofR/. 
 
 
 ## References
