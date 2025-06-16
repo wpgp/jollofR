@@ -1053,7 +1053,7 @@ Alternatively, please feel free to open an issue on the GitHub repository via ht
 5) Lindgren, F., Rue, H. & Lindström, J.(2011). An explicit link between gaussian fields and gaussian markov random fields: The stochastic partial differential equation approach. *J R Stat Soc Series B Stat Methodol*. doi:10.1111/j.1467-9868.2011.00777.x.
 6) Nnanatu, C. et al. (2024) Modelled gridded population estimates for Cameroon 2022. Version 1.0, University of Southampton, 17 Jun 2024, DOI: 10.5258/SOTON/WP00784, https://data.worldpop.org/repo/wopr/CMR/population/v1.0/.
 7) Nnanatu, C.C., et al. (2025a) Efficient Bayesian Hierarchical Small Area Population Estimation Using INLA-SPDE: Integrating Multiple Data Sources and Spatial-Autocorrelation. in Preprints; 10.20944/preprints202501.0588.v1.
-8) Nnanatu, C.C., Bonnie, A., Joseph, J. et al.(2025). Estimating small area population from health intervention campaign surveys and partially observed settlement data. Nat Commun 16, 4951. https://doi.org/10.1038/s41467-025-59862-4
+8) Nnanatu, C.C., Bonnie, A., Joseph, J. et al.(2025b). Estimating small area population from health intervention campaign surveys and partially observed settlement data. Nat Commun 16, 4951. https://doi.org/10.1038/s41467-025-59862-4
 9) Rue, H., Martino, S. & Chopin, N.(2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. *J R Stat Soc Series B Stat Methodol* 71.
 
    
