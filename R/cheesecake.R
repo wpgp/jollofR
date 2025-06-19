@@ -74,6 +74,15 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
 
   # covariates
   covs <- df %>% dplyr::select(starts_with("x"))
+
+  # standardize covariates
+  stdize <- function(x)
+  {
+    stdz <- (x - mean(x, na.rm=T))/sd(x, na.rm=T)
+    return(stdz)
+  }
+  
+  covs <- data.frame(apply(covs, 2, stdize))
   cov_names <- names(covs)# extract covariates names
 
   age_df <- cbind(age_df, covs) # add covariates to the age data
