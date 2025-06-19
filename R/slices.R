@@ -75,8 +75,8 @@ slices <-function(df,output_dir, class)# disaggregates by age only - no covariat
 
     cat_df[,colnames(cat_df)[i]] <- round(cat_df[,i])
 
-    form_cat <- as.formula(paste0(colnames(cat_df)[i], " ~ ",
-                                  "1 +   f(ID, model = 'iid', hyper = prior.prec)"))# Adding the IID here
+    form_cat <- as.formula(paste0(colnames(cat_df)[i], " ~ 1"))# Adding the IID here
+    
     if (requireNamespace("INLA", quietly = TRUE)) {
     mod_cat  <- INLA::inla(form_cat,
                            data = cat_df,
