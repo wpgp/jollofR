@@ -80,8 +80,7 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
     age_df[,colnames(age_df)[i]] <- round(age_df[,i]) # input count should be integer
 
 
-    form_age <- as.formula(paste0(colnames(age_df)[i], " ~ ",
-                                  "1 +   f(ID, model = 'iid', hyper = prior.prec)"))# Adding the IID here
+   form_age <- as.formula(paste0(colnames(age_df)[i], " ~ 1"))
 
     if (requireNamespace("INLA", quietly = TRUE)) {
     mod_age  <- INLA::inla(form_age,
