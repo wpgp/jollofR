@@ -41,8 +41,6 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     message(paste("Directory", output_dir, "already exists."))
   }
 
-  # df = dat1
-
   # Partially observed age data
   #  class <- names(dat1 %>% select(starts_with("age_")))
   cat_df <- df[,class]
@@ -62,6 +60,15 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
 
   # covariates
   covs <- df %>% dplyr::select(starts_with("x"))
+
+  # standardize covariates
+  stdize <- function(x)
+  {
+    stdz <- (x - mean(x, na.rm=T))/sd(x, na.rm=T)
+    return(stdz)
+  }
+  
+  covs <- data.frame(apply(covs, 2, stdize))
   cov_names <- names(covs)# extract covariates names
 
   cat_df <- cbind(cat_df, covs) # add covariates to the age data
