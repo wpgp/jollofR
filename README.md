@@ -78,6 +78,7 @@ In addition to **INLA** package, you may also need to confirm that you have the 
 ```{r eval=FALSE, include=TRUE}
 library(INLA)
 library(jollofR)
+library(tidyr) # use install.packages("tidyr") to install, if not available
 library(ggplot2) # use install.packages("ggplot2") to install, if not available
 library(dplyr)   # use install.packages("dplyr") to install, if not available
 library(terra)   # use install.packages("terra") to install, if not available
