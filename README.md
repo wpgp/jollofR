@@ -5,7 +5,11 @@ This statistical model-based approach allows us to estimate population proportio
 
 Altogether, the **jollofR** package contains 14 'simplified' functions and a 'toy' dataset to illustrate its implementations across different scenarios. These include functions for population prediction and disaggregation at the administrative units level ('cheesecake', 'cheesepop', 'spices' & 'slices') and those used for disaggregation at grid-cell level ('sprinkle', 'sprinkle1', 'splash', 'splash1', 'spray' & 'spray1'). Other functions ('boxLine', 'plotHist', 'plotRast' & 'pyramid') available within the **jollofR** package are used for data visualization which enable quick visual assessments of the disaggregated estimates. These functions which are embedded within a robust statistical modelling framework automatically create subnational demographically structured population counts and proportions tables as well as the corresponding high-resolution grid cell raster files in a very simple and efficient manner. 
 
-Further details on these functions, their arguments, usage and examples are provided in **Section 5** of this document, while further details on the underlying statistical methods are provided in **Section 9**.  Finally, while **jollofR** could be used to disaggregate population counts and population proportions across any mutually exclusive and exhaustive groups, here, our data description and usage examples are based on age-sex disaggregation, for ease of exposition. Note that, 'mutually exclusive' means that every individual within the population is only allowed to belong to one of the non-overlapping groups, while 'exhaustive' means that every individual within the entire population must belong to one of the groups and no one is left out. The **jollofR** functions are designed to be fully flexible to allow for a straightforward implementation for other socio-economic and socio-demographic groups so long as the 'mutually exclusive and exhaustive' requirements are met.  
+Further details on these functions, their arguments, usage and examples are provided in **Section 5** of this document, while further details on the underlying statistical methods are provided in **Section 9**.  Finally, while **jollofR** could be used to disaggregate population counts and population proportions across any mutually exclusive and exhaustive groups, here, our data description and usage examples are based on age-sex disaggregation, for ease of exposition. Note that, 'mutually exclusive' means that every individual within the population is only allowed to belong to one of the non-overlapping groups, while 'exhaustive' means that every individual within the entire population must belong to one of the groups and no one is left out. The **jollofR** functions are designed to be fully flexible to allow for a straightforward implementation for other socio-economic and socio-demographic groups so long as the 'mutually exclusive and exhaustive' requirements are met.  The pipeline overview of the underlying method is given in Figure 1 below:
+
+![Alt text](method_pipeline.png)
+#### Figure 1: Method pipeline overview
+
 
 # 2. Installation
 
@@ -87,11 +91,6 @@ library(raster)  # use install.packages("raster") to install, if not available
 
 # 3. Workflow Overview
 **jollofR** is designed to provide a very simple, efficient and statistically robust appraoch for providing disaggregated population counts across various demographic groups at operational admnistrative unit levels thus making it handy for the production of rapid demographically structured small area population counts. The **jollofR** package allows for population disaggregation with or without geospatial covariates. However, note that these geospatial covariates are those indentified *apriori* to significantly predict population distributions (functions which allow for wider range of geospatial covariates and automatically selects and retains the best fit covariates within the package are being developed by the authors). In all cases, estimates of uncertainties are also produced, and boxplots, line graphs, maps, and age-sex pyramid graphs (for age-sex disaggregations) are automatically generated. Below is the flowchart (Figure 1) for the key stages involved in the implementation of the **jollofR** package.
-
-
-![Alt text](method_pipeline.png)
-#### Figure 1: Method pipeline overview
-
 
 
 ```mermaid
