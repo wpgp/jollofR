@@ -88,6 +88,12 @@ library(raster)  # use install.packages("raster") to install, if not available
 # 3. Workflow Overview
 **jollofR** is designed to provide a very simple, efficient and statistically robust appraoch for providing disaggregated population counts across various demographic groups at operational admnistrative unit levels thus making it handy for the production of rapid demographically structured small area population counts. The **jollofR** package allows for population disaggregation with or without geospatial covariates. However, note that these geospatial covariates are those indentified *apriori* to significantly predict population distributions (functions which allow for wider range of geospatial covariates and automatically selects and retains the best fit covariates within the package are being developed by the authors). In all cases, estimates of uncertainties are also produced, and boxplots, line graphs, maps, and age-sex pyramid graphs (for age-sex disaggregations) are automatically generated. Below is the flowchart (Figure 1) for the key stages involved in the implementation of the **jollofR** package.
 
+
+![Alt text](method_pipeline.png)
+#### Figure 1: Method pipeline overview
+
+
+
 ```mermaid
 graph TD;
 A[Install INLA and jollofR]-->B[Prepare the input data];
@@ -95,7 +101,7 @@ B[Prepare the input data]-->C[Specify the output folder];
 C[Specify the output folder]-->D[Run the desired functions];
 D[Run the desired functions]-->E[Collate results];
 ```
-#### Figure 1: Flowchart of jollofR implementation steps.
+#### Figure 2: Flowchart of jollofR implementation steps.
 
 
 ##  Initialise
@@ -262,7 +268,7 @@ data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
 ![Alt text](cheesepop_result.png)
-**Figure 2**: A screenshot of result output from 'cheesecake' function (same as 'cheesepop') showing the various data frames derived from the posterior estimates. **age_pop** - dataframe containing predicted age groups population counts; **age_popL** - dataframe containing the lower bound of the predicted age groups population counts at 95% credible intervals; **age_popU** - dataframe containing upper bound of the predicted age groups population counts at 95% credible intervals; **age_prop** - dataframe containing predicted age groups population proportions; **fem_age_pop** - dataframe containing predicted age groups population counts for females; **fem_age_prop** - dataframe containing predicted age groups population proportions for females; **male_age_pop** - dataframe containing predicted age groups population counts for males; **male_age_prop** - dataframe containing predicted age groups population proportions for males. 
+**Figure 3**: A screenshot of result output from 'cheesecake' function (same as 'cheesepop') showing the various data frames derived from the posterior estimates. **age_pop** - dataframe containing predicted age groups population counts; **age_popL** - dataframe containing the lower bound of the predicted age groups population counts at 95% credible intervals; **age_popU** - dataframe containing upper bound of the predicted age groups population counts at 95% credible intervals; **age_prop** - dataframe containing predicted age groups population proportions; **fem_age_pop** - dataframe containing predicted age groups population counts for females; **fem_age_prop** - dataframe containing predicted age groups population proportions for females; **male_age_pop** - dataframe containing predicted age groups population counts for males; **male_age_prop** - dataframe containing predicted age groups population proportions for males. 
 
 ```
 # ... progress in R
@@ -370,7 +376,7 @@ pyramid(female_pop,male_pop) # make the observed pyramid plot
 ```
 
 ![Alt text](pyramid.png)
-**Figure 3**: Example of pyramid graph from 'cheesecake', 'cheesepop', 'sprinkle', 'splash' or 'spray' functions which produce two-level disaggregations (e.g., age and sex). 
+**Figure 4**: Example of pyramid graph from 'cheesecake', 'cheesepop', 'sprinkle', 'splash' or 'spray' functions which produce two-level disaggregations (e.g., age and sex). 
 
 ## 'spices'
 ### Description
@@ -788,7 +794,7 @@ boxLine(dmat=result$male_age_pop,
 
 ```
 ![Alt text](boxLine.png)
-**Figure 4**: a) Boxplots of the porterior distribution of population counts across the various age groups, and b) line plot of the aggregated population counts across all administrative units for each age group.  The 'boxLine' function can be used for the outputs from all the **jollofR** disaggregation functions. 
+**Figure 5**: a) Boxplots of the porterior distribution of population counts across the various age groups, and b) line plot of the aggregated population counts across all administrative units for each age group.  The 'boxLine' function can be used for the outputs from all the **jollofR** disaggregation functions. 
 
 # 'plotHist'	
 ### Description
@@ -824,7 +830,7 @@ plotHist(dmat=result$age_pop,
 
 ```
 ![Alt text](plotHist.png)
-**Figure 5**: Histograms of the posterior distribution of population counts across different age groups. The 'plotHist' function can be used for the outputs from all the disaggregation functions. 
+**Figure 6**: Histograms of the posterior distribution of population counts across different age groups. The 'plotHist' function can be used for the outputs from all the disaggregation functions. 
 
 # 'plotRast'	
 ### Description
@@ -879,7 +885,7 @@ nrow = 4, ncol =3)# rows and columns of the panels of the output maps
 
 ```
 ![Alt text](plotRast.png)
-**Figure 6**: Maps of the gridded raster files of the posterior estimates of population across the age groups. The 'plotRast' function can only be used to visualize outputs from the 'sprinkle', 'sprinkle1', 'splash', 'splash1', 'spray', and 'spray1' functions.
+**Figure 7**: Maps of the gridded raster files of the posterior estimates of population across the age groups. The 'plotRast' function can only be used to visualize outputs from the 'sprinkle', 'sprinkle1', 'splash', 'splash1', 'spray', and 'spray1' functions.
 
 
 ## 6. Model validation metrics
@@ -984,7 +990,7 @@ D[pp_age_3]-->K[pp_mage_3];
 E[pp_age_4]-->L[pp_fage_4];
 E[pp_age_4]-->M[pp_mage_4];
 ```
-**Figure 7**: Schematic representation of age-sex disaggregation steps. Example for 4 age groups. 
+**Figure 8**: Schematic representation of age-sex disaggregation steps. Example for 4 age groups. 
 
 
 ## 10 Disaggregation at high-resolution grid cells
