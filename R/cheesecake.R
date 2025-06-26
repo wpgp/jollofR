@@ -53,6 +53,7 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
   # Add the total population to the age data
   age_df$total <- apply(age_df, 1, sum)
   age_df$total[age_df$total==0] = NA
+  age_df$set_typ <- df$set_typ
   age_df$pop <- df$total
 
 
@@ -96,8 +97,10 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
 
     age_df[,colnames(age_df)[i]] <- round(age_df[,i])
 
-    form_age <- as.formula(paste0(colnames(age_df)[i], " ~ 1 + f(ID, model = 'iid', hyper = prior.prec) +",
+    form_age <- as.formula(paste0(colnames(age_df)[i], " ~ 1 + f(ID, model = 'iid', hyper = prior.prec) +
+                                  f(set_typ, model = 'iid', hyper = prior.prec) +", # settlement type
                                   paste(cov_names, collapse = " + ")))
+    
     if (requireNamespace("INLA", quietly = TRUE)) {
     mod_age  <- INLA::inla(form_age,
                      data = age_df,
