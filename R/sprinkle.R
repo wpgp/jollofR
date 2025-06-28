@@ -31,7 +31,8 @@
 #'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 #'rclass <- paste0("TOY_population_v1_0_age",1:12)
 #'  # run 'sprinkle' function for grid cell disaggregation and save
-#'result2 <-  sprinkle(df = result$full_data, rdf = grid_data, rclass, toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
+#'result2 <-  sprinkle(df = result$full_data, rdf = grid_data, rclass, 
+#' toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
 #'ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 #'plot(ras2) # visulize raster
 #'
@@ -44,7 +45,6 @@
 #'@importFrom stats "as.formula" "cor" "plogis"
 #'@importFrom utils "write.csv"
 #'
-
 
 sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
 {
