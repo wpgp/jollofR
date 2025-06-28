@@ -74,15 +74,6 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
   cat_df <- cbind(cat_df, covs) # add covariates to the age data
 
 
-    # create sub-folder for saving fixed and random effect esimates
-  parameter_dir <- paste0(output_dir, "/fixed_and_random_effects/")
-  if (!dir.exists(parameter_dir)) {
-    dir.create(parameter_dir, recursive = TRUE)
-    message(paste("Directory", parameter_dir, "created successfully."))
-  }
-  else {
-    message(paste("Directory", parameter_dir, "already exists."))
-  }
   for(i in 1:length(cat_classes))
   {
      # i = 1
@@ -109,8 +100,16 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     } else {
       stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
     }
-    # save fixed and random effects estimates
-capture.output(summary(mod_cat), file = paste0(parameter_dir, "/","effects_estimates_for_",cat_classes[i],".txt"))
+  # Save fixed and random effects estimates for each group
+    parameter_dir <- paste0(output_dir, "/fixed_and_random_effects/",age_classes[i])
+    if (!dir.exists(parameter_dir)) {
+      dir.create(parameter_dir, recursive = TRUE)
+      message(paste("Directory", parameter_dir, "created successfully."))
+    }
+    else {
+      message(paste("Directory", parameter_dir, "already exists."))
+    }
+    capture.output(summary(mod_age), file = paste0(parameter_dir, "/posterior_estimates.txt"))
     
     prop_dt[,i] = round(plogis(mod_cat$summary.linear.predictor$mean),7)
     prop_dtL[,i] = round(plogis(mod_cat$summary.linear.predictor$'0.025quant'),7)
