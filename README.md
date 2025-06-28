@@ -154,6 +154,7 @@ An object of class "list"- a list object containing two dataframes - an administ
 - **total**: Available in both the 'admin' and 'grid' datasets. It provides estimates of the total population counts to be disaggregated. It DOES NOT necessarily have to be a rowsum of the age groups totals.
   
 - **bld**: Available in both the 'admin' and 'grid' datasets. It provides the total number of buildings in each grid cell or administrative unit.
+- **set_typ**: Administrative unit’s settlement type classification (e.g., urban, rural).
   
 - **age_1, ..., age_12**: These correspond to the partially or fully observed number of people for each age group. Note that only 12 age groups are used here for illustration purposes,however, the package can accommodate any number of age or sex or any demographic groups.
   
