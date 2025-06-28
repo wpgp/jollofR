@@ -4,7 +4,7 @@
 \alias{sprinkle}
 \title{sprinkle: Disaggregates population counts at high-resolution grid cells using the grid cell's total population counts. Note that this could also be applied to more than two levels scenarios}
 \usage{
-sprinkle(df, rdf, rclass, output_dir)
+sprinkle(df, rdf, rclass, toSave, rasterToCSV, output_dir)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's
@@ -14,6 +14,13 @@ total populatioin count to be disaggregated as well as other key variables as de
 in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and Latitude (lat) of the grid cell's centroids.}
 
 \item{rclass}{This is a user-defined names of the files to be saved in the output folder.}
+
+\item{toSave}{Specifies the raster files to save - it has three options: set toSave="prop" to write only age and age-sex proportion files only,
+or set toSave = "pop" to write age and age-sex population count files only, or set toSave = "everything" to write everything including
+lower and upper bounds of 95-percent credible interval.}
+
+\item{rasterToCSV}{This is used to declare whether the raster files should also be saved as .CSV files: set rasterToCSV = NULL to skip,
+or set rasterToCSV = TRUE to write the corresponding .CSV files. Note that the length of time taken depends on the size of the files.}
 
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
@@ -37,7 +44,8 @@ data(toydata)
 result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 rclass <- paste0("TOY_population_v1_0_age",1:12)
  # run 'sprinkle' function for grid cell disaggregation and save
-result2 <- sprinkle(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
+result2 <-  sprinkle(df = result$full_data, rdf = grid_data, rclass,
+toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
 ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 plot(ras2) # visulize raster
 
