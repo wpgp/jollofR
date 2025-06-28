@@ -17,25 +17,26 @@ Authors@R: c(
 Description: Automatic disaggregation of small area population estimates by
     demographic groups (e.g.,age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches.
 License: MIT + file LICENSE
-URL: https://github.com/wpgp/jollofR/
+URL: https://github.com/wpgp/jollofR/, https://wpgp.github.io/jollofR/
 BugReports: https://github.com/wpgp/jollofR/issues
-SystemRequirements:INLA
+SystemRequirements: INLA
 Depends: R (>= 4.1.0)
 Imports:
     terra, 
     raster,
-    INLA,
     ggplot2,
     dplyr,
     tidyr,
+    sf,
     ggpubr,
     reshape2,
     utils
-Suggests:tidyverse,
+Suggests:
+    tidyverse,
     haven,
     caret,
     tibble,
-    sf,
+    INLA,
     R6,
     glue,
     knitr,
