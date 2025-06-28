@@ -87,6 +87,17 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
   cov_names <- names(covs)# extract covariates names
 
   age_df <- cbind(age_df, covs) # add covariates to the age data
+
+  # create sub-folder for saving fixed and random effect esimates
+  parameter_dir <- paste0(output_dir, "/fixed_and_random_effects/")
+  if (!dir.exists(parameter_dir)) {
+    dir.create(parameter_dir, recursive = TRUE)
+    message(paste("Directory", parameter_dir, "created successfully."))
+  }
+  else {
+    message(paste("Directory", parameter_dir, "already exists."))
+  }
+  
   for(i in 1:length(age_classes))
   {
 
@@ -112,10 +123,16 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
     stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
   }
 
+  # SAVE fixed and random effects parameter estimates
+ capture.output(summary(mod_age), file = paste0(parameter_dir, "/","effects_estimates_for_",age_classes[i],".txt"))
+
+    # extract posterior results
+       # proportions
     prop_dt[,i] = round(plogis(mod_age$summary.linear.predictor$mean),4)
     prop_dtL[,i] = round(plogis(mod_age$summary.linear.predictor$'0.025quant'),4)
     prop_dtU[,i] = round(plogis(mod_age$summary.linear.predictor$'0.975quant'),4)
 
+       # counts
     pred_dt[,i] = round(prop_dt[,i]*age_df$pop)
     pred_dtL[,i] = round(prop_dtL[,i]*age_df$pop)
     pred_dtU[,i] = round(prop_dtU[,i]*age_df$pop)
