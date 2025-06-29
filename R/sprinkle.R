@@ -32,7 +32,7 @@
 #'  # run 'sprinkle' function for grid cell disaggregation and save
 #'result2 <-  sprinkle(df = result$full_data, rdf = toydata$grid, rclass,
 #' toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
-#'ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 #'plot(ras2) # visulize raster
 #'
 #'@export
@@ -57,6 +57,9 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
   }
 
   # specify age classes
+
+  # df = result$full_data
+  # rdf = toydata$grid
   age_classes <- names(df %>% dplyr::select(starts_with("age_")))
   prp_age_classes <- paste0("prp_",age_classes)
   prp_age_classesL <- paste0("prp_",age_classes, "L")
@@ -92,10 +95,10 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
     ids <- which(rdf$admin_id == i)
 
     for (j in 1:length(age_classes)) {
-
+      # j = 4
       print(paste(paste0("age class ", j, " of admin ", i,
                          " is running")))
-      # j = 4
+
       #Grid disaggregation for all age groups
       prop_dt[ids, j] <- df[i, prp_age_classes[j]]  # mean
       pred_dt[ids, j] <- round(prop_dt[ids, j]*grid_df$total,2)
@@ -353,8 +356,7 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - rdf$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T), MAPE = (1/length(rdf$total)) *
-                      sum(abs((rdf$total - all_pop$total)/rdf$total)) * 100,
+  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T),
                     RMSE = sqrt(mean(residual^2, na.rm = T)), corr = cor(rdf$total[!is.na(rdf$total)],
                                                                          all_pop$total[!is.na(rdf$total)]))))
   write.csv(mets, paste0(output_dir, "/fit_metrics.csv"), row.names = F)
