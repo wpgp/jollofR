@@ -1,6 +1,6 @@
 Package: jollofR
 Type: Package
-Title: A Bayesian statistical model-based approach for disaggregating small area population estimates by demographic characteristics
+Title: A Bayesian Statistical Model-Based Approach for Disaggregating Small Area Population Estimates by Demographic Characteristics
 Version: 0.3.0
 Authors@R: c(
     person("Chibuzor Christopher", "Nnanatu", , "cc.nnanatu@soton.ac.uk", role = c("aut", "cre"),
@@ -25,6 +25,7 @@ Imports:
     terra, 
     raster,
     ggplot2,
+    fmesher,
     dplyr,
     tidyr,
     sf,
@@ -33,10 +34,10 @@ Imports:
     utils
 Suggests:
     tidyverse,
+    INLA,
     haven,
     caret,
     tibble,
-    INLA,
     R6,
     glue,
     knitr,
