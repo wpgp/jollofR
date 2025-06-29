@@ -24,7 +24,6 @@
 #' result <- cheesepop(df = toydata$admin, output_dir = tempdir())
 #'@export
 #'@importFrom dplyr "%>%"
-#'@importFrom fmesher "fm_identical_CRS"
 #'@importFrom raster "rasterFromXYZ"
 #'@importFrom sf "st_read"
 #'@importFrom grDevices "dev.off" "png"
