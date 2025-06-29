@@ -22,14 +22,16 @@
 #'@examples
 #'data(toydata)
 #' result <- cheesepop(df = toydata$admin, output_dir = tempdir())
-#' @export
-#' @importFrom dplyr "%>%"
-#' @importFrom INLA "inla"
+#'@export
+#'@importFrom dplyr "%>%"
+#'@importFrom fmesher "fm_identical_CRS"
 #'@importFrom raster "rasterFromXYZ"
+#'@importFrom sf "st_read"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"
 #'@importFrom utils "write.csv"
+#'
 cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covariates
 {
 
@@ -80,16 +82,17 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
     age_df[,colnames(age_df)[i]] <- round(age_df[,i]) # input count should be integer
 
 
-   form_age <- as.formula(paste0(colnames(age_df)[i], " ~ 1"))
+    form_age <- as.formula(paste0(colnames(age_df)[i], " ~ ",
+                                  "1 +   f(ID, model = 'iid', hyper = prior.prec)"))# Adding the IID here
 
-    if (requireNamespace("INLA", quietly = TRUE)) {
+   if(requireNamespace("INLA", quietly = TRUE)) {
     mod_age  <- INLA::inla(form_age,
                      data = age_df,
                      family = "binomial", Ntrials = total,
                      control.predictor = list(link=1, compute = TRUE),
                      control.compute = list(dic = TRUE, cpo = TRUE)
     )
-  } else {
+  }else{
     stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
   }
 

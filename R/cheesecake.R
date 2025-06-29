@@ -20,9 +20,10 @@
 #'@examples
 #'data(toydata)
 #' result <- cheesecake(df = toydata$admin, output_dir = tempdir())
-#' @export
-#' @importFrom dplyr "%>%"
-#' @importFrom INLA "inla"
+#'@export
+#'@importFrom dplyr "%>%"
+#'@importFrom stats "sd"
+#'@importFrom utils "capture.output"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"
@@ -82,7 +83,7 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
     stdz <- (x - mean(x, na.rm=T))/sd(x, na.rm=T)
     return(stdz)
   }
-  
+
   covs <- data.frame(apply(covs, 2, stdize))
   cov_names <- names(covs)# extract covariates names
 
@@ -101,19 +102,20 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
     form_age <- as.formula(paste0(colnames(age_df)[i], " ~ 1 + f(ID, model = 'iid', hyper = prior.prec) +
                                   f(set_typ, model = 'iid', hyper = prior.prec) +", # settlement type
                                   paste(cov_names, collapse = " + ")))
-    
-    if (requireNamespace("INLA", quietly = TRUE)) {
-    mod_age  <- INLA::inla(form_age,
-                     data = age_df,
-                     family = "binomial", Ntrials = total,
-                     control.predictor = list(link=1, compute = TRUE),
-                     control.compute = list(dic = TRUE, cpo = TRUE)
-    )
-  } else {
-    stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
-  }
 
- # Save fixed and random effects estimates for each group
+    if (requireNamespace("INLA", quietly = TRUE)) {
+      mod_age  <- INLA::inla(form_age,
+                             data = age_df,
+                             family = "binomial", Ntrials = total,
+                             control.predictor = list(link=1, compute = TRUE),
+                             control.compute = list(dic = TRUE, cpo = TRUE)
+      )
+
+   } else {
+      stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
+    }
+
+    # Save fixed and random effects estimates for each group
     parameter_dir <- paste0(output_dir, "/fixed_and_random_effects/",age_classes[i])
     if (!dir.exists(parameter_dir)) {
       dir.create(parameter_dir, recursive = TRUE)
@@ -123,14 +125,14 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
       message(paste("Directory", parameter_dir, "already exists."))
     }
     capture.output(summary(mod_age), file = paste0(parameter_dir, "/posterior_estimates.txt"))
-    
+
     # extract posterior results
-       # proportions
+    # proportions
     prop_dt[,i] = round(plogis(mod_age$summary.linear.predictor$mean),4)
     prop_dtL[,i] = round(plogis(mod_age$summary.linear.predictor$'0.025quant'),4)
     prop_dtU[,i] = round(plogis(mod_age$summary.linear.predictor$'0.975quant'),4)
 
-       # counts
+    # counts
     pred_dt[,i] = round(prop_dt[,i]*age_df$pop)
     pred_dtL[,i] = round(prop_dtL[,i]*age_df$pop)
     pred_dtU[,i] = round(prop_dtU[,i]*age_df$pop)
@@ -144,16 +146,16 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
                                   "1 +   f(ID, model = 'iid', hyper = prior.prec)"))# Adding the IID here
 
     if (requireNamespace("INLA", quietly = TRUE)) {
-    mod_sex  <- INLA::inla(form_sex,
-                     data = f_dat,
-                     family = "binomial", Ntrials = age_df[,i],
-                     control.predictor = list(link=1, compute = TRUE),
-                     control.compute = list(dic = TRUE, cpo = TRUE)
-    )
+      mod_sex  <- INLA::inla(form_sex,
+                             data = f_dat,
+                             family = "binomial", Ntrials = age_df[,i],
+                             control.predictor = list(link=1, compute = TRUE),
+                             control.compute = list(dic = TRUE, cpo = TRUE)
+      )
 
-} else {
-  stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
-}
+    } else {
+      stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
+    }
     f.prop_dt[,i] = round(plogis(mod_sex$summary.linear.predictor$mean),4) # female proportion - mean
     m.prop_dt[,i] = 1- f.prop_dt[,i] # male proportion
 
@@ -234,7 +236,7 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
   mage_classes_prop = paste0("prp_",mage_classes)
   colnames(m.prop_dt) <- mage_classes_prop # predicted population proportion
 
-   # Not meaningful, not used - please ignore
+  # Not meaningful, not used - please ignore
   mage_classes_propL = paste0(mage_classes_prop,"L")
   colnames(m.prop_dtL) <- mage_classes_propL #
   mage_classes_propU = paste0(mage_classes_prop,"U")

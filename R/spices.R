@@ -22,9 +22,10 @@
 #'library(dplyr)
 #'classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
 #'result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)
-#' @export
-#' @importFrom dplyr "%>%"
-#' @importFrom INLA "inla"
+#'@export
+#'@importFrom dplyr "%>%"
+#'@importFrom stats "sd"
+#'@importFrom utils "capture.output"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"
@@ -55,6 +56,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
   cat_df$total[cat_df$total==0] = NA
 
   cat_df$pop <- df$total
+  cat_df$set_typ <- df$set_typ
   cat_df$ID <- 1:nrow(cat_df) # add IID
 
 
@@ -67,7 +69,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     stdz <- (x - mean(x, na.rm=T))/sd(x, na.rm=T)
     return(stdz)
   }
-  
+
   covs <- data.frame(apply(covs, 2, stdize))
   cov_names <- names(covs)# extract covariates names
 
@@ -76,7 +78,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
 
   for(i in 1:length(cat_classes))
   {
-     # i = 1
+    # i = 1
     # 1) Disaggregate by age - estimate missing age group proportion for each admin unit
     prior.prec <- list(prec = list(prior = "pc.prec",
                                    param = c(1, 0.01))) # using PC prior
@@ -85,23 +87,23 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     cat_df[,colnames(cat_df)[i]] <- round(cat_df[,i])
 
     form_cat <- as.formula(paste0(colnames(cat_df)[i], " ~ 1 + f(ID, model = 'iid', hyper = prior.prec) +
-                                  f(ID, model = 'iid', hyper = prior.prec) + ", # settlement type
+                                  f(set_typ, model = 'iid', hyper = prior.prec) + ", # settlement type
                                   paste(cov_names, collapse = " + ")))
 
 
     if (requireNamespace("INLA", quietly = TRUE)) {
-    mod_cat  <- INLA::inla(form_cat,
-                     data = cat_df,
-                     family = "binomial", Ntrials = total,
-                     control.predictor = list(compute = TRUE),
-                     control.compute = list(dic = TRUE, cpo = TRUE)
-    )
+      mod_cat  <- INLA::inla(form_cat,
+                             data = cat_df,
+                             family = "binomial", Ntrials = total,
+                             control.predictor = list(compute = TRUE),
+                             control.compute = list(dic = TRUE, cpo = TRUE)
+      )
 
     } else {
       stop("The 'INLA' package is required but not installed. Please install it from https://www.r-inla.org.")
     }
-  # Save fixed and random effects estimates for each group
-    parameter_dir <- paste0(output_dir, "/fixed_and_random_effects/",age_classes[i])
+    # Save fixed and random effects estimates for each group
+    parameter_dir <- paste0(output_dir, "/fixed_and_random_effects/",cat_classes[i])
     if (!dir.exists(parameter_dir)) {
       dir.create(parameter_dir, recursive = TRUE)
       message(paste("Directory", parameter_dir, "created successfully."))
@@ -109,8 +111,9 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     else {
       message(paste("Directory", parameter_dir, "already exists."))
     }
-    capture.output(summary(mod_age), file = paste0(parameter_dir, "/posterior_estimates.txt"))
-    
+    capture.output(summary(mod_cat), file = paste0(parameter_dir, "/posterior_estimates.txt"))
+
+
     prop_dt[,i] = round(plogis(mod_cat$summary.linear.predictor$mean),7)
     prop_dtL[,i] = round(plogis(mod_cat$summary.linear.predictor$'0.025quant'),7)
     prop_dtU[,i] = round(plogis(mod_cat$summary.linear.predictor$'0.975quant'),7)
@@ -118,7 +121,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     pred_dt[,i] = round(prop_dt[,i]*cat_df$pop)
     pred_dtL[,i] = round(prop_dtL[,i]*cat_df$pop)
     pred_dtU[,i] = round(prop_dtU[,i]*cat_df$pop)
-   # summary(mod_cat)
+    # summary(mod_cat)
   }
 
   ## Rename Columns
@@ -161,7 +164,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
   write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = F)
 
   # join all data
-   full_dat <- cbind(df,
+  full_dat <- cbind(df,
                     prop_dt, prop_dtL,prop_dtU,
                     pred_dt, pred_dtL,pred_dtU) # everything
 

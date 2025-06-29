@@ -34,6 +34,10 @@
 #'  \item{total}{Available in both the 'admin' and 'grid' datasets. It provides estimates of the total population counts to be disaggregated.
 #'  It DOES NOT necessarily have to be a rowsum of the age groups totals.}
 #'  \item{bld}{Available in both the 'admin' and 'grid' datasets. It provides the total number of buildings in each grid cell or administrative unit. }
+#'  \item{set_typ}{Administrative unit's settlement type classification (e.g., urban, rural).}
+#'  \item{edu_no, edu_prim, edu_sec, edu_high}{These are the fully or partially observed number of people
+#'  by the highest educational level of the household members. Here, edu_no = no education, edu_prim =
+#'  primary education, edu_sec = secondary education, and edu_high = higher education.}
 #'  \item{age_1, ..., age_12}{These correspond to the partially or fully observed number of people
 #'  for each age group. Note that only 12 age groups are used here for illustration purposes,however,
 #'  the package can accommodate any number of age or sex or any demographic groups.}
