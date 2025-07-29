@@ -1,40 +1,49 @@
-library(testthat)        # load testthat package
-library(jollofR)       # load our package
-library(dplyr)
+# helper to create temp output folder with automatic cleanup
+create_temp_output <- function(name) {
+  path <- file.path(tempdir(), name)
+  dir.create(path, showWarnings = FALSE, recursive = TRUE)
 
-# Test that the cheesecake function runs well and outputs a list
-test_that("cheesecake() returns a list", {
-  output_table <- cheesecake(df = toydata, output_dir = tempdir())
-  expect_type(output_table, "list")
+  withr::defer(
+    unlink(path, recursive = TRUE, force = TRUE),
+    envir = parent.frame()
+  )
+
+  path
+}
+
+testthat::test_that("cheesecake() returns a list", {
+  tmp <- create_temp_output("cheesecake")
+  output <- cheesecake(df = toydata$admin, output_dir = tmp)
+  testthat::expect_type(output, "list")
 })
 
-
-# Test that the cheesepop function runs well and outputs a list
-test_that("cheesepop() returns a list", {
-  output_table <- cheesepop(df = toydata, output_dir = tempdir())
-  expect_type(output_table, "list")
+testthat::test_that("cheesepop() returns a list", {
+  tmp <- create_temp_output("cheesepop")
+  output <- cheesepop(df = toydata$admin, output_dir = tmp)
+  testthat::expect_type(output, "list")
 })
 
-
-
-# Test that the scissors function runs well and outputs a list
-test_that("spices() returns a list", {
-  class <- names(toydata %>% dplyr::select(starts_with("age_")))
-  output_table <- spices(df = toydata, output_dir = tempdir(), class)
-  expect_type(output_table, "list")
+testthat::test_that("spices() returns a list", {
+  tmp <- create_temp_output("spices")
+  class_vars <- names(
+    toydata$admin |> dplyr::select(dplyr::starts_with("age_"))
+  )
+  output <- spices(df = toydata$admin, output_dir = tmp, class = class_vars)
+  testthat::expect_type(output, "list")
 })
 
-# Test that the slices function runs well and outputs a list
-test_that("slices() returns a list", {
-  class <- names(toydata %>% dplyr::select(starts_with("age_")))
-  output_table <- slices(df = toydata, output_dir = tempdir(), class)
-  expect_type(output_table, "list")
+testthat::test_that("slices() returns a list", {
+  tmp <- create_temp_output("slices")
+  class_vars <- names(
+    toydata$admin |> dplyr::select(dplyr::starts_with("age_"))
+  )
+  output <- slices(df = toydata$admin, output_dir = tmp, class = class_vars)
+  testthat::expect_type(output, "list")
 })
 
-
-# Test that the pyramid function runs well and outputs a list
-test_that("pyramid() returns a list", {
-  output_table <- cheesecake(df = toydata, output_dir = tempdir())
-  output_table2 <- pyramid(output_table$fem_age_pop, output_table$male_age_pop)
-  expect_type(output_table2, "list")
+testthat::test_that("pyramid() returns a list", {
+  tmp <- create_temp_output("pyramid")
+  out1 <- cheesecake(df = toydata$admin, output_dir = tmp)
+  out2 <- pyramid(out1$fem_age_pop, out1$male_age_pop)
+  testthat::expect_type(out2, "list")
 })
