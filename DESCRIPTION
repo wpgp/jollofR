@@ -1,7 +1,7 @@
 Package: jollofR
 Type: Package
 Title: A Bayesian Statistical Model-Based Approach for Disaggregating Small Area Population Estimates by Demographic Characteristics
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person("Chibuzor Christopher", "Nnanatu", , "cc.nnanatu@soton.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5841-3700")),
