@@ -1,3 +1,9 @@
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/wpgp/jollofR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/wpgp/jollofR/actions/workflows/R-CMD-check.yaml)
+
+<!-- badges: end -->
+
 # 1. Background
 
 **jollofR** version 0.3.0 is an R package that enables rapid disaggregation of small area population estimates into demographic groups such as age and sex classes as well as other socio-demographic and socio-economic categories (e.g., marital status, wealth indices, educational level, etc). It facilitates the filling of important population data gaps especially across settings where census data are either outdated or incomplete. **jollofR** is based on advanced multi-steps Bayesian hierarchical statistical modelling approach which first estimates the proportions of each demographic group’s composition within the population of interest based on a (often partially observed) sample data, and then uses it to disaggregate the total population estimate for each administrative unit within the population. **jollofR** also includes functions to easily disaggregate the population proportions and population numbers at high-resolution grid cells (e.g., 100m by 100m) along with the corresponding estimates of uncertaintity thereby facilitating evidence-based decision-making at small area units. It is **fully automated and does not require any special skills or deep knowledge in statistics or statistical modelling**, and the input population datasets could come from various sources including census, census projections, Microcensus, household surveys and administrative records.

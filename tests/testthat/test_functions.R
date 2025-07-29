@@ -1,3 +1,6 @@
+# skip tests on cran
+testthat::skip_on_cran()
+
 # helper to create temp output folder with automatic cleanup
 create_temp_output <- function(name) {
   path <- file.path(tempdir(), name)
