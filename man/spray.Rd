@@ -29,6 +29,7 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels when there are no information on the building and population counts.
 }
 \examples{
+\dontrun{
  # load relevant libraries
 library(raster)
 library(terra)
@@ -41,5 +42,6 @@ rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
 result2 <- spray(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
 ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 plot(ras2) # visualize
+}
 
 }

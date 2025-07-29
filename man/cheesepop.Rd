@@ -29,6 +29,8 @@ It uses Bayesian statistical models to predict population proportions and popula
 Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
 }
 \examples{
+\dontrun{
 data(toydata)
 result <- cheesepop(df = toydata$admin, output_dir = tempdir())
+}
 }

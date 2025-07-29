@@ -31,6 +31,7 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels using the population counts of each grid cell.
 }
 \examples{
+\dontrun{
  # load relevant libraries
 library(raster)
 library(dplyr)
@@ -47,5 +48,6 @@ result2 <- sprinkle1(df = result$full_data,
 rdf = toydata$grid, class, rclass, output_dir = tempdir())
 ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 plot(ras2) # visulize raster
+}
 
 }
