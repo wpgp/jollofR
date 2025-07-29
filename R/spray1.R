@@ -22,6 +22,7 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
+#'\dontrun{
 #'library(raster) # load relevant libraries
 #'library(dplyr)
 #'library(terra)
@@ -36,6 +37,7 @@
 #'result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
 #'ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 #'plot(ras2) # visulize of the raster files produced
+#'}
 #'
 #'@export
 #'@importFrom dplyr "%>%"

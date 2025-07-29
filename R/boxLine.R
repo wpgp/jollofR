@@ -14,12 +14,14 @@
 #'@return A graphic image of two combined graphs - a boxplot and a line plot showing the distribution of the disaggregated  population counts across the groups.
 #'
 #'@examples
+#'\dontrun{
 #'library(ggplot2)
 #'data(toydata)
 #'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 #'boxLine(dmat=result$male_age_pop,
 #'        xlab="Age group (years)",
 #'        ylab = "Population Count")
+#'}
 #'
 #'@export
 #'@importFrom dplyr "%>%"

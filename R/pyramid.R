@@ -11,9 +11,11 @@
 #'@return A graphic image of age-sex population distribution pyramid
 #'
 #'@examples
+#'\dontrun{
 #'data(toydata)
 #'result <- cheesecake(df = toydata$admin, output_dir = tempdir())
-#' pyramid(result$fem_age_pop,result$male_age_pop)
+#'pyramid(result$fem_age_pop,result$male_age_pop)
+#'}
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"
