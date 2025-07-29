@@ -28,9 +28,17 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
       RENV_CONFIG_AUTO_LOAD: FALSE
+      RENV_ACTIVATE_PROJECT: FALSE
+      RENV_PROJECT: ""
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Remove renv activation
+        run: |
+          rm -f renv/activate.R
+          rm -f .Rprofile
+        shell: bash
 
       - uses: r-lib/actions/setup-pandoc@v2
 
