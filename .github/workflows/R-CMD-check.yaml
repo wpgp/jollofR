@@ -27,6 +27,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      RENV_CONFIG_AUTO_LOAD: FALSE
 
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +47,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck any::mvabund
+          extra-packages: any::rcmdcheck
 
       - name: Check
         env:
