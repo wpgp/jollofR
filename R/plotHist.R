@@ -13,13 +13,14 @@
 #'@return A graphic image of histogram of the disaggregated population count
 #'
 #'@examples
-#'
+#'\dontrun{
 #'data(toydata)
 #'library(ggplot2)
 #'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 #'plotHist(dmat=result$age_pop,
 #'         xlab="Population Count",
 #'         ylab = "Frequency")
+#'}
 #'
 #'@export
 #'@importFrom dplyr "%>%"

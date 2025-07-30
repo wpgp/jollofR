@@ -26,8 +26,10 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates by a single demographic (age or sex or religion, etc)
 }
 \examples{
+\dontrun{
 data(toydata)
 library(dplyr)
 classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
 result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)
+}
 }

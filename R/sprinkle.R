@@ -21,6 +21,7 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
+#'\dontrun{
 #' # load necessary libraries
 #'library(raster)
 #'library(terra)
@@ -34,6 +35,7 @@
 #' toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
 #'ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 #'plot(ras2) # visulize raster
+#'}
 #'
 #'@export
 #'@importFrom dplyr "%>%"

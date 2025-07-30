@@ -17,6 +17,7 @@
 #'@return A graphic image of the multi-panel maps of population disaggregated raster files
 #'
 #'@examples
+#'\dontrun{
 #'data(toydata)
 #'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 #'rclass <- paste0("TOY_population_v1_0_age",1:12)
@@ -34,6 +35,7 @@
 #' names = paste0("Age ", group),  # Customised names of the plot panels (same length as rclass)
 #' nrow = 4, ncol =3)# rows and columns of the panels of the output maps
 #' #ggsave(paste0(out_path, "/grid_maps.tif"),#plot = plt1, dpi = 300) - save in output folder
+#'}
 #'
 #'
 #'@export

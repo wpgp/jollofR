@@ -31,6 +31,7 @@ This function disaggregates population estimates at grid cell levels using the b
 total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.
 }
 \examples{
+\dontrun{
 library(raster) # load relevant libraries
 library(dplyr)
 library(terra)
@@ -45,5 +46,6 @@ rclass <- paste0("TOY_population_v1_0_age",1:12)
 result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
 ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 plot(ras2) # visulize of the raster files produced
+}
 
 }

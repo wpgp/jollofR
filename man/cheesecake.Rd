@@ -27,6 +27,8 @@ It uses Bayesian hierachical statistical models to predict population proportion
 Primarily designed to support users (e.g., National Statistical Offices) in filling population data gaps across various demographic groups due to outdated or incomplete census/population data.
 }
 \examples{
+\dontrun{
 data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+}
 }

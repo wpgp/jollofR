@@ -4,13 +4,14 @@
 \name{jollofR-package}
 \alias{jollofR}
 \alias{jollofR-package}
-\title{jollofR: A Bayesian statistical model-based approach for disaggregating small area population estimates by demographic characteristics}
+\title{jollofR: A Bayesian Statistical Model-Based Approach for Disaggregating Small Area Population Estimates by Demographic Characteristics}
 \description{
 Automatic disaggregation of small area population estimates by demographic groups (e.g.,age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches.
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://github.com/wpgp/jollofR/}
   \item \url{https://wpgp.github.io/jollofR/}
   \item Report bugs at \url{https://github.com/wpgp/jollofR/issues}
 }
@@ -22,6 +23,7 @@ Useful links:
 Authors:
 \itemize{
   \item Somnath Chaudhuri (\href{https://orcid.org/0000-0003-4899-1870}{ORCID})
+  \item Ortis Yankey (\href{https://orcid.org/0000-0002-0808-884X}{ORCID})
   \item Attila N Lazar (\href{https://orcid.org/0000-0003-2033-2013}{ORCID})
   \item Andrew J Tatem (\href{https://orcid.org/0000-0002-7270-941X}{ORCID})
 }

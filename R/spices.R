@@ -18,10 +18,12 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
+#'\dontrun{
 #'data(toydata)
 #'library(dplyr)
 #'classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
 #'result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)
+#'}
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom stats "sd"

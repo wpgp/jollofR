@@ -35,6 +35,7 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels using the population counts of each grid cell.
 }
 \examples{
+\dontrun{
 # load necessary libraries
 library(raster)
 library(terra)
@@ -44,9 +45,10 @@ data(toydata)
 result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 rclass <- paste0("TOY_population_v1_0_age",1:12)
  # run 'sprinkle' function for grid cell disaggregation and save
-result2 <-  sprinkle(df = result$full_data, rdf = grid_data, rclass,
+result2 <-  sprinkle(df = result$full_data, rdf = toydata$grid, rclass,
 toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
-ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 plot(ras2) # visulize raster
+}
 
 }

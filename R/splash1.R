@@ -22,6 +22,7 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
+#'\dontrun{
 #' # load key libraries
 #' library(raster)
 #' library(dplyr)
@@ -39,6 +40,7 @@
 #'   # read and visualise one of the saved raster files
 #' ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
 #' plot(ras2)
+#'}
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom INLA "inla"

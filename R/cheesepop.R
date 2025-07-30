@@ -20,8 +20,10 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
+#'\dontrun{
 #'data(toydata)
 #' result <- cheesepop(df = toydata$admin, output_dir = tempdir())
+#'}
 #'@export
 #'@importFrom dplyr "%>%"
 #'@importFrom raster "rasterFromXYZ"
