@@ -422,9 +422,6 @@ names(male_pop) <- paste0("pp_", names(male_pop))# rename the variables by addin
 pyramid(female_pop,male_pop) # make the observed pyramid plot
 ```
 
-![Alt text](inst/doc/figures/pyramid.png)
-**Figure 4**: Example of pyramid graph from 'cheesecake', 'cheesepop', 'sprinkle', 'splash' or 'spray' functions which produce two-level disaggregations (e.g., age and sex).
-
 ## 'spices'
 
 ### Description
