@@ -114,7 +114,7 @@ C[Specify the output folder]-->D[Run the desired functions];
 D[Run the desired functions]-->E[Collate results];
 ```
 
-#### Figure 2: Flowchart of jollofR implementation steps.
+#### Figure 1: Flowchart of jollofR implementation steps.
 
 ## Initialise
 
