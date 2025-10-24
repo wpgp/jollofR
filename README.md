@@ -15,8 +15,6 @@ Altogether, the **jollofR** package contains 14 'simplified' functions and a 'to
 Further details on these functions, their arguments, usage and examples are provided in **Section 5** of this document, while further details on the underlying statistical methods are provided in **Section 9**. Finally, while **jollofR** could be used to disaggregate population counts and population proportions across any mutually exclusive and exhaustive groups, here, our data description and usage examples are based on age-sex disaggregation, for ease of exposition. Note that, 'mutually exclusive' means that every individual within the population is only allowed to belong to one of the non-overlapping groups, while 'exhaustive' means that every individual within the entire population must belong to one of the groups and no one is left out. The **jollofR** functions are designed to be fully flexible to allow for a straightforward implementation for other socio-economic and socio-demographic groups so long as the 'mutually exclusive and exhaustive' requirements are met. The pipeline overview of the underlying method is given in Figure 1 below:
 
 
-![Alt text](https://github.com/wpgp/jollofR/tree/main/docs/methods_pipeline.png)
-#### Figure 1: JollofR method pipeline overview - input datasets comprise both demographic data and geospatial covariates. Following data preparation/cleaning, statistical models are trained so that predictions can be made at both sampled and unsampled locations. The model outputs include disaggregated population numbers and proportions across various population groups (e.g., age, sex, education, ethnicity, wealth, etc). See Section 9 for more details on the underlying multi-step statistical modelling framework utilised.
 
 # 2. Installation
 
@@ -300,8 +298,7 @@ data(toydata)
 result <- cheesecake(df = toydata$admin, output_dir = tempdir())
 ```
 
-![Alt text](inst/doc/figures/cheesepop_result.png)
-**Figure 3**: A screenshot of result output from 'cheesecake' function (same as 'cheesepop') showing the various data frames derived from the posterior estimates. **age_pop** - dataframe containing predicted age groups population counts; **age_popL** - dataframe containing the lower bound of the predicted age groups population counts at 95% credible intervals; **age_popU** - dataframe containing upper bound of the predicted age groups population counts at 95% credible intervals; **age_prop** - dataframe containing predicted age groups population proportions; **fem_age_pop** - dataframe containing predicted age groups population counts for females; **fem_age_prop** - dataframe containing predicted age groups population proportions for females; **male_age_pop** - dataframe containing predicted age groups population counts for males; **male_age_prop** - dataframe containing predicted age groups population proportions for males.
+
 
 ```
 # ... progress in R
@@ -924,8 +921,6 @@ boxLine(dmat=result$male_age_pop,
 
 ```
 
-![Alt text](inst/doc/figures/boxLine.png)
-**Figure 5**: a) Boxplots of the porterior distribution of population counts across the various age groups, and b) line plot of the aggregated population counts across all administrative units for each age group. The 'boxLine' function can be used for the outputs from all the **jollofR** disaggregation functions.
 
 # 'plotHist'
 
@@ -969,8 +964,7 @@ plotHist(dmat=result$age_pop,
 
 ```
 
-![Alt text](inst/doc/figures/plotHist.png)
-**Figure 6**: Histograms of the posterior distribution of population counts across different age groups. The 'plotHist' function can be used for the outputs from all the disaggregation functions.
+
 
 # 'plotRast'
 
@@ -1033,8 +1027,7 @@ nrow = 4, ncol =3)# rows and columns of the panels of the output maps
 
 ```
 
-![Alt text](inst/doc/figures/plotRast.png)
-**Figure 7**: Maps of the gridded raster files of the posterior estimates of population across the age groups. The 'plotRast' function can only be used to visualize outputs from the 'sprinkle', 'sprinkle1', 'splash', 'splash1', 'spray', and 'spray1' functions.
+
 
 ## 6. Model validation metrics
 
