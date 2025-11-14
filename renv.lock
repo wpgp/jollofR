@@ -1175,12 +1175,12 @@
     },
     "fmesher": {
       "Package": "fmesher",
-      "Version": "0.2.0",
+      "Version": "0.5.0",
       "Source": "Repository",
       "Type": "Package",
       "Title": "Triangle Meshes and Related Geometry Tools",
       "Authors@R": "c( person(\"Finn\", \"Lindgren\", email = \"finn.lindgren@gmail.com\", role = c(\"aut\", \"cre\", \"cph\"), comment = c(ORCID = \"0000-0002-5833-2011\", \"Finn Lindgren wrote the main code\")), person(\"Seaton\", \"Andy\", email = \"andy.e.seaton@gmail.com\", role = c(\"ctb\"), comment = \"Andy Seaton constributed features to the sf support\"), person(\"Suen\", \"Man Ho\", email = \"M.H.Suen@sms.ed.ac.uk\", role = c(\"ctb\"), comment = \"Man Ho Suen contributed features and code structure design for the integration methods\"), person(\"Fabian E.\", \"Bachl\", email = \"bachlfab@gmail.com\", role = c(\"ctb\"), comment = \"Fabian Bachl co-developed precursors of fm_pixels and fm_split_lines in inlabru\") )",
-      "Description": "Generate planar and spherical triangle meshes, compute finite element calculations for 1- and 2-dimensional flat and curved manifolds with associated basis function spaces, methods for lines and polygons, and transparent handling of coordinate reference systems and coordinate transformation, including 'sf' and 'sp' geometries. The core 'fmesher' library code was originally part of the 'INLA' package, and implements parts of \"Triangulations and Applications\" by Hjelle and Daehlen (2006) <doi:10.1007/3-540-33261-8>.",
+      "Description": "Generate planar and spherical triangle meshes, compute finite element calculations for 1-, 2-, and 3-dimensional flat and curved manifolds with associated basis function spaces, methods for lines and polygons, and transparent handling of coordinate reference systems and coordinate transformation, including 'sf' and 'sp' geometries. The core 'fmesher' library code was originally part of the 'INLA' package, and implements parts of \"Triangulations and Applications\" by Hjelle and Daehlen (2006) <doi:10.1007/3-540-33261-8>.",
       "Depends": [
         "R (>= 4.0)",
         "methods"
@@ -1191,30 +1191,32 @@
         "grDevices",
         "lifecycle",
         "Matrix",
+        "Rcpp",
         "rlang",
         "sf",
+        "splancs",
         "stats",
         "tibble",
         "utils",
-        "withr",
-        "Rcpp"
+        "withr"
       ],
       "Suggests": [
+        "geometry",
         "ggplot2",
         "knitr",
+        "patchwork",
         "testthat (>= 3.0.0)",
         "terra",
         "tidyterra",
         "rgl",
         "rmarkdown",
         "sp (>= 1.6-1)",
-        "splancs",
         "gsl"
       ],
       "URL": "https://inlabru-org.github.io/fmesher/, https://github.com/inlabru-org/fmesher",
       "BugReports": "https://github.com/inlabru-org/fmesher/issues",
       "License": "MPL-2.0",
-      "Copyright": "2010-2024 Finn Lindgren, except src/predicates.cc by Jonathan Richard Shewchuk, 1996",
+      "Copyright": "2010-2025 Finn Lindgren, except src/predicates.cc by Jonathan Richard Shewchuk, 1996",
       "NeedsCompilation": "yes",
       "RoxygenNote": "7.3.2",
       "Encoding": "UTF-8",
@@ -1226,11 +1228,11 @@
       ],
       "VignetteBuilder": "knitr",
       "BuildVignettes": "true",
-      "Collate": "'RcppExports.R' 'deprecated.R' 'bary.R' 'bbox.R' 'print.R' 'crs.R' 'data-fmexample.R' 'diameter.R' 'evaluator.R' 'fem.R' 'fm.R' 'fmesher-package.R' 'fmesher.R' 'ggplot.R' 'integration.R' 'lattice_2d.R' 'list.R' 'local.R' 'manifold.R' 'mapping.R' 'matern.R' 'mesh.R' 'mesh_1d.R' 'mesh_2d.R' 'nonconvex_hull.R' 'onload.R' 'plot.R' 'segm.R' 'sf_mesh.R' 'sf_utils.R' 'simplify.R' 'sp_mesh.R' 'split_lines.R' 'tensor.R' 'utils.R'",
+      "Collate": "'RcppExports.R' 'deprecated.R' 'bary.R' 'basis.R' 'bbox.R' 'collect.R' 'components.R' 'print.R' 'crs.R' 'data-fmexample.R' 'diameter.R' 'evaluator.R' 'fem.R' 'fm.R' 'fmesher-package.R' 'fmesher.R' 'ggplot.R' 'integration.R' 'lattice_2d.R' 'lattice_Nd.R' 'list.R' 'local.R' 'manifold.R' 'mapping.R' 'matern.R' 'mesh.R' 'mesh_1d.R' 'mesh_2d.R' 'mesh_3d.R' 'mesh_assessment.R' 'nonconvex_hull.R' 'onload.R' 'plot.R' 'segm.R' 'sf_mesh.R' 'sf_utils.R' 'simplify.R' 'sp_mesh.R' 'split_lines.R' 'tensor.R' 'utils.R'",
       "LazyData": "true",
-      "Author": "Finn Lindgren [aut, cre, cph] (<https://orcid.org/0000-0002-5833-2011>, Finn Lindgren wrote the main code), Seaton Andy [ctb] (Andy Seaton constributed features to the sf support), Suen Man Ho [ctb] (Man Ho Suen contributed features and code structure design for the integration methods), Fabian E. Bachl [ctb] (Fabian Bachl co-developed precursors of fm_pixels and fm_split_lines in inlabru)",
+      "Author": "Finn Lindgren [aut, cre, cph] (ORCID: <https://orcid.org/0000-0002-5833-2011>, Finn Lindgren wrote the main code), Seaton Andy [ctb] (Andy Seaton constributed features to the sf support), Suen Man Ho [ctb] (Man Ho Suen contributed features and code structure design for the integration methods), Fabian E. Bachl [ctb] (Fabian Bachl co-developed precursors of fm_pixels and fm_split_lines in inlabru)",
       "Maintainer": "Finn Lindgren <finn.lindgren@gmail.com>",
-      "Repository": "RSPM"
+      "Repository": "CRAN"
     },
     "generics": {
       "Package": "generics",
@@ -2836,6 +2838,32 @@
       "NeedsCompilation": "yes",
       "Author": "Edzer Pebesma [aut, cre], Roger Bivand [aut], Barry Rowlingson [ctb], Virgilio Gomez-Rubio [ctb], Robert Hijmans [ctb], Michael Sumner [ctb], Don MacQueen [ctb], Jim Lemon [ctb], Finn Lindgren [ctb], Josh O'Brien [ctb], Joseph O'Rourke [ctb], Patrick Hausmann [ctb]",
       "Maintainer": "Edzer Pebesma <edzer.pebesma@uni-muenster.de>",
+      "Repository": "CRAN"
+    },
+    "splancs": {
+      "Package": "splancs",
+      "Version": "2.01-45",
+      "Source": "Repository",
+      "Date": "2024-05-13",
+      "Title": "Spatial and Space-Time Point Pattern Analysis",
+      "Authors@R": "c( person(\"Roger\", \"Bivand\", role = c(\"cre\"), email = \"Roger.Bivand@nhh.no\"), person(\"Barry\", \"Rowlingson\", role = \"aut\"), person(\"Peter\", \"Diggle\", role = \"aut\"), person(\"Giovanni\", \"Petris\", role = \"ctb\"), person(\"Stephen\", \"Eglen\", role = \"ctb\"))",
+      "Depends": [
+        "R (>= 2.10.0)",
+        "sp (>= 0.9)"
+      ],
+      "Imports": [
+        "stats",
+        "graphics",
+        "grDevices",
+        "methods"
+      ],
+      "Description": "The Splancs package was written as an enhancement to S-Plus for display and analysis of spatial point pattern data; it has been ported to R and is in \"maintenance mode\".",
+      "License": "GPL (>= 2)",
+      "URL": "https://www.maths.lancs.ac.uk/~rowlings/Splancs/, https://rsbivand.github.io/splancs/, https://github.com/rsbivand/splancs",
+      "BugReports": "https://github.com/rsbivand/splancs/issues",
+      "NeedsCompilation": "yes",
+      "Author": "Roger Bivand [cre], Barry Rowlingson [aut], Peter Diggle [aut], Giovanni Petris [ctb], Stephen Eglen [ctb]",
+      "Maintainer": "Roger Bivand <Roger.Bivand@nhh.no>",
       "Repository": "CRAN"
     },
     "stringi": {

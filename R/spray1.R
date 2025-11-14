@@ -41,7 +41,6 @@
 #'
 #'@export
 #'@importFrom dplyr "%>%"
-#'@importFrom INLA "inla"
 #'@importFrom raster "rasterFromXYZ"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"

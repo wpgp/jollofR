@@ -25,7 +25,6 @@
 #'result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)
 #'@export
 #'@importFrom dplyr "%>%"
-#'@importFrom INLA "inla"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
 #'@importFrom stats "as.formula" "cor" "plogis"

@@ -1,7 +1,7 @@
 Package: jollofR
 Type: Package
 Title: A Bayesian Statistical Model-Based Approach for Disaggregating Small Area Population Estimates by Demographic Characteristics
-Version: 0.4.0
+Version: 0.5.0
 Authors@R: c(
     person("Chibuzor Christopher", "Nnanatu", , "cc.nnanatu@soton.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5841-3700")),
@@ -25,7 +25,6 @@ Depends: R (>= 4.1.0)
 Additional_repositories:
     https://inla.r-inla-download.org/R/stable/
 Imports:
-    INLA,
     terra,
     raster,
     ggplot2,
@@ -36,6 +35,9 @@ Imports:
     reshape2,
     utils
 Suggests:
+    fmesher (>= 0.5.0),
+    INLA,
+    inlabru,
     knitr,
     rmarkdown,
     withr,
@@ -46,4 +48,5 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, r6 = TRUE)
 RoxygenNote: 7.3.2
+Language: en-US
 Config/Needs/website: rmarkdown

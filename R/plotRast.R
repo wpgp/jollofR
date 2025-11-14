@@ -40,7 +40,6 @@
 #'
 #'@export
 #'@importFrom dplyr "%>%"
-#'@importFrom INLA "inla"
 #'@importFrom ggplot2 "ggplot"
 #'@importFrom ggplot2 "aes"
 #'@importFrom ggplot2 "geom_bar"
