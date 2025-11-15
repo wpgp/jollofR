@@ -20,7 +20,6 @@ Description: Automatic disaggregation of small area population estimates  by dem
 License: MIT + file LICENSE
 URL: https://github.com/wpgp/jollofR/, https://wpgp.github.io/jollofR/
 BugReports: https://github.com/wpgp/jollofR/issues
-SystemRequirements: INLA
 Depends: R (>= 4.1.0)
 Additional_repositories:
     https://inla.r-inla-download.org/R/stable/
