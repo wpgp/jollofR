@@ -34,9 +34,7 @@ Imports:
     reshape2,
     utils
 Suggests:
-    fmesher (>= 0.5.0),
     INLA,
-    inlabru,
     knitr,
     rmarkdown,
     withr,
