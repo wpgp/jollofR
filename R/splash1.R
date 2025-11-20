@@ -23,23 +23,25 @@
 #'
 #'@examples
 #'\donttest{
-#' # load key libraries
-#' library(raster)
-#' library(dplyr)
-#' library(terra)
+#'if (requireNamespace("INLA", quietly = TRUE)) {
+#'  # load key libraries
+#'  library(raster)
+#'  library(dplyr)
+#'  library(terra)
 #'  # load toy data
-#' data(toydata)
+#'  data(toydata)
 #'  # run 'cheesepop' to obtain admin-level proportions
-#' result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'  result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 #'  # specify the names to assign to the raster files
 #'  class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
-#' rclass <- paste0("TOY_population_v1_0_age",1:12)
-#'   # run the splash function to disaggregate at grid cells
-#' result2 <- splash1(df = result$full_data, rdf = toydata$grid,
-#' class, rclass, output_dir = tempdir())
-#'   # read and visualise one of the saved raster files
-#' ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-#' plot(ras2)
+#'  rclass <- paste0("TOY_population_v1_0_age",1:12)
+#'  # run the splash function to disaggregate at grid cells
+#'  result2 <- splash1(df = result$full_data, rdf = toydata$grid,
+#'  class, rclass, output_dir = tempdir())
+#'  # read and visualise one of the saved raster files
+#'  ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'  plot(ras2)
+#'}
 #'}
 #'@export
 #'@importFrom dplyr "%>%"

@@ -25,12 +25,14 @@ The input data could come from any of the disaggregation functions within the 'j
 }
 \examples{
 \donttest{
-data(toydata)
-library(ggplot2)
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-plotHist(dmat=result$age_pop,
-        xlab="Population Count",
-        ylab = "Frequency")
+if (requireNamespace("INLA", quietly = TRUE)) {
+ data(toydata)
+ library(ggplot2)
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ plotHist(dmat=result$age_pop,
+          xlab="Population Count",
+          ylab = "Frequency")
+}
 }
 
 }

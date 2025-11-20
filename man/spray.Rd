@@ -30,18 +30,20 @@ This function disaggregates population estimates at grid cell levels when there 
 }
 \examples{
 \donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
  # load relevant libraries
-library(raster)
-library(terra)
-  # load toy data
-data(toydata)
+ library(raster)
+ library(terra)
+ # load toy data
+ data(toydata)
  # run 'cheesepop' function for admin level disaggregation
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
-  # run 'spray' for grid cell level disaggregation
-result2 <- spray(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
-ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-plot(ras2) # visualize
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
+ # run 'spray' for grid cell level disaggregation
+ result2 <- spray(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
+ ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ plot(ras2) # visualize
+}
 }
 
 }

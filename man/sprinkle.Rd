@@ -36,19 +36,21 @@ This function disaggregates population estimates at grid cell levels using the p
 }
 \examples{
 \donttest{
-# load necessary libraries
-library(raster)
-library(terra)
+if (requireNamespace("INLA", quietly = TRUE)) {
+ # load necessary libraries
+ library(raster)
+ library(terra)
  # load toy data
-data(toydata)
+ data(toydata)
  # run 'cheesepop' function for admin level disaggregation
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-rclass <- paste0("TOY_population_v1_0_age",1:12)
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ rclass <- paste0("TOY_population_v1_0_age",1:12)
  # run 'sprinkle' function for grid cell disaggregation and save
-result2 <-  sprinkle(df = result$full_data, rdf = toydata$grid, rclass,
-toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
-ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-plot(ras2) # visulize raster
+ result2 <-  sprinkle(df = result$full_data, rdf = toydata$grid, rclass,
+ toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
+ ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ plot(ras2) # visulize raster
+}
 }
 
 }

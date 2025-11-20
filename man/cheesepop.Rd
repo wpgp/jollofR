@@ -33,7 +33,9 @@ Primarily designed to help users in filling population data gaps across demograp
 }
 \examples{
 \donttest{
-data(toydata)
-result <- cheesepop(df = toydata$admin, output_dir = tempdir())
+if (requireNamespace("INLA", quietly = TRUE)) {
+ data(toydata)
+ result <- cheesepop(df = toydata$admin, output_dir = tempdir())
+}
 }
 }

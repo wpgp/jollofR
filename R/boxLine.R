@@ -15,12 +15,14 @@
 #'
 #'@examples
 #'\donttest{
-#'library(ggplot2)
-#'data(toydata)
-#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-#'boxLine(dmat=result$male_age_pop,
-#'        xlab="Age group (years)",
-#'        ylab = "Population Count")
+#'if (requireNamespace("INLA", quietly = TRUE)) {
+#'  library(ggplot2)
+#'  data(toydata)
+#'  result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'  boxLine(dmat=result$male_age_pop,
+#'          xlab="Age group (years)",
+#'          ylab = "Population Count")
+#'}
 #'}
 #'
 #'@export

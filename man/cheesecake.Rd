@@ -31,7 +31,9 @@ Primarily designed to support users (e.g., National Statistical Offices) in fill
 }
 \examples{
 \donttest{
-data(toydata)
-result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+if (requireNamespace("INLA", quietly = TRUE)) {
+ data(toydata)
+ result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+}
 }
 }

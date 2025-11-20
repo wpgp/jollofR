@@ -12,9 +12,11 @@
 #'
 #'@examples
 #'\donttest{
-#'data(toydata)
-#'result <- cheesecake(df = toydata$admin, output_dir = tempdir())
-#'pyramid(result$fem_age_pop,result$male_age_pop)
+#'if (requireNamespace("INLA", quietly = TRUE)) {
+#'  data(toydata)
+#'  result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+#'  pyramid(result$fem_age_pop,result$male_age_pop)
+#'}
 #'}
 #'@export
 #'@importFrom dplyr "%>%"

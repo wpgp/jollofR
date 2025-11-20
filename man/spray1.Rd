@@ -32,20 +32,22 @@ total population across the grid cells. Then, each grid cell's total count is fu
 }
 \examples{
 \donttest{
-library(raster) # load relevant libraries
-library(dplyr)
-library(terra)
-data(toydata) # load toy data
+if (requireNamespace("INLA", quietly = TRUE)) {
+ library(raster) # load relevant libraries
+ library(dplyr)
+ library(terra)
+ data(toydata) # load toy data
 
  # run 'cheesepop' admin unit disaggregation function
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-class <- class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
-rclass <- paste0("TOY_population_v1_0_age",1:12)
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ class <- class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+ rclass <- paste0("TOY_population_v1_0_age",1:12)
 
-# run spray1 grid cell disaggregation function
-result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
-ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-plot(ras2) # visulize of the raster files produced
+ # run spray1 grid cell disaggregation function
+ result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
+ ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ plot(ras2) # visulize of the raster files produced
+}
 }
 
 }

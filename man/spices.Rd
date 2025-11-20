@@ -30,9 +30,11 @@ This function disaggregates population estimates by a single demographic (age or
 }
 \examples{
 \donttest{
-data(toydata)
-library(dplyr)
-classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
-result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)
+if (requireNamespace("INLA", quietly = TRUE)) {
+ data(toydata)
+ library(dplyr)
+ classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+ result2 <- spices(df = toydata$admin, output_dir = tempdir(), class = classes)
+}
 }
 }

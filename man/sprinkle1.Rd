@@ -32,22 +32,24 @@ This function disaggregates population estimates at grid cell levels using the p
 }
 \examples{
 \donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
  # load relevant libraries
-library(raster)
-library(dplyr)
-library(terra)
-# load the toy data
-data(toydata)
+ library(raster)
+ library(dplyr)
+ library(terra)
+ # load the toy data
+ data(toydata)
  # run 'cheesepop' function for admin level disaggregation
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
 
-rclass <- paste0("TOY_population_v1_0_age",1:12)
-  # run 'sprinkle1' function for grid cell disaggregation at one level
-result2 <- sprinkle1(df = result$full_data,
-rdf = toydata$grid, class, rclass, output_dir = tempdir())
-ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-plot(ras2) # visulize raster
+ rclass <- paste0("TOY_population_v1_0_age",1:12)
+ # run 'sprinkle1' function for grid cell disaggregation at one level
+ result2 <- sprinkle1(df = result$full_data,
+ rdf = toydata$grid, class, rclass, output_dir = tempdir())
+ ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ plot(ras2) # visulize raster
+}
 }
 
 }

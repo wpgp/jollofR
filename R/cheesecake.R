@@ -22,8 +22,10 @@
 #'
 #'@examples
 #'\donttest{
-#'data(toydata)
-#'result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+#'if (requireNamespace("INLA", quietly = TRUE)) {
+#'  data(toydata)
+#'  result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+#'}
 #'}
 #'@export
 #'@importFrom dplyr "%>%"

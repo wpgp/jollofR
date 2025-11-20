@@ -20,8 +20,10 @@ This function creates population pyramid for age and sex output data from the 'c
 }
 \examples{
 \donttest{
-data(toydata)
-result <- cheesecake(df = toydata$admin, output_dir = tempdir())
-pyramid(result$fem_age_pop,result$male_age_pop)
+if (requireNamespace("INLA", quietly = TRUE)) {
+ data(toydata)
+ result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+ pyramid(result$fem_age_pop,result$male_age_pop)
+}
 }
 }
