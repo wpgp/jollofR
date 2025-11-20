@@ -17,7 +17,7 @@
 #'@return A graphic image of the multi-panel maps of population disaggregated raster files
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #'data(toydata)
 #'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 #'rclass <- paste0("TOY_population_v1_0_age",1:12)
@@ -68,7 +68,7 @@ plotRast <- function(title, output_dir,raster_files,
   }
 
   names(raster_stack) <- names
-  raster_df <- as.data.frame(raster_stack, xy=T)
+  raster_df <- as.data.frame(raster_stack, xy=TRUE)
   (raster_lng <- reshape2::melt(raster_df, id=c("x", "y"), value.name="Population",
                                 variable.name="Key"))
 

@@ -15,12 +15,15 @@
 #' disaggregated population proportions and population totals are
 #' automatically saved.
 #'
+#' @param verbose Logical. If TRUE (default), progress messages are displayed during model execution.
+#' Set to FALSE to suppress informational messages.
+#'
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #'data(toydata)
 #' result <- cheesepop(df = toydata$admin, output_dir = tempdir())
 #'}
@@ -33,7 +36,7 @@
 #'@importFrom stats "as.formula" "cor" "plogis"
 #'@importFrom utils "write.csv"
 #'
-cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covariates
+cheesepop <- function(df, output_dir, verbose = TRUE)# disaggregates by age and sex - no covariates
 {
 
   # Check if the output directory exists, if not, create it
@@ -78,7 +81,7 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
     # 1) Disaggregate by age - estimate missing age group proportion for each admin unit
     prior.prec <- list(prec = list(prior = "pc.prec",
                                    param = c(1, 0.01))) # using PC prior
-    print(paste(paste0("(",i,")"),paste0(age_classes[i], " model is running")))
+    if(verbose) message(paste(paste0("(",i,")"),paste0(age_classes[i], " model is running")))
 
     age_df[,colnames(age_df)[i]] <- round(age_df[,i]) # input count should be integer
 
@@ -215,12 +218,12 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
 
   # Calculate the model fit metrics
   residual = all_pop$total - df$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm=T),#MAE
+  print(mets <- t(c(MAE = mean(abs(residual), na.rm=TRUE),#MAE
                     MAPE = (1/length(df$total))*sum(abs((df$total-all_pop$total)/df$total))*100,#MAPE
-                    RMSE = sqrt(mean(residual^2, na.rm=T)),
+                    RMSE = sqrt(mean(residual^2, na.rm=TRUE)),
                     corr = cor(df$total[!is.na(df$total)],all_pop$total[!is.na(df$total)]))))# should be with at least 95% correlation
 
-  write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = F)
+  write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = FALSE)
 
   # join all data
   full_dat <- cbind(df,
@@ -231,13 +234,13 @@ cheesepop <- function(df, output_dir)# disaggregates by age and sex - no covaria
                     m.pred_dt, m.pred_dtL, m.pred_dtU) # everything
 
   # saving datasets to output folder
-  write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)
-  write.csv(pred_dt, paste0(output_dir,"/age_disaggregated_data.csv"),row.names = F)
-  write.csv(f.pred_dt, paste0(output_dir,"/female_disaggregated_data.csv"),row.names = F)
-  write.csv(m.pred_dt, paste0(output_dir,"/male_disaggregated_data.csv"),row.names = F)
-  write.csv(f.prop_dt, paste0(output_dir,"/female_proportions.csv"),row.names = F)
-  write.csv(m.prop_dt, paste0(output_dir,"/male_proportions.csv"),row.names = F)
-  write.csv(prop_dt, paste0(output_dir,"/age_proportions.csv"),row.names = F)
+  write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(pred_dt, paste0(output_dir,"/age_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(f.pred_dt, paste0(output_dir,"/female_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(m.pred_dt, paste0(output_dir,"/male_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(f.prop_dt, paste0(output_dir,"/female_proportions.csv"),row.names = FALSE)
+  write.csv(m.prop_dt, paste0(output_dir,"/male_proportions.csv"),row.names = FALSE)
+  write.csv(prop_dt, paste0(output_dir,"/age_proportions.csv"),row.names = FALSE)
 
   # returns output as a list
   return(out <- list(age_pop = pred_dt,

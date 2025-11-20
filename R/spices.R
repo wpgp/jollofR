@@ -13,12 +13,15 @@
 #'
 #' @param class This are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.
 #'
+#' @param verbose Logical. If TRUE (default), progress messages are displayed during model execution.
+#' Set to FALSE to suppress informational messages.
+#'
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #'data(toydata)
 #'library(dplyr)
 #'classes <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
@@ -33,7 +36,7 @@
 #'@importFrom stats "as.formula" "cor" "plogis"
 #'@importFrom utils "write.csv"
 #'
-spices <-function(df, output_dir, class)# disaggregates by age only - with covariates
+spices <-function(df, output_dir, class, verbose = TRUE)# disaggregates by age only - with covariates
 {
 
   # Check if the output directory exists, if not, create it
@@ -68,7 +71,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
   # standardize covariates
   stdize <- function(x)
   {
-    stdz <- (x - mean(x, na.rm=T))/sd(x, na.rm=T)
+    stdz <- (x - mean(x, na.rm=TRUE))/sd(x, na.rm=TRUE)
     return(stdz)
   }
 
@@ -84,7 +87,7 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
     # 1) Disaggregate by age - estimate missing age group proportion for each admin unit
     prior.prec <- list(prec = list(prior = "pc.prec",
                                    param = c(1, 0.01))) # using PC prior
-    print(paste(paste0("(",i,")"),paste0(cat_classes[i], " model is running")))
+    if(verbose) message(paste(paste0("(",i,")"),paste0(cat_classes[i], " model is running")))
 
     cat_df[,colnames(cat_df)[i]] <- round(cat_df[,i])
 
@@ -158,12 +161,12 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
 
 
   residual = all_pop-df$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm=T),#MAE
+  print(mets <- t(c(MAE = mean(abs(residual), na.rm=TRUE),#MAE
                     MAPE = (1/length(df$total))*sum(abs((df$total-all_pop)/df$total))*100,#MAPE
-                    RMSE = sqrt(mean(residual^2, na.rm=T)),
+                    RMSE = sqrt(mean(residual^2, na.rm=TRUE)),
                     corr = cor(df$total[!is.na(df$total)],all_pop[!is.na(df$total)]))))# should be with at least 95% correlation
 
-  write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = F)
+  write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = FALSE)
 
   # join all data
   full_dat <- cbind(df,
@@ -171,9 +174,9 @@ spices <-function(df, output_dir, class)# disaggregates by age only - with covar
                     pred_dt, pred_dtL,pred_dtU) # everything
 
   # save the datasets
-  write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)
-  write.csv(pred_dt, paste0(output_dir,"/cat_disaggregated_data.csv"),row.names = F)
-  write.csv(prop_dt, paste0(output_dir,"/cat_proportions.csv"),row.names = F)
+  write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(pred_dt, paste0(output_dir,"/cat_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(prop_dt, paste0(output_dir,"/cat_proportions.csv"),row.names = FALSE)
 
 
   # return output as a list

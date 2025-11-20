@@ -24,7 +24,7 @@ This function produces a multi-panel histogram plot of the disaggregated populat
 The input data could come from any of the disaggregation functions within the 'jollofR' package (both at admin and grid levels) such as 'cheesecake', 'cheesepop', 'slices', etc.
 }
 \examples{
-\dontrun{
+\donttest{
 data(toydata)
 library(ggplot2)
 result <- cheesepop(df = toydata$admin,output_dir = tempdir())

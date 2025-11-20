@@ -6,7 +6,7 @@
 (e.g., age groups only or sex group only) - without covariates
 Please use 'spices' if you want covariates included.}
 \usage{
-slices(df, output_dir, class)
+slices(df, output_dir, class, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on age or sex groups population data
@@ -17,6 +17,9 @@ disaggregated population proportions and population totals are
 automatically saved.}
 
 \item{class}{These are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.}
+
+\item{verbose}{Logical. If TRUE (default), progress messages are displayed during model execution.
+Set to FALSE to suppress informational messages.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals

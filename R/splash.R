@@ -20,7 +20,7 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #' # load key libraries
 #' library(raster)
 #' library(dplyr)
@@ -70,7 +70,7 @@ splash <- function (df, rdf, rclass, output_dir)
 
 
   age_df <- df[, pp_age_classes]
-  age_df$total <- apply(age_df, 1, sum, na.rm=T)
+  age_df$total <- apply(age_df, 1, sum, na.rm=TRUE)
   # create female age classes
   fage_classes <- names(df %>% dplyr::select(starts_with("fage_")))
   prp_fage_classes <- paste0("prp_",fage_classes)
@@ -285,7 +285,7 @@ splash <- function (df, rdf, rclass, output_dir)
   all_pop <- as.data.frame(fpred_dt + mpred_dt)
   all_pop <- cbind(rdf, all_pop)
   all_pop <-  all_pop %>% dplyr::group_by(admin_id) %>%
-    dplyr::summarise_at(fage_classes_pop, sum, na.rm=T) %>%
+    dplyr::summarise_at(fage_classes_pop, sum, na.rm=TRUE) %>%
     dplyr::select(-admin_id)
 
   all_pop$total <- round(apply(all_pop, 1, sum))
@@ -295,12 +295,12 @@ splash <- function (df, rdf, rclass, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - df$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T), MAPE = (1/length(df$total)) *
+  print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(df$total)) *
                       sum(abs((df$total - all_pop$total)/df$total)) * 100,
-                    RMSE = sqrt(mean(residual^2, na.rm = T)), corr = cor(df$total[!is.na(df$total)],
+                    RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(df$total[!is.na(df$total)],
                                                                          all_pop$total[!is.na(df$total)]))))
   write.csv(mets, paste0(output_dir, "/fit_metrics.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   #  combine the data outputs
   full_dat <- cbind(rdf,
@@ -311,7 +311,7 @@ splash <- function (df, rdf, rclass, output_dir)
 
   # save
   write.csv(full_dat, paste0(output_dir, "/full_disaggregated_data.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   return(out <- list(full_data = data.frame(full_dat),
                      fem_age_pop = data.frame(fpred_dt),

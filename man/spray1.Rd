@@ -31,7 +31,7 @@ This function disaggregates population estimates at grid cell levels using the b
 total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.
 }
 \examples{
-\dontrun{
+\donttest{
 library(raster) # load relevant libraries
 library(dplyr)
 library(terra)

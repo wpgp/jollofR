@@ -5,7 +5,7 @@
 \title{spices: Disaggregates population counts for a single level of demographics
 (e.g., age groups only or sex group only) with covariates.}
 \usage{
-spices(df, output_dir, class)
+spices(df, output_dir, class, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on age or sex groups population data
@@ -16,6 +16,9 @@ disaggregated population proportions and population totals are
 automatically saved.}
 
 \item{class}{This are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.}
+
+\item{verbose}{Logical. If TRUE (default), progress messages are displayed during model execution.
+Set to FALSE to suppress informational messages.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -26,7 +29,7 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates by a single demographic (age or sex or religion, etc)
 }
 \examples{
-\dontrun{
+\donttest{
 data(toydata)
 library(dplyr)
 classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))

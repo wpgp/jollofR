@@ -31,7 +31,7 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels using the population counts of each grid cell.
 }
 \examples{
-\dontrun{
+\donttest{
  # load relevant libraries
 library(raster)
 library(dplyr)

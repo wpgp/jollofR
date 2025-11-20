@@ -30,7 +30,7 @@ The input data could come from any of the jolloR disaggregation functions at gri
 'sprinkle1', 'spray1', 'and splash1',
 }
 \examples{
-\dontrun{
+\donttest{
 data(toydata)
 result <- cheesepop(df = toydata$admin,output_dir = tempdir())
 rclass <- paste0("TOY_population_v1_0_age",1:12)

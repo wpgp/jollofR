@@ -29,7 +29,7 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels when there are no information on the building and population counts.
 }
 \examples{
-\dontrun{
+\donttest{
  # load relevant libraries
 library(raster)
 library(terra)

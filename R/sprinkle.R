@@ -21,7 +21,7 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #' # load necessary libraries
 #'library(raster)
 #'library(terra)
@@ -358,10 +358,10 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - rdf$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T),
-                    RMSE = sqrt(mean(residual^2, na.rm = T)), corr = cor(rdf$total[!is.na(rdf$total)],
+  print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE),
+                    RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(rdf$total[!is.na(rdf$total)],
                                                                          all_pop$total[!is.na(rdf$total)]))))
-  write.csv(mets, paste0(output_dir, "/fit_metrics.csv"), row.names = F)
+  write.csv(mets, paste0(output_dir, "/fit_metrics.csv"), row.names = FALSE)
   full_dat <- cbind(rdf, pred_dt, pred_dtL, pred_dtU, prop_dt,
                     prop_dtL, prop_dtU, fpred_dt, fpred_dtL, fpred_dtU, mpred_dt,
                     mpred_dtL, mpred_dtU)
@@ -370,7 +370,7 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
   {
     print("Writing a combined .CSV file of the age and age-sex raster files")
     write.csv(full_dat, paste0(output_dir, "/full_disaggregated_data.csv"),
-              row.names = F)
+              row.names = FALSE)
   }
 
   return(out <- list(full_data = data.frame(full_dat), fem_age_pop = data.frame(fpred_dt),

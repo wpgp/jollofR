@@ -13,7 +13,7 @@
 #'@return A graphic image of histogram of the disaggregated population count
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #'data(toydata)
 #'library(ggplot2)
 #'result <- cheesepop(df = toydata$admin,output_dir = tempdir())

@@ -4,7 +4,7 @@
 \alias{cheesepop}
 \title{cheesepop: Population disaggregation by two-level demographic groups (eg., age and sex), without covariates}
 \usage{
-cheesepop(df, output_dir)
+cheesepop(df, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on age and sex groups population data
@@ -13,6 +13,9 @@ as well as the estimated overall total counts per administrative unit.}
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE (default), progress messages are displayed during model execution.
+Set to FALSE to suppress informational messages.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -29,7 +32,7 @@ It uses Bayesian statistical models to predict population proportions and popula
 Primarily designed to help users in filling population data gaps across demographic groups due to outdated or incomplete census data.
 }
 \examples{
-\dontrun{
+\donttest{
 data(toydata)
 result <- cheesepop(df = toydata$admin, output_dir = tempdir())
 }

@@ -14,7 +14,7 @@
 #'@return A graphic image of two combined graphs - a boxplot and a line plot showing the distribution of the disaggregated  population counts across the groups.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #'library(ggplot2)
 #'data(toydata)
 #'result <- cheesepop(df = toydata$admin,output_dir = tempdir())

@@ -22,7 +22,7 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #'library(raster) # load relevant libraries
 #'library(dplyr)
 #'library(terra)
@@ -73,7 +73,7 @@ spray1 <- function (df, rdf, class, rclass, output_dir)
 
 
   cat_df <- df[,pp_cat_classes]
-  cat_df$total <- apply(cat_df, 1, sum, na.rm=T)
+  cat_df$total <- apply(cat_df, 1, sum, na.rm=TRUE)
 
   # specify grids for all ages
   pred_dt <- pred_dtL <- pred_dtU <- matrix(0, ncol = length(cat_classes), nrow = nrow(rdf))
@@ -184,7 +184,7 @@ spray1 <- function (df, rdf, class, rclass, output_dir)
   all_pop <- as.data.frame(pred_dt)
   all_pop <- cbind(rdf, all_pop)
   all_pop <-  all_pop %>% group_by(admin_id) %>%
-    dplyr::summarise_at(cat_classes_pop, sum, na.rm=T) %>%
+    dplyr::summarise_at(cat_classes_pop, sum, na.rm=TRUE) %>%
     dplyr::select(-admin_id)
 
 
@@ -197,12 +197,12 @@ spray1 <- function (df, rdf, class, rclass, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - df$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T), MAPE = (1/length(df$total)) *
+  print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(df$total)) *
                       sum(abs((df$total - all_pop$total)/df$total)) * 100,
-                    RMSE = sqrt(mean(residual^2, na.rm = T)), corr = cor(df$total[!is.na(df$total)],
+                    RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(df$total[!is.na(df$total)],
                                                                          all_pop$total[!is.na(df$total)]))))
   write.csv(mets, paste0(output_dir, "/fit_metrics.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   #  combine the data outputs
   full_dat <- cbind(rdf,
@@ -211,7 +211,7 @@ spray1 <- function (df, rdf, class, rclass, output_dir)
 
   # save
   write.csv(full_dat, paste0(output_dir, "/full_disaggregated_data.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   return(out <- list(full_data = data.frame(full_dat)))
 

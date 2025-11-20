@@ -21,7 +21,7 @@
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
 #'  # load relevant libraries
 #'library(raster)
 #'library(dplyr)
@@ -183,12 +183,12 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - rdf$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T), MAPE = (1/length(rdf$total)) *
+  print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(rdf$total)) *
                       sum(abs((rdf$total - all_pop$total)/rdf$total)) * 100,
-                    RMSE = sqrt(mean(residual^2, na.rm = T)), corr = cor(rdf$total[!is.na(rdf$total)],
+                    RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(rdf$total[!is.na(rdf$total)],
                                                                          all_pop$total[!is.na(rdf$total)]))))
   write.csv(mets, paste0(output_dir, "/fit_metrics.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   #  combine the data outputs
   full_dat <- cbind(rdf,
@@ -197,7 +197,7 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
 
   # save
   write.csv(full_dat, paste0(output_dir, "/full_disaggregated_data.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   return(out <- list(full_data = data.frame(full_dat)))
 

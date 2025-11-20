@@ -25,7 +25,7 @@ disaggregated population counts, and (b) a line graph of the aggregated counts a
 Here, the input data could come from any of the disaggregation functions within the 'jollofR' package such as 'cheesecake', 'cheesepop', 'slices' & 'spices'.
 }
 \examples{
-\dontrun{
+\donttest{
 library(ggplot2)
 data(toydata)
 result <- cheesepop(df = toydata$admin,output_dir = tempdir())
