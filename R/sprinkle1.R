@@ -16,6 +16,7 @@
 #' @param output_dir This is the directory with the name of the output folder where the
 #' disaggregated population proportions and population totals are
 #' automatically saved.
+#' @param verbose Logical. If TRUE, prints progress messages. Default is TRUE.
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
@@ -51,7 +52,7 @@
 #'@importFrom utils "write.csv"
 #'
 
-sprinkle1 <- function (df, rdf, class, rclass, output_dir)
+sprinkle1 <- function (df, rdf, class, rclass, output_dir, verbose = TRUE)
 {
 
   if (!dir.exists(output_dir)) {
@@ -86,7 +87,7 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
     for (j in 1:length(cat_classes)) {
 
       # j = 4
-      print(paste(paste0(cat_classes[j], " of admin ", i,
+      if(verbose) print(paste(paste0(cat_classes[j], " of admin ", i,
                          " is running")))
 
       #Grid disaggregation for all age groups
@@ -122,7 +123,7 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
   colnames(prop_dtU) <- cat_classes_propU
 
 
-  print("Writing raster files")
+  if(verbose) print("Writing raster files")
   # write the raster files
 
   ref_coords <- cbind(rdf$lon, rdf$lat) # the reference coordinates
@@ -185,7 +186,7 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - rdf$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(rdf$total)) *
+  if(verbose) print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(rdf$total)) *
                       sum(abs((rdf$total - all_pop$total)/rdf$total)) * 100,
                     RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(rdf$total[!is.na(rdf$total)],
                                                                          all_pop$total[!is.na(rdf$total)]))))

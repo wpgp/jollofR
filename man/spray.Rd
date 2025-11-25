@@ -5,7 +5,7 @@
 \title{Spray: Disaggregates population counts by dividing the admin total by the number of grid cells within the
 administrative units. Then admin proportions are used to further disaggregate the grid cell totals by groups}
 \usage{
-spray(df, rdf, rclass, output_dir)
+spray(df, rdf, rclass, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's
@@ -19,6 +19,8 @@ in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and L
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE, prints progress messages. Default is TRUE.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals

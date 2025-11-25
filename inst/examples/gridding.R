@@ -62,7 +62,7 @@ p4 <- plot(ras4,
      asp = NA, cex.axis = 3)
 
 # Compare all three methods side by side
-par(mfrow = c(2, 2))
+oldpar <- par(mfrow = c(2, 2))
 plot(ras2, main = "Sprinkle Method",
      legend = TRUE, col = colorRampPalette(c("white", "orange", "brown"))(255),
      asp = NA, cex.axis = 3)
@@ -72,6 +72,7 @@ plot(ras3, main = "Splash Method",
 plot(ras4, main = "Spray Method",
      legend = TRUE, col = colorRampPalette(c("white", "orange", "brown"))(255),
      asp = NA, cex.axis = 3)
+par(oldpar)
 
 # Plot population pyramids together
 library(ggpubr)

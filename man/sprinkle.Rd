@@ -4,7 +4,7 @@
 \alias{sprinkle}
 \title{sprinkle: Disaggregates population counts at high-resolution grid cells using the grid cell's total population counts. Note that this could also be applied to more than two levels scenarios}
 \usage{
-sprinkle(df, rdf, rclass, toSave, rasterToCSV, output_dir)
+sprinkle(df, rdf, rclass, toSave, rasterToCSV, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's
@@ -25,6 +25,8 @@ or set rasterToCSV = TRUE to write the corresponding .CSV files. Note that the l
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE, prints progress messages. Default is TRUE.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals

@@ -135,7 +135,7 @@ slices <-function(df,output_dir, class, verbose = TRUE)# disaggregates by age on
 
 
   residual = all_pop-df$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm=TRUE),#MAE
+  if(verbose) print(mets <- t(c(MAE = mean(abs(residual), na.rm=TRUE),#MAE
                     MAPE = (1/length(df$total))*sum(abs((df$total-all_pop)/df$total))*100,#MAPE
                     RMSE = sqrt(mean(residual^2, na.rm=TRUE)),
                     corr = cor(df$total[!is.na(df$total)],all_pop[!is.na(df$total)]))))# should be with at least 95% correlation

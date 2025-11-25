@@ -15,6 +15,8 @@
 #' disaggregated population proportions and population totals are
 #' automatically saved.
 #'
+#' @param verbose Logical. If TRUE, prints progress messages. Default is TRUE.
+#'
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
@@ -49,7 +51,7 @@
 #'@importFrom utils "write.csv"
 #'
 
-splash <- function (df, rdf, rclass, output_dir)
+splash <- function (df, rdf, rclass, output_dir, verbose = TRUE)
 {
 
 
@@ -105,7 +107,7 @@ splash <- function (df, rdf, rclass, output_dir)
 
     for (j in 1:length(age_classes)) {
       # j = 4
-      print(paste(paste0("age class ", j, " of admin ", i,
+      if(verbose) print(paste(paste0("age class ", j, " of admin ", i,
                          " is running")))
 
       #Grid disaggregation for all age groups
@@ -183,7 +185,7 @@ splash <- function (df, rdf, rclass, output_dir)
 
 
 
-  print("Writing age and age-sex raster files")
+  if(verbose) print("Writing age and age-sex raster files")
   # write the raster files
   ref_coords <- cbind(rdf$lon, rdf$lat) # the reference coordinates
   xx <- as.matrix(ref_coords)
@@ -297,7 +299,7 @@ splash <- function (df, rdf, rclass, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - df$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(df$total)) *
+  if(verbose) print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(df$total)) *
                       sum(abs((df$total - all_pop$total)/df$total)) * 100,
                     RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(df$total[!is.na(df$total)],
                                                                          all_pop$total[!is.na(df$total)]))))

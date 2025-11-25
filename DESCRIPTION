@@ -1,7 +1,7 @@
 Package: jollofR
 Type: Package
 Title: Small Area Population Estimation by Demographics
-Version: 0.6.1
+Version: 0.6.2
 Authors@R: c(
     person("Chibuzor Christopher", "Nnanatu", , "cc.nnanatu@soton.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5841-3700")),

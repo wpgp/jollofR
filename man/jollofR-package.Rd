@@ -6,7 +6,7 @@
 \alias{jollofR-package}
 \title{jollofR: Small Area Population Estimation by Demographics}
 \description{
-Automatic disaggregation of small area population estimates by demographic groups (e.g., age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches based on integrated nested Laplace approximation (INLA) Rue et al. (2009) \doi{10.1111/b.9781405178525.2009.x} and stochastic partial differential equation (SPDE) methods Lindgren et al. (2011) \doi{10.1111/j.1467-9868.2011.00777.x}. The package implements hierarchical Bayesian modeling frameworks for small area estimation as described in Leasure et al. (2020) \doi{10.1073/pnas.1913050117} and Nnanatu et al. (2025) \doi{10.1038/s41467-025-59862-4}.
+Automatic disaggregation of small1area population estimates by demographic groups (e.g., age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches based on integrated nested Laplace approximation (INLA) Rue et al. (2009) \doi{10.1111/b.9781405178525.2009.x} and stochastic partial differential equation (SPDE) methods Lindgren et al. (2011) \doi{10.1111/j.1467-9868.2011.00777.x}. The package implements hierarchical Bayesian modeling frameworks for small area estimation as described in Leasure et al. (2020) \doi{10.1073/pnas.1913050117} and Nnanatu et al. (2025) \doi{10.1038/s41467-025-59862-4}.
 }
 \seealso{
 Useful links:

@@ -4,7 +4,7 @@
 \alias{sprinkle1}
 \title{sprinkle1: Disaggregates population counts at high-resolution grid cells using the grid's total population. This can also be applied to one-level disaggregation}
 \usage{
-sprinkle1(df, rdf, class, rclass, output_dir)
+sprinkle1(df, rdf, class, rclass, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's
@@ -21,6 +21,8 @@ primary education', 'secondary education', 'tertiary education'.}
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE, prints progress messages. Default is TRUE.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
