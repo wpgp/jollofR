@@ -45,10 +45,10 @@ testthat::test_that("slices() returns a list", {
   testthat::expect_type(output, "list")
 })
 
-testthat::test_that("pyramid() returns a list", {
+testthat::test_that("pyramid() returns a ggplot object", {
   testthat::skip_if_not_installed("INLA")
   tmp <- create_temp_output("pyramid")
   out1 <- cheesecake(df = toydata$admin, output_dir = tmp)
   out2 <- pyramid(out1$fem_age_pop, out1$male_age_pop)
-  testthat::expect_type(out2, "list")
+  testthat::expect_s3_class(out2, "ggplot")
 })

@@ -103,6 +103,7 @@ pyramid <- function(female_pop, male_pop)
                     #xtickslab.rt = 45, ytickslab.rt = 45
   )
   print(pyramid1)
+  invisible(pyramid1)
 
 }
 
