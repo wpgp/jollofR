@@ -13,14 +13,19 @@
 #' disaggregated population proportions and population totals are
 #' automatically saved.
 #'
+#' @param verbose Logical. If TRUE (default), progress messages are displayed during model execution.
+#' Set to FALSE to suppress informational messages.
+#'
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
-#'data(toydata)
-#'result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+#'\donttest{
+#'if (requireNamespace("INLA", quietly = TRUE)) {
+#'  data(toydata)
+#'  result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+#'}
 #'}
 #'@export
 #'@importFrom dplyr "%>%"
@@ -31,7 +36,7 @@
 #'@importFrom stats "as.formula" "cor" "plogis"
 #'@importFrom utils "write.csv"
 #'
-cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covariates
+cheesecake <- function(df, output_dir, verbose = TRUE)# disaggregates by age and sex - no covariates
 {
 
   # Check if the output directory exists, if not, create it
@@ -82,7 +87,7 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
   # standardize covariates
   stdize <- function(x)
   {
-    stdz <- (x - mean(x, na.rm=T))/sd(x, na.rm=T)
+    stdz <- (x - mean(x, na.rm=TRUE))/sd(x, na.rm=TRUE)
     return(stdz)
   }
 
@@ -97,7 +102,7 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
     # 1) Disaggregate by age - estimate missing age group proportion for each admin unit
     prior.prec <- list(prec = list(prior = "pc.prec",
                                    param = c(1, 0.01))) # using PC prior
-    print(paste(paste0("(",i,")"),paste0(age_classes[i], " model is running")))
+    if(verbose) message(paste(paste0("(",i,")"),paste0(age_classes[i], " model is running")))
 
     age_df[,colnames(age_df)[i]] <- round(age_df[,i])
 
@@ -262,12 +267,12 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
   # Calculate the model fit metrics
   # Calculate the model fit metrics
   residual = all_pop$total - df$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm=T),#MAE
+  if(verbose) print(mets <- t(c(MAE = mean(abs(residual), na.rm=TRUE),#MAE
                     MAPE = (1/length(df$total))*sum(abs((df$total-all_pop$total)/df$total))*100,#MAPE
-                    RMSE = sqrt(mean(residual^2, na.rm=T)),
+                    RMSE = sqrt(mean(residual^2, na.rm=TRUE)),
                     corr = cor(df$total[!is.na(df$total)],all_pop$total[!is.na(df$total)]))))# should be with at least 95% correlation
 
-  write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = F)
+  write.csv(t(mets), paste0(output_dir,"/fit_metrics.csv"),row.names = FALSE)
 
   # join all data
   full_dat <- cbind(df,
@@ -278,13 +283,13 @@ cheesecake <- function(df, output_dir)# disaggregates by age and sex - no covari
                     m.pred_dt, m.pred_dtL, m.pred_dtU) # everything
 
   # save the datasets
-  write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = F)
-  write.csv(pred_dt, paste0(output_dir,"/age_disaggregated_data.csv"),row.names = F)
-  write.csv(f.pred_dt, paste0(output_dir,"/female_disaggregated_data.csv"),row.names = F)
-  write.csv(m.pred_dt, paste0(output_dir,"/male_disaggregated_data.csv"),row.names = F)
-  write.csv(f.prop_dt, paste0(output_dir,"/female_proportions.csv"),row.names = F)
-  write.csv(m.prop_dt, paste0(output_dir,"/male_proportions.csv"),row.names = F)
-  write.csv(prop_dt, paste0(output_dir,"/age_proportions.csv"),row.names = F)
+  write.csv(full_dat, paste0(output_dir,"/full_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(pred_dt, paste0(output_dir,"/age_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(f.pred_dt, paste0(output_dir,"/female_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(m.pred_dt, paste0(output_dir,"/male_disaggregated_data.csv"),row.names = FALSE)
+  write.csv(f.prop_dt, paste0(output_dir,"/female_proportions.csv"),row.names = FALSE)
+  write.csv(m.prop_dt, paste0(output_dir,"/male_proportions.csv"),row.names = FALSE)
+  write.csv(prop_dt, paste0(output_dir,"/age_proportions.csv"),row.names = FALSE)
 
 
   # return output as a list

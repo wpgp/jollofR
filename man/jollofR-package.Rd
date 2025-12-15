@@ -4,9 +4,9 @@
 \name{jollofR-package}
 \alias{jollofR}
 \alias{jollofR-package}
-\title{jollofR: A Bayesian Statistical Model-Based Approach for Disaggregating Small Area Population Estimates by Demographic Characteristics}
+\title{jollofR: Small Area Population Estimation by Demographics}
 \description{
-Automatic disaggregation of small area population estimates by demographic groups (e.g.,age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches.
+Automatic disaggregation of small-area population estimates by demographic groups (e.g., age, sex, race, marital status, educational level, etc) along with the estimates of uncertainty, using advanced Bayesian statistical modelling approaches based on integrated nested Laplace approximation (INLA) Rue et al. (2009) \doi{10.1111/j.1467-9868.2008.00700.x} and stochastic partial differential equation (SPDE) methods Lindgren et al. (2011) \doi{10.1111/j.1467-9868.2011.00777.x}. The package implements hierarchical Bayesian modeling frameworks for small area estimation as described in Leasure et al. (2020) \doi{10.1073/pnas.1913050117} and Nnanatu et al. (2025) \doi{10.1038/s41467-025-59862-4}.
 }
 \seealso{
 Useful links:
@@ -22,6 +22,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Mohamed A. Yusuf (\href{https://orcid.org/0000-0002-9339-4613}{ORCID})
   \item Somnath Chaudhuri (\href{https://orcid.org/0000-0003-4899-1870}{ORCID})
   \item Ortis Yankey (\href{https://orcid.org/0000-0002-0808-884X}{ORCID})
   \item Attila N Lazar (\href{https://orcid.org/0000-0003-2033-2013}{ORCID})

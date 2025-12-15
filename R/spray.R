@@ -15,29 +15,32 @@
 #' disaggregated population proportions and population totals are
 #' automatically saved.
 #'
+#' @param verbose Logical. If TRUE, prints progress messages. Default is TRUE.
+#'
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
+#'if (requireNamespace("INLA", quietly = TRUE)) {
 #'  # load relevant libraries
-#'library(raster)
-#'library(terra)
-#'   # load toy data
-#'data(toydata)
+#'  library(raster)
+#'  library(terra)
+#'  # load toy data
+#'  data(toydata)
 #'  # run 'cheesepop' function for admin level disaggregation
-#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-#'rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
-#'   # run 'spray' for grid cell level disaggregation
-#'result2 <- spray(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
-#'ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-#'plot(ras2) # visualize
+#'  result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'  rclass <- paste0("TOY_population_v1_0_age",1:12) # Mean
+#'  # run 'spray' for grid cell level disaggregation
+#'  result2 <- spray(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
+#'  ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'  plot(ras2) # visualize
+#'}
 #'}
 #'
 #'@export
 #'@importFrom dplyr "%>%"
-#'@importFrom INLA "inla"
 #'@importFrom raster "rasterFromXYZ"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
@@ -45,7 +48,7 @@
 #'@importFrom utils "write.csv"
 #'
 
-spray <- function (df, rdf, rclass, output_dir)
+spray <- function (df, rdf, rclass, output_dir, verbose = TRUE)
 {
 
   if (!dir.exists(output_dir)) {
@@ -68,7 +71,7 @@ spray <- function (df, rdf, rclass, output_dir)
 
 
   age_df <- df[, pp_age_classes]
-  age_df$total <- apply(age_df, 1, sum, na.rm=T)
+  age_df$total <- apply(age_df, 1, sum, na.rm=TRUE)
   # create female age classes
   fage_classes <- names(df %>% dplyr::select(starts_with("fage_")))
   prp_fage_classes <- paste0("prp_",fage_classes)
@@ -100,7 +103,7 @@ spray <- function (df, rdf, rclass, output_dir)
 
     for (j in 1:length(age_classes)) {
 
-      print(paste(paste0("age class ", j, " of admin ", i,
+      if(verbose) print(paste(paste0("age class ", j, " of admin ", i,
                          " is running")))
       # j = 4
       #Grid disaggregation for all age groups
@@ -178,7 +181,7 @@ spray <- function (df, rdf, rclass, output_dir)
 
 
 
-  print("Writing age and age-sex raster files")
+  if(verbose) print("Writing age and age-sex raster files")
   # write the raster files
   ref_coords <- cbind(rdf$lon, rdf$lat) # the reference coordinates
   xx <- as.matrix(ref_coords)
@@ -282,7 +285,7 @@ spray <- function (df, rdf, rclass, output_dir)
   all_pop <- as.data.frame(fpred_dt + mpred_dt)
   all_pop <- cbind(rdf, all_pop)
   all_pop <- all_pop %>% dplyr::group_by(admin_id) %>%
-    dplyr::summarise_at(fage_classes_pop, sum, na.rm=T)%>%
+    dplyr::summarise_at(fage_classes_pop, sum, na.rm=TRUE)%>%
     dplyr::select(-admin_id)
 
   all_pop$total <- round(apply(all_pop, 1, sum))
@@ -292,12 +295,12 @@ spray <- function (df, rdf, rclass, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - df$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T), MAPE = (1/length(df$total)) *
+  if(verbose) print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(df$total)) *
                       sum(abs((df$total - all_pop$total)/df$total)) * 100,
-                    RMSE = sqrt(mean(residual^2, na.rm = T)), corr = cor(df$total[!is.na(df$total)],
+                    RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(df$total[!is.na(df$total)],
                                                                          all_pop$total[!is.na(df$total)]))))
   write.csv(mets, paste0(output_dir, "/fit_metrics.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   #  combine the data outputs
   full_dat <- cbind(rdf,
@@ -308,7 +311,7 @@ spray <- function (df, rdf, rclass, output_dir)
 
   # save
   write.csv(full_dat, paste0(output_dir, "/full_disaggregated_data.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   return(out <- list(full_data = data.frame(full_dat),
                      fem_age_pop = data.frame(fpred_dt),

@@ -4,7 +4,7 @@
 \alias{spray1}
 \title{spray1: Disaggregates population counts at high-resolution grid cells in the absence population and building counts - for one-level only}
 \usage{
-spray1(df, rdf, class, rclass, output_dir)
+spray1(df, rdf, class, rclass, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's
@@ -20,6 +20,8 @@ in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and L
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE, prints progress messages. Default is TRUE.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -31,21 +33,23 @@ This function disaggregates population estimates at grid cell levels using the b
 total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.
 }
 \examples{
-\dontrun{
-library(raster) # load relevant libraries
-library(dplyr)
-library(terra)
-data(toydata) # load toy data
+\donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
+ library(raster) # load relevant libraries
+ library(dplyr)
+ library(terra)
+ data(toydata) # load toy data
 
  # run 'cheesepop' admin unit disaggregation function
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-class <- class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
-rclass <- paste0("TOY_population_v1_0_age",1:12)
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ class <- class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+ rclass <- paste0("TOY_population_v1_0_age",1:12)
 
-# run spray1 grid cell disaggregation function
-result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
-ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-plot(ras2) # visulize of the raster files produced
+ # run spray1 grid cell disaggregation function
+ result2 <- spray1(df = result$full_data, rdf = toydata$grid, class, rclass, output_dir = tempdir())
+ ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ plot(ras2) # visulize of the raster files produced
+}
 }
 
 }

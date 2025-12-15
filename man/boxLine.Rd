@@ -25,13 +25,15 @@ disaggregated population counts, and (b) a line graph of the aggregated counts a
 Here, the input data could come from any of the disaggregation functions within the 'jollofR' package such as 'cheesecake', 'cheesepop', 'slices' & 'spices'.
 }
 \examples{
-\dontrun{
-library(ggplot2)
-data(toydata)
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-boxLine(dmat=result$male_age_pop,
-       xlab="Age group (years)",
-       ylab = "Population Count")
+\donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
+ library(ggplot2)
+ data(toydata)
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ boxLine(dmat=result$male_age_pop,
+         xlab="Age group (years)",
+         ylab = "Population Count")
+}
 }
 
 }

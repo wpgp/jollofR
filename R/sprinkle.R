@@ -16,25 +16,28 @@
 #' @param output_dir This is the directory with the name of the output folder where the
 #' disaggregated population proportions and population totals are
 #' automatically saved.
+#' @param verbose Logical. If TRUE, prints progress messages. Default is TRUE.
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
-#' # load necessary libraries
-#'library(raster)
-#'library(terra)
+#'\donttest{
+#'if (requireNamespace("INLA", quietly = TRUE)) {
+#'  # load necessary libraries
+#'  library(raster)
+#'  library(terra)
 #'  # load toy data
-#'data(toydata)
+#'  data(toydata)
 #'  # run 'cheesepop' function for admin level disaggregation
-#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-#'rclass <- paste0("TOY_population_v1_0_age",1:12)
+#'  result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'  rclass <- paste0("TOY_population_v1_0_age",1:12)
 #'  # run 'sprinkle' function for grid cell disaggregation and save
-#'result2 <-  sprinkle(df = result$full_data, rdf = toydata$grid, rclass,
-#' toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
-#'ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-#'plot(ras2) # visulize raster
+#'  result2 <-  sprinkle(df = result$full_data, rdf = toydata$grid, rclass,
+#'  toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
+#'  ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'  plot(ras2) # visulize raster
+#'}
 #'}
 #'
 #'@export
@@ -46,7 +49,7 @@
 #'@importFrom utils "write.csv"
 #'
 
-sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
+sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir, verbose = TRUE)
 {
 
 
@@ -98,7 +101,7 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
 
     for (j in 1:length(age_classes)) {
       # j = 4
-      print(paste(paste0("age class ", j, " of admin ", i,
+      if(verbose) print(paste(paste0("age class ", j, " of admin ", i,
                          " is running")))
 
       #Grid disaggregation for all age groups
@@ -176,7 +179,7 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
   colnames(mprop_dt) <- mage_classes_prop
 
 
-  print("Writing age and age-sex raster files:")
+  if(verbose) print("Writing age and age-sex raster files:")
   ref_coords <- cbind(rdf$lon, rdf$lat)
   xx <- as.matrix(ref_coords)
   rclassL <- paste0(rclass, "L")
@@ -185,24 +188,24 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
   mrclass <- gsub("_age", "_agesex_m", rclass)
   for (k in 1:length(rclass)) {
     # k =2
-    print(paste("(",k,")","Writing ", rclass[k],".tif", "raster files"))
+    if(verbose) print(paste("(",k,")","Writing ", rclass[k],".tif", "raster files"))
     if(toSave == "everything") # saves everything - pop, prop and the lower and upper bounds
     {
       # output_dir = tempdir()
-      print(paste0(output_dir, "/prop_",rclass[k], ".tif"))
+      if(verbose) print(paste0(output_dir, "/prop_",rclass[k], ".tif"))
       z1a <- as.matrix(prop_dt[, k])
       h1a <- rasterFromXYZ(cbind(xx, z1a))
       writeRaster(h1a, filename = paste0(output_dir, "/prop_",
                                          rclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/prop_",
+      if(verbose) print(paste0(output_dir, "/prop_",
                    rclass[k], "_lower", ".tif"))
       z2a <- as.matrix(prop_dtL[, k])
       h2a <- rasterFromXYZ(cbind(xx, z2a))
       writeRaster(h2a, filename = paste0(output_dir, "/prop_",
                                          rclass[k], "_lower", ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/prop_",
+      if(verbose) print(paste0(output_dir, "/prop_",
                    rclass[k], "_upper", ".tif"))
       z3a <- as.matrix(prop_dtU[, k])
       h3a <- rasterFromXYZ(cbind(xx, z3a))
@@ -210,35 +213,35 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
                                          rclass[k], "_upper", ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
 
-      print(paste0(output_dir, "/prop_",
+      if(verbose) print(paste0(output_dir, "/prop_",
                    frclass[k], ".tif"))
       z4a <- as.matrix(fprop_dt[, k])
       h4a <- rasterFromXYZ(cbind(xx, z4a))
       writeRaster(h4a, filename = paste0(output_dir, "/prop_",
                                          frclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/prop_",
+      if(verbose) print(paste0(output_dir, "/prop_",
                    mrclass[k], ".tif"))
       z5a <- as.matrix(mprop_dt[, k])
       h5a <- rasterFromXYZ(cbind(xx, z5a))
       writeRaster(h5a, filename = paste0(output_dir, "/prop_",
                                          mrclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    rclass[k], ".tif"))
       z1b <- as.matrix(pred_dt[, k])
       h1b <- rasterFromXYZ(cbind(xx, z1b))
       writeRaster(h1b, filename = paste0(output_dir, "/pop_",
                                          rclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    rclass[k], "_lower", ".tif"))
       z2b <- as.matrix(pred_dtL[, k])
       h2b <- rasterFromXYZ(cbind(xx, z2b))
       writeRaster(h2b, filename = paste0(output_dir, "/pop_",
                                          rclass[k], "_lower", ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    rclass[k], "_upper", ".tif"))
       z3b <- as.matrix(pred_dtU[, k])
       h3b <- rasterFromXYZ(cbind(xx, z3b))
@@ -246,7 +249,7 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
                                          rclass[k], "_upper", ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    frclass[k], ".tif"))
       z4b <- as.matrix(fpred_dt[, k])
       h4b <- rasterFromXYZ(cbind(xx, z4b))
@@ -254,7 +257,7 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
                                          frclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    frclass[k], "_lower", ".tif"))
       z4bL <- as.matrix(fpred_dtL[, k])
       h4bL <- rasterFromXYZ(cbind(xx, z4bL))
@@ -263,7 +266,7 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
                   options = c(COMPRESS = "LZW"))
 
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    frclass[k], "_upper", ".tif"))
       z4bU <- as.matrix(fpred_dtU[, k])
       h4bU <- rasterFromXYZ(cbind(xx, z4bU))
@@ -271,14 +274,14 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
                                           frclass[k], "_upper", ".tif"), overwrite = TRUE,ptions = c(COMPRESS = "LZW"))
 
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    mrclass[k], ".tif"))
       z5b <- as.matrix(mpred_dt[, k])
       h5b <- rasterFromXYZ(cbind(xx, z5b))
       writeRaster(h5b, filename = paste0(output_dir, "/pop_",
                                          mrclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    mrclass[k], "_lower", ".tif"))
       z5bL <- as.matrix(mpred_dtL[, k])
       h5bL <- rasterFromXYZ(cbind(xx, z5bL))
@@ -287,7 +290,7 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
                   options = c(COMPRESS = "LZW"))
 
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    mrclass[k], "_upper", ".tif"))
       z5bU <- as.matrix(mpred_dtU[, k])
       h5bU <- rasterFromXYZ(cbind(xx, z5bU))
@@ -300,21 +303,21 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
     if(toSave == "prop") # saves proportions only
     {
 
-      print(paste0(output_dir, "/prop_",
+      if(verbose) print(paste0(output_dir, "/prop_",
                    rclass[k], ".tif"))
       z1a <- as.matrix(prop_dt[, k])
       h1a <- rasterFromXYZ(cbind(xx, z1a))
       writeRaster(h1a, filename = paste0(output_dir, "/prop_",
                                          rclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/prop_",
+      if(verbose) print(paste0(output_dir, "/prop_",
                    frclass[k], ".tif"))
       z4a <- as.matrix(fprop_dt[, k])
       h4a <- rasterFromXYZ(cbind(xx, z4a))
       writeRaster(h4a, filename = paste0(output_dir, "/prop_",
                                          frclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/prop_",
+      if(verbose) print(paste0(output_dir, "/prop_",
                    mrclass[k], ".tif"))
       z5a <- as.matrix(mprop_dt[, k])
       h5a <- rasterFromXYZ(cbind(xx, z5a))
@@ -326,21 +329,21 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
     if(toSave == "pop") # save counts only
     {
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    rclass[k], ".tif"))
       z1b <- as.matrix(pred_dt[, k])
       h1b <- rasterFromXYZ(cbind(xx, z1b))
       writeRaster(h1b, filename = paste0(output_dir, "/pop_",
                                          rclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    frclass[k], ".tif"))
       z4b <- as.matrix(fpred_dt[, k])
       h4b <- rasterFromXYZ(cbind(xx, z4b))
       writeRaster(h4b, filename = paste0(output_dir, "/pop_",
                                          frclass[k], ".tif"), overwrite = TRUE, options = c(COMPRESS = "LZW"))
 
-      print(paste0(output_dir, "/pop_",
+      if(verbose) print(paste0(output_dir, "/pop_",
                    mrclass[k], ".tif"))
       z5b <- as.matrix(mpred_dt[, k])
       h5b <- rasterFromXYZ(cbind(xx, z5b))
@@ -358,19 +361,19 @@ sprinkle <- function (df, rdf, rclass, toSave,rasterToCSV, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - rdf$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T),
-                    RMSE = sqrt(mean(residual^2, na.rm = T)), corr = cor(rdf$total[!is.na(rdf$total)],
+  if(verbose) print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE),
+                    RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(rdf$total[!is.na(rdf$total)],
                                                                          all_pop$total[!is.na(rdf$total)]))))
-  write.csv(mets, paste0(output_dir, "/fit_metrics.csv"), row.names = F)
+  write.csv(mets, paste0(output_dir, "/fit_metrics.csv"), row.names = FALSE)
   full_dat <- cbind(rdf, pred_dt, pred_dtL, pred_dtU, prop_dt,
                     prop_dtL, prop_dtU, fpred_dt, fpred_dtL, fpred_dtU, mpred_dt,
                     mpred_dtL, mpred_dtU)
 
   if(!is.null(rasterToCSV)) # saves the raster file as .CSV if not set to NULL- the time required depends on the size of the file
   {
-    print("Writing a combined .CSV file of the age and age-sex raster files")
+    if(verbose) print("Writing a combined .CSV file of the age and age-sex raster files")
     write.csv(full_dat, paste0(output_dir, "/full_disaggregated_data.csv"),
-              row.names = F)
+              row.names = FALSE)
   }
 
   return(out <- list(full_data = data.frame(full_dat), fem_age_pop = data.frame(fpred_dt),

@@ -19,9 +19,11 @@ This function creates population pyramid for age and sex output data from the 'c
 'cheesepop' functions outputs. It could also be used to visualize observed age-sex compositions.
 }
 \examples{
-\dontrun{
-data(toydata)
-result <- cheesecake(df = toydata$admin, output_dir = tempdir())
-pyramid(result$fem_age_pop,result$male_age_pop)
+\donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
+ data(toydata)
+ result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+ pyramid(result$fem_age_pop,result$male_age_pop)
+}
 }
 }

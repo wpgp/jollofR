@@ -6,7 +6,7 @@
 (e.g., age groups only or sex group only) - without covariates
 Please use 'spices' if you want covariates included.}
 \usage{
-slices(df, output_dir, class)
+slices(df, output_dir, class, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on age or sex groups population data
@@ -17,6 +17,9 @@ disaggregated population proportions and population totals are
 automatically saved.}
 
 \item{class}{These are the categories of the variables of interest. For example, for educational level, it could be 'no education', 'primary education', 'secondary education', 'tertiary education'.}
+
+\item{verbose}{Logical. If TRUE (default), progress messages are displayed during model execution.
+Set to FALSE to suppress informational messages.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -27,8 +30,12 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates by a single demographic group (age or sex or religion, etc)
 }
 \examples{
-data(toydata)
-library(dplyr)
-classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
-result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)
+\donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
+ data(toydata)
+ library(dplyr)
+ classes <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+ result2 <- slices(df = toydata$admin, output_dir = tempdir(), class = classes)
+}
+}
 }

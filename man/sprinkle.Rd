@@ -4,7 +4,7 @@
 \alias{sprinkle}
 \title{sprinkle: Disaggregates population counts at high-resolution grid cells using the grid cell's total population counts. Note that this could also be applied to more than two levels scenarios}
 \usage{
-sprinkle(df, rdf, rclass, toSave, rasterToCSV, output_dir)
+sprinkle(df, rdf, rclass, toSave, rasterToCSV, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's
@@ -25,6 +25,8 @@ or set rasterToCSV = TRUE to write the corresponding .CSV files. Note that the l
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE, prints progress messages. Default is TRUE.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -35,20 +37,22 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels using the population counts of each grid cell.
 }
 \examples{
-\dontrun{
-# load necessary libraries
-library(raster)
-library(terra)
+\donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
+ # load necessary libraries
+ library(raster)
+ library(terra)
  # load toy data
-data(toydata)
+ data(toydata)
  # run 'cheesepop' function for admin level disaggregation
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-rclass <- paste0("TOY_population_v1_0_age",1:12)
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ rclass <- paste0("TOY_population_v1_0_age",1:12)
  # run 'sprinkle' function for grid cell disaggregation and save
-result2 <-  sprinkle(df = result$full_data, rdf = toydata$grid, rclass,
-toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
-ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-plot(ras2) # visulize raster
+ result2 <-  sprinkle(df = result$full_data, rdf = toydata$grid, rclass,
+ toSave="pop",rasterToCSV = NULL,  output_dir = tempdir())
+ ras2<- rast(paste0(tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ plot(ras2) # visulize raster
+}
 }
 
 }

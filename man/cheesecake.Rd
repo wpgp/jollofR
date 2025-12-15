@@ -4,7 +4,7 @@
 \alias{cheesecake}
 \title{cheesecake: Population disaggregation by two-level demographic groups (eg., age and sex), with covariates}
 \usage{
-cheesecake(df, output_dir)
+cheesecake(df, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on age and sex groups population data, for example,
@@ -13,6 +13,9 @@ as well as the overall total population counts per administrative unit.}
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE (default), progress messages are displayed during model execution.
+Set to FALSE to suppress informational messages.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -27,8 +30,10 @@ It uses Bayesian hierachical statistical models to predict population proportion
 Primarily designed to support users (e.g., National Statistical Offices) in filling population data gaps across various demographic groups due to outdated or incomplete census/population data.
 }
 \examples{
-\dontrun{
-data(toydata)
-result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+\donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
+ data(toydata)
+ result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+}
 }
 }

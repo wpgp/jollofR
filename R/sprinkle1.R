@@ -16,33 +16,35 @@
 #' @param output_dir This is the directory with the name of the output folder where the
 #' disaggregated population proportions and population totals are
 #' automatically saved.
+#' @param verbose Logical. If TRUE, prints progress messages. Default is TRUE.
 #' @return A list of data frame objects of the output files including the disaggregated population proportions and population totals
 #' along with the corresponding measures of uncertainties (lower and upper bounds of 95-percent credible intervals) for each demographic characteristic.
 #' In addition, a file containing the model performance/model fit evaluation metrics is also produced.
 #'
 #'@examples
-#'\dontrun{
+#'\donttest{
+#'if (requireNamespace("INLA", quietly = TRUE)) {
 #'  # load relevant libraries
-#'library(raster)
-#'library(dplyr)
-#'library(terra)
-#' # load the toy data
-#'data(toydata)
+#'  library(raster)
+#'  library(dplyr)
+#'  library(terra)
+#'  # load the toy data
+#'  data(toydata)
 #'  # run 'cheesepop' function for admin level disaggregation
-#'result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-#'class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
+#'  result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+#'  class <- names(toydata$admin %>% dplyr::select(starts_with("age_")))
 #'
-#'rclass <- paste0("TOY_population_v1_0_age",1:12)
-#'   # run 'sprinkle1' function for grid cell disaggregation at one level
-#'result2 <- sprinkle1(df = result$full_data,
-#'rdf = toydata$grid, class, rclass, output_dir = tempdir())
-#'ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-#'plot(ras2) # visulize raster
+#'  rclass <- paste0("TOY_population_v1_0_age",1:12)
+#'  # run 'sprinkle1' function for grid cell disaggregation at one level
+#'  result2 <- sprinkle1(df = result$full_data,
+#'  rdf = toydata$grid, class, rclass, output_dir = tempdir())
+#'  ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+#'  plot(ras2) # visulize raster
+#'}
 #'}
 #'
 #'@export
 #'@importFrom dplyr "%>%"
-#'@importFrom INLA "inla"
 #'@importFrom raster "rasterFromXYZ"
 #'@importFrom grDevices "dev.off" "png"
 #'@importFrom graphics "abline"
@@ -50,7 +52,7 @@
 #'@importFrom utils "write.csv"
 #'
 
-sprinkle1 <- function (df, rdf, class, rclass, output_dir)
+sprinkle1 <- function (df, rdf, class, rclass, output_dir, verbose = TRUE)
 {
 
   if (!dir.exists(output_dir)) {
@@ -85,7 +87,7 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
     for (j in 1:length(cat_classes)) {
 
       # j = 4
-      print(paste(paste0(cat_classes[j], " of admin ", i,
+      if(verbose) print(paste(paste0(cat_classes[j], " of admin ", i,
                          " is running")))
 
       #Grid disaggregation for all age groups
@@ -121,7 +123,7 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
   colnames(prop_dtU) <- cat_classes_propU
 
 
-  print("Writing raster files")
+  if(verbose) print("Writing raster files")
   # write the raster files
 
   ref_coords <- cbind(rdf$lon, rdf$lat) # the reference coordinates
@@ -184,12 +186,12 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
   abline(0, 1, col = 2, lwd = 2)
   dev.off()
   residual = all_pop$total - rdf$total
-  print(mets <- t(c(MAE = mean(abs(residual), na.rm = T), MAPE = (1/length(rdf$total)) *
+  if(verbose) print(mets <- t(c(MAE = mean(abs(residual), na.rm = TRUE), MAPE = (1/length(rdf$total)) *
                       sum(abs((rdf$total - all_pop$total)/rdf$total)) * 100,
-                    RMSE = sqrt(mean(residual^2, na.rm = T)), corr = cor(rdf$total[!is.na(rdf$total)],
+                    RMSE = sqrt(mean(residual^2, na.rm = TRUE)), corr = cor(rdf$total[!is.na(rdf$total)],
                                                                          all_pop$total[!is.na(rdf$total)]))))
   write.csv(mets, paste0(output_dir, "/fit_metrics.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   #  combine the data outputs
   full_dat <- cbind(rdf,
@@ -198,7 +200,7 @@ sprinkle1 <- function (df, rdf, class, rclass, output_dir)
 
   # save
   write.csv(full_dat, paste0(output_dir, "/full_disaggregated_data.csv"),
-            row.names = F)
+            row.names = FALSE)
 
   return(out <- list(full_data = data.frame(full_dat)))
 

@@ -4,7 +4,7 @@
 \alias{splash}
 \title{splash: Disaggregates population counts at high-resolution grid cells using building counts values of grid cells as a weighting layer. It is used for two-level disaggregation (e.g., age and sex).}
 \usage{
-splash(df, rdf, rclass, output_dir)
+splash(df, rdf, rclass, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's
@@ -18,6 +18,8 @@ in the admin level data. It contains GPS coordinates. i.e, longitude (lon) and L
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE, prints progress messages. Default is TRUE.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -29,22 +31,24 @@ This function disaggregates population estimates at grid cell levels using the b
 total population across the grid cells. Then, each grid cell's total count is further disaggregated into groups of interest using the admin's proportions.
 }
 \examples{
-\dontrun{
-# load key libraries
-library(raster)
-library(dplyr)
-library(terra)
+\donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
+ # load key libraries
+ library(raster)
+ library(dplyr)
+ library(terra)
  # load toy data
-data(toydata)
+ data(toydata)
  # run 'cheesepop' to obtain admin-level proportions
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
  # specify the names to assign to the raster files
-rclass <- paste0("TOY_population_v1_0_age",1:12)
-  # run the splash function to disaggregate at grid cells
-result2 <- splash(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
-  # read and visualise one of the saved raster files
-ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-plot(ras2)
+ rclass <- paste0("TOY_population_v1_0_age",1:12)
+ # run the splash function to disaggregate at grid cells
+ result2 <- splash(df = result$full_data, rdf = toydata$grid, rclass, output_dir = tempdir())
+ # read and visualise one of the saved raster files
+ ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ plot(ras2)
+}
 }
 
 }

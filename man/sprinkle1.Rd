@@ -4,7 +4,7 @@
 \alias{sprinkle1}
 \title{sprinkle1: Disaggregates population counts at high-resolution grid cells using the grid's total population. This can also be applied to one-level disaggregation}
 \usage{
-sprinkle1(df, rdf, class, rclass, output_dir)
+sprinkle1(df, rdf, class, rclass, output_dir, verbose = TRUE)
 }
 \arguments{
 \item{df}{A data frame object containing sample data (often partially observed) on different demographic groups population. It contains the admin's
@@ -21,6 +21,8 @@ primary education', 'secondary education', 'tertiary education'.}
 \item{output_dir}{This is the directory with the name of the output folder where the
 disaggregated population proportions and population totals are
 automatically saved.}
+
+\item{verbose}{Logical. If TRUE, prints progress messages. Default is TRUE.}
 }
 \value{
 A list of data frame objects of the output files including the disaggregated population proportions and population totals
@@ -31,23 +33,25 @@ In addition, a file containing the model performance/model fit evaluation metric
 This function disaggregates population estimates at grid cell levels using the population counts of each grid cell.
 }
 \examples{
-\dontrun{
+\donttest{
+if (requireNamespace("INLA", quietly = TRUE)) {
  # load relevant libraries
-library(raster)
-library(dplyr)
-library(terra)
-# load the toy data
-data(toydata)
+ library(raster)
+ library(dplyr)
+ library(terra)
+ # load the toy data
+ data(toydata)
  # run 'cheesepop' function for admin level disaggregation
-result <- cheesepop(df = toydata$admin,output_dir = tempdir())
-class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
+ result <- cheesepop(df = toydata$admin,output_dir = tempdir())
+ class <- names(toydata$admin \%>\% dplyr::select(starts_with("age_")))
 
-rclass <- paste0("TOY_population_v1_0_age",1:12)
-  # run 'sprinkle1' function for grid cell disaggregation at one level
-result2 <- sprinkle1(df = result$full_data,
-rdf = toydata$grid, class, rclass, output_dir = tempdir())
-ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
-plot(ras2) # visulize raster
+ rclass <- paste0("TOY_population_v1_0_age",1:12)
+ # run 'sprinkle1' function for grid cell disaggregation at one level
+ result2 <- sprinkle1(df = result$full_data,
+ rdf = toydata$grid, class, rclass, output_dir = tempdir())
+ ras2<- rast(paste0(output_dir = tempdir(), "/pop_TOY_population_v1_0_age4.tif"))
+ plot(ras2) # visulize raster
+}
 }
 
 }

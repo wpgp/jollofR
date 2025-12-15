@@ -11,14 +11,15 @@
 #'@return A graphic image of age-sex population distribution pyramid
 #'
 #'@examples
-#'\dontrun{
-#'data(toydata)
-#'result <- cheesecake(df = toydata$admin, output_dir = tempdir())
-#'pyramid(result$fem_age_pop,result$male_age_pop)
+#'\donttest{
+#'if (requireNamespace("INLA", quietly = TRUE)) {
+#'  data(toydata)
+#'  result <- cheesecake(df = toydata$admin, output_dir = tempdir())
+#'  pyramid(result$fem_age_pop,result$male_age_pop)
+#'}
 #'}
 #'@export
 #'@importFrom dplyr "%>%"
-#'@importFrom INLA "inla"
 #'@importFrom ggplot2 "ggplot"
 #'@importFrom ggplot2 "aes"
 #'@importFrom ggplot2 "geom_bar"
@@ -102,6 +103,7 @@ pyramid <- function(female_pop, male_pop)
                     #xtickslab.rt = 45, ytickslab.rt = 45
   )
   print(pyramid1)
+  invisible(pyramid1)
 
 }
 
